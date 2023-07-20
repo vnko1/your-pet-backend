@@ -5,7 +5,8 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 require("dotenv").config();
 
-// const { authRouter, notices } = require("./routes");
+// const { userRouter, notices } = require("./routes");
+const { userRouter } = require("./routes");
 
 const app = express();
 
@@ -25,7 +26,7 @@ app.get("/", async (req, res) => {
   res.status(200).json({ mess: "OK" });
 });
 
-// app.use("/auth", authRouter);
+app.use("/users", userRouter);
 // app.use("/notices", notices);
 
 app.use((req, res) => {

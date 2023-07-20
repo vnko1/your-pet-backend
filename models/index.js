@@ -1,5 +1,5 @@
-const { User } = require("./auth/user");
+const { User } = require("./auth/userModel");
 
-const { Notice } = require("./notice/notice");
+const { Notice } = require("./notice/noticeModel");
 
 module.exports = { User, Notice };

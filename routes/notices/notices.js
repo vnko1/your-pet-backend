@@ -14,8 +14,8 @@ router.get("/", ctrl.getAll);
 
 router.post(
 	"/add-pet",
-	authentificate,
-	// fieldValidation(noticeSchemas.addSchema),
+	// authentificate,
+	fieldValidation(noticeSchemas.addSchema),
 	ctrl.add
 );
 

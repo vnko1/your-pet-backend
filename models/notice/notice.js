@@ -2,49 +2,47 @@ const { Schema, model } = require("mongoose");
 
 const { schemaError } = require("../../utils");
 
-const Joi = require("joi");
+const Joi = require("joi").extend(require("@joi/date"));
 
 const noticeSchema = new Schema(
 	{
-		nickname: {
+		name: {
 			type: String,
 			required: [true, "Set nickname for pet"],
 		},
 		category: {
 			type: String,
-      required: true,
+			required: true,
 		},
-		birthday: {
+		date: {
 			type: String,
-      required: [true, "Enter a date of birth"],
+			required: [true, "Enter a date of birth"],
 		},
-		breed: {
+		type: {
 			type: String,
-      required: [true, "Enter the breed of pet"],
+			required: [true, "Enter the breed of pet"],
 		},
-    avatarURL: {
-      type: String,
-      require: true,
-    },
+		file: {
+			type: String,
+			require: true,
+		},
 		comments: {
 			type: String,
-      required: [true, "Enter your comment"],
 		},
 		title: {
 			type: String,
-      required: true,
 		},
 		sex: {
 			type: String,
-      required: true,
+			required: true,
 		},
 		location: {
 			type: String,
-      required: true,
+			required: true,
 		},
 		price: {
-			type: String,
-      required: true,
+			type: Number,
+			required: true,
 		},
 		favorite: {
 			type: Boolean,
@@ -62,18 +60,27 @@ const noticeSchema = new Schema(
 noticeSchema.post("save", schemaError);
 
 const addSchema = Joi.object({
-  nickname: Joi.string().min(2).max(12).required(),
-  breed: Joi.string().min(2).max(12).required(),
-  favorite: Joi.boolean,
+	category: Joi.string()
+		.valid("sell", "lost-found", "for-free", "my-pet")
+		.required(),
+	name: Joi.string().min(2).max(16).uppercase().required(),
+	date: Joi.date()
+		.format(['DD-MM-YYYY'])
+		.min("01-01-2000")
+		.messages({ "date.format": `Date format is DD-MM-YYYY` })
+		.required(),
+	type: Joi.string().min(2).max(16).uppercase().required(),
+	price: Joi.number().integer().greater(0).required(),
+	favorite: Joi.boolean,
 });
 
 const updateFavorite = Joi.object({
-  favorite: Joi.boolean().required(),
+	favorite: Joi.boolean().required(),
 });
 
 const noticeSchemas = {
-  addSchema,
-  updateFavorite,
+	addSchema,
+	updateFavorite,
 };
 
 const Notice = model("notice", noticeSchema);

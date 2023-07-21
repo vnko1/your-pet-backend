@@ -16,7 +16,6 @@ const loginSchemaValidation = Joi.object({
 const editUserValidation = Joi.object({
   name: Joi.string().min(2).max(15),
   email: Joi.string().pattern(emailRegex),
-
   city: Joi.string(),
   phone: Joi.string().pattern(phoneRegex).min(13),
   birthday: Joi.date().format("DD-MM-YYYY").min("01-01-1940"),

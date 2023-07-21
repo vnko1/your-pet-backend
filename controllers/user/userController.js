@@ -52,20 +52,18 @@ const login = async (req, res) => {
   const updatedUser = await Users.updateUser(user.id, { token });
   updatedUser.password = undefined;
   updatedUser.token = undefined;
-  updatedUser.isNewUser = false;
 
   res.json({
     token,
-    user: updatedUser,
+    user: { ...updatedUser["_doc"], isNewUser: false },
   });
 };
 
 const current = async (req, res) => {
   req.user.password = undefined;
   req.user.token = undefined;
-  req.user.isNewUser = false;
 
-  res.json({ user: req.user });
+  res.json({ user: { ...req.user["_doc"], isNewUser: false } });
 };
 
 const logout = async (req, res) => {
@@ -91,12 +89,25 @@ const update = async (req, res) => {
     await fs.unlink(req.file.path);
   }
 
+  if (body.email) {
+    const user = await Users.findUserByQuery({ email: body.email });
+
+    if (user) throw httpError(409, errorMessage[409]);
+
+    body.token = jwt.sign({ email: body.email }, process.env.JWT_KEY, {
+      expiresIn: expiresIn,
+    });
+  }
+
   const updatedUser = await Users.updateUser(id, body);
+  const token = updatedUser.token;
   updatedUser.password = undefined;
   updatedUser.token = undefined;
-  updatedUser.isNewUser = false;
 
-  res.json({ user: updatedUser });
+  res.json({
+    token: body.token ? body.token : token,
+    user: { ...updatedUser["_doc"], isNewUser: false },
+  });
 };
 
 module.exports = {

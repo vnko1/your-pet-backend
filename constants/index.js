@@ -6,6 +6,7 @@ const {
   fileFormats,
   serverMessage,
   emailRegex,
+  phoneRegex,
   passwordRegex,
   schemaMessage,
 } = require("./constants");
@@ -19,5 +20,6 @@ module.exports = {
   serverMessage,
   emailRegex,
   passwordRegex,
+  phoneRegex,
   schemaMessage,
 };

@@ -4,6 +4,7 @@ const { authentificate, fieldValidation } = require("../../middlewares");
 const {
   registerSchemaValidation,
   loginSchemaValidation,
+  editUserValidation,
 } = require("../../schema");
 
 const { Image } = require("../../services");
@@ -40,6 +41,7 @@ router.put(
   "/update",
   authentificate,
   Image.uploadErrorHandler(file.avatar.fieldName, file.avatar.fileName),
+  fieldValidation(editUserValidation),
   update
 );
 

@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const { schemaError } = require("../../utils");
-const { emailRegex } = require("../../constants");
+const { emailRegex, phoneRegex } = require("../../constants");
 
 const userSchema = new Schema(
   {
@@ -29,7 +29,7 @@ const userSchema = new Schema(
     birthday: {
       type: String,
     },
-    phone: { type: String },
+    phone: { type: String, match: phoneRegex },
     city: { type: String },
     avatarUrl: { type: String },
   },

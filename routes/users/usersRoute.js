@@ -41,7 +41,7 @@ router.put(
   "/update",
   authentificate,
   Image.uploadErrorHandler(file.avatar.fieldName, file.avatar.fileName),
-  fieldValidation(editUserValidation),
+  fieldValidation(editUserValidation, schemaMessage.auth),
   update
 );
 

@@ -14,20 +14,12 @@ const loginSchemaValidation = Joi.object({
 });
 
 const editUserValidation = Joi.object({
-  name: Joi.string().min(2).max(15).messages({
-    "string.min": "Wrong name format",
-    "string.max": "Wrong name format",
-  }),
+  name: Joi.string().min(2).max(15),
   email: Joi.string().pattern(emailRegex),
 
   city: Joi.string(),
-  phone: Joi.string().pattern(phoneRegex).min(13).messages({
-    "string.min": "Wrong phone format",
-  }),
-  birthday: Joi.date().format("DD-MM-YYYY").min("01-01-1940").messages({
-    "date.format": `Wrong date format`,
-    "date.min": "Wrong date format",
-  }),
+  phone: Joi.string().pattern(phoneRegex).min(13),
+  birthday: Joi.date().format("DD-MM-YYYY").min("01-01-1940"),
 });
 
 module.exports = {

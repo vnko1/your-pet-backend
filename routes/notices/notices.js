@@ -4,6 +4,8 @@ const ctrl = require("../../controllers");
 
 const { fieldValidation, authentificate } = require("../../middlewares");
 
+const { Image } = require("../../services");
+
 const { addSchema } = require("../../schema");
 
 const router = express.Router();
@@ -13,10 +15,11 @@ router.get("/", ctrl.getAll);
 // router.get("/:contactId", authenticate, isValidId, ctrl.getById);
 
 router.post(
-	"/add-pet",
-	// authentificate,
-	fieldValidation(addSchema),
-	ctrl.add
+  "/add-pet",
+  // authentificate,
+  Image.uploadErrorHandler("file", "file"),
+  fieldValidation(addSchema),
+  ctrl.add
 );
 
 // router.delete("/:contactId", authenticate, isValidId, ctrl.delById);

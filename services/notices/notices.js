@@ -1,5 +1,13 @@
-const { User } = require("../../models");
+const { Notice } = require("../../models");
 
-class Users {}
+class Notices {
+    static getAllNotices() {
+        return Notice.find();
+    }
 
-module.exports = { Users };
+    static addNotice(newNotice) {
+        return Notice.create(newNotice);
+    }
+}
+
+module.exports = { Notices };

@@ -4,7 +4,7 @@ const ctrl = require("../../controllers");
 
 const { fieldValidation, authentificate } = require("../../middlewares");
 
-const { noticeSchemas } = require("../../models");
+const { addSchema } = require("../../schema");
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ router.get("/", ctrl.getAll);
 router.post(
 	"/add-pet",
 	// authentificate,
-	fieldValidation(noticeSchemas.addSchema),
+	fieldValidation(addSchema),
 	ctrl.add
 );
 

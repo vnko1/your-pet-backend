@@ -4,7 +4,7 @@ const path = require("path");
 const cloudinary = require("cloudinary").v2;
 
 const { httpError } = require("../../utils");
-const { errorMessage, fileFormats } = require("../../constants");
+const { errorMessage, fileFormats, file } = require("../../constants");
 const { nanoid } = require("nanoid");
 const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
 
@@ -36,9 +36,13 @@ class Image {
       else cb(httpError(400, errorMessage[400]), false);
     };
 
-    return multer({ storage: multerConfig, fileFilter: multerFilter }).single(
-      fieldName
-    );
+    const multerLimits = { fileSize: file.avatar.fileSize };
+
+    return multer({
+      storage: multerConfig,
+      fileFilter: multerFilter,
+      limits: multerLimits,
+    }).single(fieldName);
   }
 
   static uploadErrorHandler(fieldName, name) {

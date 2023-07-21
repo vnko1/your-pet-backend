@@ -1,7 +1,13 @@
 const emailFrom = "valenkoedu@gmail.com";
 
 const file = {
-  avatar: { fieldName: "avatar", fileName: "avatar", width: 182, height: 182 },
+  avatar: {
+    fieldName: "avatar",
+    fileName: "avatar",
+    width: 182,
+    height: 182,
+    fileSize: 1024 * 1024,
+  },
 };
 
 const errorMessage = {

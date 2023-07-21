@@ -1,6 +1,5 @@
-const { Email } = require("./email/email");
-const { Users } = require("./users/users");
-const { Notices } = require("./notices/notices");
-const { Image } = require("./image/image");
+const { Email } = require("./email/emailService");
+const { Users } = require("./users/usersService");
+const { Image } = require("./image/imageService");
 
-module.exports = { Email, Users, Notices, Image };
+module.exports = { Email, Users, Image };

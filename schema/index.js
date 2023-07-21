@@ -1,9 +1,11 @@
 const {
-	addSchema,
-	updateFavorite,
-} = require("./notices/noticesSchemaValidation");
+  registerSchemaValidation,
+  loginSchemaValidation,
+  editUserValidation,
+} = require("./users/usersSchemaValidation");
 
 module.exports = {
-	addSchema,
-	updateFavorite,
+  registerSchemaValidation,
+  loginSchemaValidation,
+  editUserValidation,
 };

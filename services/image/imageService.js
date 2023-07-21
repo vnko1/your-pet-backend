@@ -4,7 +4,7 @@ const path = require("path");
 const cloudinary = require("cloudinary").v2;
 
 const { httpError } = require("../../utils");
-// const { errorMessage, fileFormats, file } = require("../../constants");
+const { errorMessage, fileFormats, file } = require("../../constants");
 const { nanoid } = require("nanoid");
 const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
 
@@ -33,15 +33,15 @@ class Image {
 
     const multerFilter = (req, file, cb) => {
       if (file.mimetype.startsWith("image/")) cb(null, true);
-      else cb(httpError(400, "errorMessage[400]"), false);
+      else cb(httpError(400, errorMessage[400]), false);
     };
 
-    // const multerLimits = { fileSize: file.avatar.fileSize };
+    const multerLimits = { fileSize: file.avatar.fileSize };
 
     return multer({
       storage: multerConfig,
       fileFilter: multerFilter,
-      // limits: multerLimits,
+      limits: multerLimits,
     }).single(fieldName);
   }
 
@@ -51,7 +51,7 @@ class Image {
     return function (req, res, next) {
       uploadFile(req, res, function (err) {
         if (err instanceof multer.MulterError || err) {
-          next(httpError(400, "errorMessage[400]"));
+          next(httpError(400, errorMessage[400]));
         }
 
         next();

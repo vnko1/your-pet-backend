@@ -1,5 +1,9 @@
-const { register, login, current, logout, update } = require("./auth/auth");
+const {
+  register,
+  login,
+  current,
+  logout,
+  update,
+} = require("./user/userController");
 
-const { add, getAll} = require("./notices/notices");
-
-module.exports = { register, login, current, logout, update, add, getAll };
+module.exports = { register, login, current, logout, update };

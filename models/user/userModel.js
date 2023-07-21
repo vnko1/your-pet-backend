@@ -1,16 +1,19 @@
 const { Schema, model } = require("mongoose");
 
 const { schemaError } = require("../../utils");
+const { emailRegex } = require("../../constants");
 
 const userSchema = new Schema(
   {
     email: {
       type: String,
       required: [true, "Email is required"],
+      match: emailRegex,
       unique: true,
     },
     password: {
       type: String,
+      minlength: 6,
       required: [true, "Set password for user"],
     },
     token: {
@@ -19,6 +22,9 @@ const userSchema = new Schema(
     },
     name: {
       type: String,
+      minlength: 2,
+      maxlength: 15,
+      required: [true, "Set name for user"],
     },
     birthday: {
       type: String,

@@ -1,6 +1,10 @@
 const express = require("express");
 
-const { authentificate } = require("../../middlewares");
+const { authentificate, fieldValidation } = require("../../middlewares");
+const {
+  registerSchemaValidation,
+  loginSchemaValidation,
+} = require("../../schema");
 
 const { Image } = require("../../services");
 
@@ -12,13 +16,21 @@ const {
   update,
 } = require("../../controllers");
 
-const { file } = require("../../constants");
+const { file, schemaMessage } = require("../../constants");
 
 const router = express.Router();
 
-router.post("/register", register);
+router.post(
+  "/register",
+  fieldValidation(registerSchemaValidation, schemaMessage.auth),
+  register
+);
 
-router.post("/login", login);
+router.post(
+  "/login",
+  fieldValidation(loginSchemaValidation, schemaMessage.auth),
+  login
+);
 
 router.post("/current", authentificate, current);
 

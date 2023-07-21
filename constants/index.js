@@ -5,6 +5,9 @@ const {
   expiresIn,
   fileFormats,
   serverMessage,
+  emailRegex,
+  passwordRegex,
+  schemaMessage,
 } = require("./constants");
 
 module.exports = {
@@ -14,4 +17,7 @@ module.exports = {
   expiresIn,
   fileFormats,
   serverMessage,
+  emailRegex,
+  passwordRegex,
+  schemaMessage,
 };

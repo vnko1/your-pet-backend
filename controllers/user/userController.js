@@ -7,7 +7,7 @@ const { tryCatchWrapper, httpError } = require("../../utils");
 const { file, errorMessage, expiresIn } = require("../../constants");
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
 
   const user = await Users.findUserByQuery({ email });
 
@@ -18,19 +18,27 @@ const register = async (req, res) => {
     expiresIn: expiresIn,
   });
 
-  const newUser = await Users.createUser({ email, password: hashPass, token });
+  const newUser = await Users.createUser({
+    email,
+    password: hashPass,
+    token,
+    name,
+  });
 
-  res.json({ token, user: { id: newUser.id, email: newUser.email } });
+  res.json({
+    token,
+    user: { id: newUser.id, email: newUser.email, name: newUser.name },
+  });
 };
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await Users.findUserByQuery({ email });
-  if (!user) throw httpError(401, errorMessage[401]);
+  if (!user) throw httpError(401, errorMessage[401].wrongLogin);
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) throw httpError(401, errorMessage[401]);
+  if (!isPasswordValid) throw httpError(401, errorMessage[401].wrongLogin);
 
   const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
     expiresIn: expiresIn,

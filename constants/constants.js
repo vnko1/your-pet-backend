@@ -21,6 +21,13 @@ const serverMessage = {
   dbConnection: "Database connection successful",
 };
 
+const schemaMessage = {
+  auth: "Missing required name field or wrong field name ",
+};
+const emailRegex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
+
 module.exports = {
   emailFrom,
   file,
@@ -28,4 +35,7 @@ module.exports = {
   expiresIn,
   fileFormats,
   serverMessage,
+  schemaMessage,
+  emailRegex,
+  passwordRegex,
 };

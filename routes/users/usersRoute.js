@@ -39,7 +39,7 @@ router.post("/logout", authentificate, logout);
 router.put(
   "/update",
   authentificate,
-  Image.uploadErrorHandler(file.avatar.name),
+  Image.uploadErrorHandler(file.avatar.fieldName, file.avatar.fileName),
   update
 );
 

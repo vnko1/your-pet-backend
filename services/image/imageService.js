@@ -5,6 +5,7 @@ const cloudinary = require("cloudinary").v2;
 
 const { httpError } = require("../../utils");
 const { errorMessage, fileFormats } = require("../../constants");
+const { nanoid } = require("nanoid");
 const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
 
 cloudinary.config({
@@ -14,17 +15,16 @@ cloudinary.config({
 });
 
 class Image {
-  static upload(name) {
+  static upload(fieldName, name) {
     const dirName = path.join(__dirname, "..", "..", "temp");
 
     const multerConfig = multer.diskStorage({
       destination: dirName,
       filename: (req, file, cb) => {
-        const { id } = req.user;
         const { mimetype } = file;
 
         const ext = mimetype.split("/")[1];
-
+        const id = nanoid();
         const filename = `${name}_` + id + "." + ext;
 
         cb(null, filename);
@@ -37,12 +37,12 @@ class Image {
     };
 
     return multer({ storage: multerConfig, fileFilter: multerFilter }).single(
-      name
+      fieldName
     );
   }
 
-  static uploadErrorHandler(name) {
-    const uploadFile = Image.upload(name);
+  static uploadErrorHandler(fieldName, name) {
+    const uploadFile = Image.upload(fieldName, name);
     return function (req, res, next) {
       uploadFile(req, res, function (err) {
         if (err instanceof multer.MulterError || err)
@@ -57,7 +57,7 @@ class Image {
       folder: dirName,
       allowed_formats: fileFormats,
       use_filename: true,
-      unique_filename: true,
+      unique_filename: false,
       overwrite: false,
     };
 

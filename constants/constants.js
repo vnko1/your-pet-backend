@@ -1,6 +1,8 @@
 const emailFrom = "valenkoedu@gmail.com";
 
-const file = { avatar: { name: "avatar", width: 182, height: 182 } };
+const file = {
+  avatar: { fieldName: "avatar", fileName: "avatar", width: 182, height: 182 },
+};
 
 const errorMessage = {
   400: "Bad request",

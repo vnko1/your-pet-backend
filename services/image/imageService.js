@@ -47,10 +47,13 @@ class Image {
 
   static uploadErrorHandler(fieldName, name) {
     const uploadFile = Image.upload(fieldName, name);
+
     return function (req, res, next) {
       uploadFile(req, res, function (err) {
-        if (err instanceof multer.MulterError || err)
+        if (err instanceof multer.MulterError || err) {
           next(httpError(400, errorMessage[400]));
+        }
+
         next();
       });
     };

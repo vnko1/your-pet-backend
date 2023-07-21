@@ -1,3 +1,17 @@
-const { emailFrom } = require("./constants");
+const {
+  emailFrom,
+  file,
+  errorMessage,
+  expiresIn,
+  fileFormats,
+  serverMessage,
+} = require("./constants");
 
-module.exports = { emailFrom };
+module.exports = {
+  emailFrom,
+  file,
+  errorMessage,
+  expiresIn,
+  fileFormats,
+  serverMessage,
+};

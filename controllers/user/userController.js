@@ -1,20 +1,22 @@
 const fs = require("fs/promises");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { nanoid } = require("nanoid");
 
 const { Users, Image } = require("../../services");
 const { tryCatchWrapper, httpError } = require("../../utils");
+const { file, errorMessage, expiresIn } = require("../../constants");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await Users.findUserByQuery({ email });
 
-  if (user) throw httpError(409, "Email in use");
+  if (user) throw httpError(409, errorMessage[409]);
 
   const hashPass = await bcrypt.hash(password, 10);
-  const token = jwt.sign({ email }, process.env.JWT_KEY, { expiresIn: "7d" });
+  const token = jwt.sign({ email }, process.env.JWT_KEY, {
+    expiresIn: expiresIn,
+  });
 
   const newUser = await Users.createUser({ email, password: hashPass, token });
 
@@ -25,13 +27,13 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await Users.findUserByQuery({ email });
-  if (!user) throw httpError(401, "Email or password is wrong");
+  if (!user) throw httpError(401, errorMessage[401]);
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid) throw httpError(401, "Email or password is wrong");
+  if (!isPasswordValid) throw httpError(401, errorMessage[401]);
 
   const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
-    expiresIn: "7d",
+    expiresIn: expiresIn,
   });
 
   await Users.updateUser(user.id, { token });
@@ -58,7 +60,13 @@ const update = async (req, res) => {
   const { body } = req;
 
   if (req.file) {
-    const avatarUrl = await Image.uploadImage(req.file.path, 182, 182);
+    console.log(req.file.fieldname);
+    const avatarUrl = await Image.uploadImage(
+      req.file.path,
+      file.avatar.width,
+      file.avatar.height,
+      req.file.fieldname
+    );
     body.avatarUrl = avatarUrl;
     await fs.unlink(req.file.path);
   }

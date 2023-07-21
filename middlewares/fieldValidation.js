@@ -1,4 +1,5 @@
 const { httpError } = require("../utils");
+const { errorMessage } = require("../constants");
 
 const fieldValidation = (schema, message) => (req, _, next) => {
   const { body } = req;
@@ -14,7 +15,7 @@ const fieldValidation = (schema, message) => (req, _, next) => {
 };
 
 const checkFile = (req, res, next) => {
-  if (!req.file) next(httpError(400, "Bad request"));
+  if (!req.file) next(httpError(400, errorMessage[400]));
   next();
 };
 

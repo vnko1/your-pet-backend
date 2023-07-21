@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { authentificate, checkFileFieldName } = require("../../middlewares");
+const { authentificate } = require("../../middlewares");
 
 const { Image } = require("../../services");
 
@@ -12,6 +12,8 @@ const {
   update,
 } = require("../../controllers");
 
+const { file } = require("../../constants");
+
 const router = express.Router();
 
 router.post("/register", register);
@@ -22,6 +24,11 @@ router.post("/current", authentificate, current);
 
 router.post("/logout", authentificate, logout);
 
-router.put("/update", authentificate, Image.upload("avatar"), update);
+router.put(
+  "/update",
+  authentificate,
+  Image.uploadErrorHandler(file.avatar.name),
+  update
+);
 
 module.exports = router;

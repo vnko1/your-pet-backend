@@ -1,13 +1,14 @@
 const app = require("./app");
+const { serverMessage } = require("./constants");
 
 const mongoose = require("mongoose");
 
 mongoose
   .connect(process.env.PET_DB)
   .then(() => {
-    console.log("Database connection successful");
+    console.log(serverMessage.dbConnection);
     app.listen(process.env.PORT, async () => {
-      console.log(`Server running. Use our API on port: ${process.env.PORT}`);
+      console.log(serverMessage.expressConnection);
     });
   })
   .catch((err) => {

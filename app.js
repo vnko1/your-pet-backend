@@ -7,6 +7,7 @@ require("dotenv").config();
 
 // const { userRouter, notices } = require("./routes");
 const { userRouter } = require("./routes");
+const { errorMessage } = require("./constants");
 
 const app = express();
 
@@ -30,7 +31,7 @@ app.use("/users", userRouter);
 // app.use("/notices", notices);
 
 app.use((req, res) => {
-  res.status(404).json({ message: "Not found" });
+  res.status(404).json({ message: errorMessage[404] });
 });
 
 app.use((err, _, res, next) => {

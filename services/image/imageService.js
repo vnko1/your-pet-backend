@@ -4,6 +4,7 @@ const path = require("path");
 const cloudinary = require("cloudinary").v2;
 
 const { httpError } = require("../../utils");
+const { errorMessage, fileFormats } = require("../../constants");
 const { CLOUD_NAME, API_KEY, API_SECRET } = process.env;
 
 cloudinary.config({
@@ -32,7 +33,7 @@ class Image {
 
     const multerFilter = (req, file, cb) => {
       if (file.mimetype.startsWith("image/")) cb(null, true);
-      else cb(httpError(400, "Bad request"), false);
+      else cb(httpError(400, errorMessage[400]), false);
     };
 
     return multer({ storage: multerConfig, fileFilter: multerFilter }).single(
@@ -40,11 +41,24 @@ class Image {
     );
   }
 
-  static async uploadImage(imagePath, width, height) {
+  static uploadErrorHandler(name) {
+    const uploadFile = Image.upload(name);
+    return function (req, res, next) {
+      uploadFile(req, res, function (err) {
+        if (err instanceof multer.MulterError || err)
+          next(httpError(400, errorMessage[400]));
+        next();
+      });
+    };
+  }
+
+  static async uploadImage(imagePath, width, height, dirName) {
     const options = {
+      folder: dirName,
+      allowed_formats: fileFormats,
       use_filename: true,
       unique_filename: true,
-      overwrite: true,
+      overwrite: false,
     };
 
     try {

@@ -1,9 +1,11 @@
 const {
-  register,
-  login,
-  current,
-  logout,
-  update,
+	register,
+	login,
+	current,
+	logout,
+	update,
 } = require("./user/userController");
 
-module.exports = { register, login, current, logout, update };
+const { add, getAll } = require("./notices/noticesController");
+
+module.exports = { register, login, current, logout, update, add, getAll };

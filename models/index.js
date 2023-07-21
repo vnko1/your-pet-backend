@@ -1,4 +1,4 @@
-const { User } = require("./auth/userModel");
+const { User } = require("./user/userModel");
 
 const { Notice } = require("./notice/noticeModel");
 

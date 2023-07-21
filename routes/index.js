@@ -1,3 +1,3 @@
-const userRouter = require("./auth/userRoute");
+const userRouter = require("./users/usersRoute");
 
-module.exports = { userRouter };
+module.exports = { usersRouter };

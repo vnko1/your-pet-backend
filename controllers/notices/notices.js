@@ -13,33 +13,8 @@ const getAll = async (req, res) => {
 
 const add = async (req, res) => {
 	// const { id: owner } = req.user;
-    console.log(req.body);
-	const newNotice = await Notices.addNotice({
-		category,
-		name,
-		type,
-		date,
-		comments,
-		sex,
-		location,
-		price,
-		title,
-		file,
-	});
-	res.status(201).json({
-         notice: {
-            _id: newNotice.id,
-            name: newNotice.name,
-            category: newNotice.category,
-            type: newNotice.type,
-            date: newNotice.date,
-            comments: newNotice.comments,
-            sex: newNotice.sex,
-            location: newNotice.location,
-            price: newNotice.price,
-            title: newNotice.title,
-            file: newNotice.file,
-             } });
+	const response = await Notices.addNotice(req.body);
+	res.status(201).json(response);
 };
 
 module.exports = {

@@ -13,4 +13,12 @@ const loginSchemaValidation = Joi.object({
   password: Joi.string().min(6).max(16).pattern(passwordRegex).required(),
 });
 
-module.exports = { registerSchemaValidation, loginSchemaValidation };
+const editUserValidation = Joi.object({
+  name: Joi.string().min(2).max(15),
+});
+
+module.exports = {
+  registerSchemaValidation,
+  loginSchemaValidation,
+  editUserValidation,
+};

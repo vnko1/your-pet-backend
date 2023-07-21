@@ -33,7 +33,7 @@ const userSchema = new Schema(
     city: { type: String },
     avatarUrl: { type: String },
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false, timestamps: false }
 );
 
 userSchema.post("save", schemaError);

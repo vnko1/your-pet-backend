@@ -27,7 +27,12 @@ const register = async (req, res) => {
 
   res.json({
     token,
-    user: { id: newUser.id, email: newUser.email, name: newUser.name },
+    user: {
+      _id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      isNewUser: true,
+    },
   });
 };
 
@@ -44,15 +49,23 @@ const login = async (req, res) => {
     expiresIn: expiresIn,
   });
 
-  await Users.updateUser(user.id, { token });
+  const updatedUser = await Users.updateUser(user.id, { token });
+  updatedUser.password = undefined;
+  updatedUser.token = undefined;
+  updatedUser.isNewUser = false;
 
-  res.json({ token, user: { id: user.id, email: user.email } });
+  res.json({
+    token,
+    user: updatedUser,
+  });
 };
 
 const current = async (req, res) => {
-  const { email, id } = req.user;
+  req.user.password = undefined;
+  req.user.token = undefined;
+  req.user.isNewUser = false;
 
-  res.json({ user: { id, email } });
+  res.json({ user: req.user });
 };
 
 const logout = async (req, res) => {
@@ -68,7 +81,6 @@ const update = async (req, res) => {
   const { body } = req;
 
   if (req.file) {
-    console.log(req.file.fieldname);
     const avatarUrl = await Image.uploadImage(
       req.file.path,
       file.avatar.width,
@@ -80,6 +92,9 @@ const update = async (req, res) => {
   }
 
   const updatedUser = await Users.updateUser(id, body);
+  updatedUser.password = undefined;
+  updatedUser.token = undefined;
+  updatedUser.isNewUser = false;
 
   res.json({ user: updatedUser });
 };

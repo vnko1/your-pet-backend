@@ -21,6 +21,9 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument)
 );
+app.get("/", (req, res) => {
+  res.json({ mess: "OK" });
+});
 
 app.use("/users", usersRouter);
 // app.use("/notices", notices);

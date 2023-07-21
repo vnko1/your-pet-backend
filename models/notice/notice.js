@@ -65,7 +65,7 @@ const addSchema = Joi.object({
 		.required(),
 	name: Joi.string().min(2).max(16).uppercase().required(),
 	date: Joi.date()
-		.format(['DD-MM-YYYY'])
+		.format('DD-MM-YYYY')
 		.min("01-01-2000")
 		.messages({ "date.format": `Date format is DD-MM-YYYY` })
 		.required(),

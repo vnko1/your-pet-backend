@@ -1,3 +1,9 @@
-const { register, login, current, logout, update } = requre("./auth/auth");
+const {
+  register,
+  login,
+  current,
+  logout,
+  update,
+} = require("./user/userController");
 
 module.exports = { register, login, current, logout, update };

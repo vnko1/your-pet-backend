@@ -1,9 +1,8 @@
 const fs = require("fs/promises");
-const jwt = require("jsonwebtoken");
 
 const { Users, Image } = require("../services");
 const { httpError, createToken } = require("../utils");
-const { file, errorMessage, expiresIn } = require("../constants");
+const { file, errorMessage } = require("../constants");
 
 const checkUpdateData = async (req, res, next) => {
   const { body } = req;

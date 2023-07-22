@@ -7,24 +7,16 @@ const addPet = async (req, res) => {
   const { body } = req;
 
   const pet = await Pets.add({ ...body, owner });
+  pet.owner = undefined;
 
   res.json({ pet });
 };
 
 const deletePet = async (req, res) => {
   const { petId } = req.params;
-  const { id } = req.user;
-
-  {
-    const pet = await Pets.find(petId);
-
-    if (pet.owner.toString() !== id)
-      throw httpError(401, errorMessage[401].wrongAuth);
-  }
 
   const pet = await Pets.remove(petId);
-
-  if (!pet) throw httpError(404, errorMessage[404]);
+  pet.owner = undefined;
 
   res.json({ pet });
 };

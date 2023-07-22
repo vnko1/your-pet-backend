@@ -4,6 +4,7 @@ const {
   authentificate,
   fieldValidation,
   checkPetData,
+  checkUserAuth,
   isValidId,
 } = require("../../middlewares");
 const { addPetSchemaValidation } = require("../../schema");
@@ -17,12 +18,12 @@ router.use(authentificate);
 
 router.post(
   "/",
-  // Image.uploadErrorHandler(file.pet.fieldName, file.pet.fileName),
-  // checkPetData,
+  Image.uploadErrorHandler(file.pet.fieldName, file.pet.fileName),
+  checkPetData,
   fieldValidation(addPetSchemaValidation, schemaMessage.pet),
   addPet
 );
 
-router.delete("/:petId", deletePet);
-// isValidId;
+router.delete("/:petId", isValidId, checkUserAuth, deletePet);
+
 module.exports = router;

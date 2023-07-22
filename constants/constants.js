@@ -18,13 +18,13 @@ const file = {
 };
 
 const errorMessage = {
-  400: "Bad request",
+  400: "Bad request! Missing required name field or wrong field name.",
   401: {
-    wrongAuth: "Not authorized",
-    wrongLogin: "Email or password is wrong",
+    wrongAuth: "Not authorized.",
+    wrongLogin: "Email or password is wrong.",
   },
-  404: "Not found",
-  409: "Email in use",
+  404: "Not found.",
+  409: "Email in use.",
 };
 
 const expiresIn = "7d";
@@ -40,7 +40,8 @@ const defaultAvatarUrl =
   "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png";
 
 const schemaMessage = {
-  auth: "Missing required name field or wrong field name ",
+  auth: "Bad request! Missing required name field or wrong field name.",
+  pet: "Bad request! Missing required name field or wrong field name.",
 };
 const emailRegex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
 

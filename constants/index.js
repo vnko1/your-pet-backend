@@ -9,6 +9,7 @@ const {
   phoneRegex,
   passwordRegex,
   schemaMessage,
+  cityRegex,
 } = require("./users/constants");
 
 module.exports = {
@@ -22,4 +23,5 @@ module.exports = {
   passwordRegex,
   phoneRegex,
   schemaMessage,
+  cityRegex,
 };

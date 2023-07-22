@@ -9,7 +9,8 @@ const {
   phoneRegex,
   passwordRegex,
   schemaMessage,
-} = require("./constants");
+  cityRegex,
+} = require("./users/constants");
 
 module.exports = {
   emailFrom,
@@ -22,4 +23,5 @@ module.exports = {
   passwordRegex,
   phoneRegex,
   schemaMessage,
+  cityRegex,
 };

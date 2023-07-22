@@ -1,22 +1,22 @@
-const fs = require("fs/promises");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
-const { Users, Image } = require("../../services");
-const { tryCatchWrapper, httpError } = require("../../utils");
-const { file, errorMessage, expiresIn } = require("../../constants");
+const { Users } = require("../../services");
+const {
+  tryCatchWrapper,
+  httpError,
+  createToken,
+  hashPassword,
+} = require("../../utils");
+const { errorMessage } = require("../../constants");
 
 const register = async (req, res) => {
   const { email, password, name } = req.body;
 
   const user = await Users.findUserByQuery({ email });
-
   if (user) throw httpError(409, errorMessage[409]);
 
-  const hashPass = await bcrypt.hash(password, 10);
-  const token = jwt.sign({ email }, process.env.JWT_KEY, {
-    expiresIn: expiresIn,
-  });
+  const hashPass = await hashPassword(password);
+  const token = createToken({ email });
 
   const newUser = await Users.createUser({
     email,
@@ -45,9 +45,7 @@ const login = async (req, res) => {
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) throw httpError(401, errorMessage[401].wrongLogin);
 
-  const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
-    expiresIn: expiresIn,
-  });
+  const token = createToken({ id: user.id });
 
   const updatedUser = await Users.updateUser(user.id, { token });
   updatedUser.password = undefined;
@@ -78,28 +76,8 @@ const update = async (req, res) => {
   const { id } = req.user;
   const { body } = req;
 
-  if (req.file) {
-    const avatarUrl = await Image.uploadImage(
-      req.file.path,
-      file.avatar.width,
-      file.avatar.height,
-      req.file.fieldname
-    );
-    body.avatarUrl = avatarUrl;
-    await fs.unlink(req.file.path);
-  }
-
-  if (body.email) {
-    const user = await Users.findUserByQuery({ email: body.email });
-
-    if (user) throw httpError(409, errorMessage[409]);
-
-    body.token = jwt.sign({ email: body.email }, process.env.JWT_KEY, {
-      expiresIn: expiresIn,
-    });
-  }
-
   const updatedUser = await Users.updateUser(id, body);
+
   const token = updatedUser.token;
   updatedUser.password = undefined;
   updatedUser.token = undefined;

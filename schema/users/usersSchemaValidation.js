@@ -1,6 +1,11 @@
 const Joi = require("joi").extend(require("@joi/date"));
 
-const { emailRegex, passwordRegex, phoneRegex } = require("../../constants");
+const {
+  emailRegex,
+  passwordRegex,
+  phoneRegex,
+  cityRegex,
+} = require("../../constants");
 
 const registerSchemaValidation = Joi.object({
   name: Joi.string().min(2).max(15).required(),
@@ -16,11 +21,11 @@ const loginSchemaValidation = Joi.object({
 const editUserValidation = Joi.object({
   name: Joi.string().min(2).max(15),
   email: Joi.string().pattern(emailRegex),
-  city: Joi.string(),
+  city: Joi.string().pattern(cityRegex).min(2).max(30),
   phone: Joi.string().pattern(phoneRegex).min(13),
-  birthday: Joi.date().format("DD-MM-YYYY").min("01-01-1940"),
+  birthday: Joi.date().format("DD-MM-YYYY").utc().min("01-01-1940"),
 });
-
+//
 module.exports = {
   registerSchemaValidation,
   loginSchemaValidation,

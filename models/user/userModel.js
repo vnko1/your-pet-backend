@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const { schemaError } = require("../../utils");
-const { emailRegex, phoneRegex } = require("../../constants");
+const { emailRegex, phoneRegex, cityRegex } = require("../../constants");
 
 const userSchema = new Schema(
   {
@@ -27,10 +27,10 @@ const userSchema = new Schema(
       required: [true, "Set name for user"],
     },
     birthday: {
-      type: String,
+      type: Date,
     },
     phone: { type: String, match: phoneRegex },
-    city: { type: String },
+    city: { type: String, match: cityRegex, minlength: 2, maxlength: 30 },
     avatarUrl: { type: String },
   },
   { versionKey: false, timestamps: false }

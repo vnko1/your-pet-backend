@@ -79,6 +79,7 @@ class Image {
       return result.secure_url;
     } catch (error) {
       await fs.unlink(imagePath);
+
       throw httpError(500, error.message);
     }
   }

@@ -1,5 +1,6 @@
 const { Email } = require("./email/emailService");
 const { Users } = require("./users/usersService");
 const { Image } = require("./image/imageService");
+const { Pets } = require("./pets/petsService");
 
-module.exports = { Email, Users, Image };
+module.exports = { Email, Users, Image, Pets };

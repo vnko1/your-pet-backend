@@ -11,7 +11,10 @@
     { "url": "http://localhost:3000" },
     { "url": "https://my-pet-app-8sz1.onrender.com" }
   ],
-  "tags": [{ "name": "Users", "description": "User authorisation endpoint" }],
+  "tags": [
+    { "name": "Users", "description": "User authorisation endpoint" },
+    { "name": "Pets", "description": "Adding and deleting pets endpoint" }
+  ],
   "paths": {
     "/users/register": {
       "post": {
@@ -39,11 +42,11 @@
             }
           },
           "400": {
-            "description": "Bad request",
+            "description": "Bad request! Missing required name field or wrong field name.",
             "content": {}
           },
           "409": {
-            "description": "Email in use",
+            "description": "Email in use.",
             "content": {}
           }
         }
@@ -67,7 +70,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfull operations",
+            "description": "Successfull operations.",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#components/schemas/LoginResponse" }
@@ -76,11 +79,11 @@
           },
 
           "400": {
-            "description": "Bad request",
+            "description": "Bad request! Missing required name field or wrong field name.",
             "content": {}
           },
           "401": {
-            "description": "Not authorized / Email or password is wrong",
+            "description": "Not authorized / Email or password is wrong.",
             "content": {}
           }
         }
@@ -97,7 +100,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfull operations",
+            "description": "Successfull operations.",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#components/schemas/CurrentResponse" }
@@ -105,7 +108,7 @@
             }
           },
           "401": {
-            "description": "Not authorized",
+            "description": "Not authorized.",
             "content": {}
           }
         }
@@ -122,11 +125,11 @@
         },
         "responses": {
           "204": {
-            "description": "Successfull operations",
+            "description": "Successfull operations.",
             "content": {}
           },
           "401": {
-            "description": "Not authorized",
+            "description": "Not authorized.",
             "content": {}
           }
         }
@@ -165,17 +168,93 @@
             }
           },
           "400": {
-            "description": "Bad request",
+            "description": "Bad request! Missing required name field or wrong field name.",
             "content": {}
           },
           "401": {
-            "description": "Not authorized",
+            "description": "Not authorized.",
             "content": {}
           },
           "409": {
-            "description": "Email in use",
+            "description": "Email in use.",
             "content": {}
           }
+        }
+      }
+    },
+    "/pets": {
+      "post": {
+        "tags": ["Pets"],
+        "summary": "Add user`s pet card",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updating object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/PetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/pets/:petId": {
+      "delete": {
+        "tags": ["Pets"],
+        "summary": "Delete user`s pet card",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petId",
+            "required": true,
+            "type": "string",
+            "description": "Pet`s id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/PetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
         }
       }
     }
@@ -478,6 +557,76 @@
                 "type": "string",
                 "description": "User location",
                 "example": "London"
+              }
+            }
+          }
+        }
+      },
+      "AddPetRequest": {
+        "type": "object",
+        "required": ["name", "date", "type", "file"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet name",
+            "format": "text",
+            "example": "Peaches"
+          },
+
+          "date": {
+            "type": "date",
+            "description": "Pet birthday date",
+            "example": "2022-12-22T00:00:00.000Z"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet`s type",
+            "example": "cat"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "User avatar file"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Pet`s description",
+            "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+          }
+        }
+      },
+      "PetResponse": {
+        "type": "object",
+        "properties": {
+          "pet": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Pet name",
+                "format": "text",
+                "example": "Peaches"
+              },
+
+              "date": {
+                "type": "date",
+                "description": "Pet birthday date",
+                "example": "2022-12-22T00:00:00.000Z"
+              },
+              "type": {
+                "type": "string",
+                "description": "Pet`s type",
+                "example": "cat"
+              },
+              "fileUrl": {
+                "type": "string",
+                "format": "binary",
+                "description": "User avatar file"
+              },
+              "comments": {
+                "type": "string",
+                "description": "Pet`s description",
+                "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
               }
             }
           }

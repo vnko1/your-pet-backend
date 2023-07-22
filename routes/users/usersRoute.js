@@ -3,8 +3,9 @@ const express = require("express");
 const {
   authentificate,
   fieldValidation,
-  checkUpdateData,
+  checkUserData,
 } = require("../../middlewares");
+
 const {
   registerSchemaValidation,
   loginSchemaValidation,
@@ -46,7 +47,7 @@ router.put(
   authentificate,
   Image.uploadErrorHandler(file.avatar.fieldName, file.avatar.fileName),
   fieldValidation(editUserValidation, schemaMessage.auth),
-  checkUpdateData,
+  checkUserData,
   update
 );
 

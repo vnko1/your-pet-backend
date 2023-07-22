@@ -4,7 +4,7 @@ const { Users, Image } = require("../services");
 const { httpError, createToken } = require("../utils");
 const { file, errorMessage } = require("../constants");
 
-const checkUpdateData = async (req, res, next) => {
+const checkUserData = async (req, res, next) => {
   const { body } = req;
 
   if (req.file) {
@@ -33,4 +33,4 @@ const checkUpdateData = async (req, res, next) => {
   next();
 };
 
-module.exports = { checkUpdateData };
+module.exports = { checkUserData };

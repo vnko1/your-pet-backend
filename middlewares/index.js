@@ -1,10 +1,10 @@
 const { fieldValidation, checkFile } = require("./fieldValidation");
 const { authentificate } = require("./authentification");
-const { checkUpdateData } = require("./checkUpdateData");
+const { checkUserData } = require("./checkData");
 
 module.exports = {
   fieldValidation,
   checkFile,
   authentificate,
-  checkUpdateData,
+  checkUserData,
 };

@@ -6,4 +6,14 @@ const {
   update,
 } = require("./users/usersController");
 
-module.exports = { register, login, current, logout, update };
+const { addPet, deletePet } = require("./pets/petsController");
+
+module.exports = {
+  register,
+  login,
+  current,
+  logout,
+  update,
+  addPet,
+  deletePet,
+};

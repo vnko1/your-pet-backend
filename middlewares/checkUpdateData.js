@@ -27,6 +27,9 @@ const checkUpdateData = async (req, res, next) => {
     body.token = createToken({ email: body.email });
   }
 
+  const keys = Object.keys(body);
+  if (!keys.length && !req.file) next(httpError(400, errorMessage[400]));
+
   next();
 };
 

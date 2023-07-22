@@ -29,6 +29,9 @@ const serverMessage = {
   dbConnection: "Database connection successful",
 };
 
+const defaultAvatarUrl =
+  "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png";
+
 const schemaMessage = {
   auth: "Missing required name field or wrong field name ",
 };
@@ -53,4 +56,5 @@ module.exports = {
   passwordRegex,
   phoneRegex,
   cityRegex,
+  defaultAvatarUrl,
 };

@@ -7,7 +7,7 @@ const {
   createToken,
   hashPassword,
 } = require("../../utils");
-const { errorMessage } = require("../../constants");
+const { errorMessage, defaultAvatarUrl } = require("../../constants");
 
 const register = async (req, res) => {
   const { email, password, name } = req.body;
@@ -17,12 +17,14 @@ const register = async (req, res) => {
 
   const hashPass = await hashPassword(password);
   const token = createToken({ email });
+  const avatarUrl = defaultAvatarUrl;
 
   const newUser = await Users.createUser({
     email,
     password: hashPass,
     token,
     name,
+    avatarUrl,
   });
 
   res.json({
@@ -31,6 +33,7 @@ const register = async (req, res) => {
       _id: newUser.id,
       name: newUser.name,
       email: newUser.email,
+      avatarUrl: newUser.avatarUrl,
       isNewUser: true,
     },
   });

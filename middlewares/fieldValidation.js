@@ -11,6 +11,7 @@ const fieldValidation = (schema, message) => (req, _, next) => {
   if (error) return next(httpError(400, message));
 
   req.body = value;
+
   next();
 };
 

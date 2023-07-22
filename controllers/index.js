@@ -1,10 +1,10 @@
 const {
-	register,
-	login,
-	current,
-	logout,
-	update,
-} = require("./user/userController");
+  register,
+  login,
+  current,
+  logout,
+  update,
+} = require("./users/usersController");
 
 const { add, getAll } = require("./notices/noticesController");
 

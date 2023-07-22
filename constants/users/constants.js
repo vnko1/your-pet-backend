@@ -39,6 +39,8 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]/;
 const phoneRegex =
   /(\+\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9})/;
 
+const cityRegex = /^[A-Z][a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+
 module.exports = {
   emailFrom,
   file,
@@ -50,4 +52,5 @@ module.exports = {
   emailRegex,
   passwordRegex,
   phoneRegex,
+  cityRegex,
 };

@@ -33,6 +33,6 @@ const petSchema = new Schema(
 
 petSchema.post("save", schemaError);
 
-const Pet = model("user", petSchema);
+const Pet = model("pet", petSchema);
 
 module.exports = { Pet };

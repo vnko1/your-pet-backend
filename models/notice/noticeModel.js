@@ -1,28 +1,25 @@
 const { Schema, model } = require("mongoose");
 
 const { schemaError } = require("../../utils");
+const { date } = require("joi");
 
 const noticeSchema = new Schema(
 	{
 		name: {
 			type: String,
-			required: [true, "Set nickname for pet"],
 		},
 		category: {
 			type: String,
-			required: true,
+			default: "my-pet",
 		},
 		date: {
-			type: String,
-			required: [true, "Enter a date of birth"],
+			type: Date,
 		},
 		type: {
 			type: String,
-			required: [true, "Enter the breed of pet"],
 		},
 		file: {
 			type: String,
-			require: true,
 		},
 		comments: {
 			type: String,
@@ -32,15 +29,12 @@ const noticeSchema = new Schema(
 		},
 		sex: {
 			type: String,
-			required: [true, "Enter male or female"],
 		},
 		location: {
 			type: String,
-			required: true,
 		},
 		price: {
 			type: Number,
-			required: true,
 		},
 		favorite: {
 			type: Boolean,

@@ -1,0 +1,99 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.1",
+    "title": "My pet api",
+    "description": "description"
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [
+    { "url": "http://localhost:3000" },
+    { "url": "https://my-pet-app-8sz1.onrender.com" }
+  ],
+  "tags": [{ "name": "Users", "description": "User authorisation endpoint" }],
+  "path": {
+    "users/register": {
+      "post": { "tags": ["Users"] },
+      "summary": "User registration",
+      "parameters": [],
+      "security": [{ "Bearer": [] }],
+      "requestBody": {
+        "description": "Registration`s object",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#components/schemas/RegistrationRequest" }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Successfull operations",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#components/schemas/RegistrationResponse" }
+            }
+          }
+        },
+        "400": {
+          "description": "Email in use",
+          "content": {}
+        },
+        "409": {
+          "description": "Bad request",
+          "content": {}
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "Object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "text"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "Qw123456"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "Object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User id",
+            "example": "12314213234244asd"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "text"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "isNewUser": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      }
+    }
+  }
+}

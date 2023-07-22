@@ -9,7 +9,7 @@ const {
   phoneRegex,
   passwordRegex,
   schemaMessage,
-} = require("./constants");
+} = require("./users/constants");
 
 module.exports = {
   emailFrom,

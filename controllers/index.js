@@ -4,6 +4,6 @@ const {
   current,
   logout,
   update,
-} = require("./user/userController");
+} = require("./users/usersController");
 
 module.exports = { register, login, current, logout, update };

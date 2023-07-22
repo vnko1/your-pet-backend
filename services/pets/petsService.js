@@ -5,8 +5,12 @@ class Pets {
     return Pet.create(newPet);
   }
 
+  static find(id) {
+    return Pet.findById(id);
+  }
+
   static remove(id) {
-    return Pet.findOneAndDelete(id);
+    return Pet.findByIdAndDelete(id);
   }
 }
 

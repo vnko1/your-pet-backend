@@ -23,6 +23,6 @@ router.post(
   addPet
 );
 
-router.delete("/:petId", isValidId, deletePet);
-
+router.delete("/:petId", deletePet);
+// isValidId;
 module.exports = router;

@@ -133,7 +133,7 @@
       }
     },
     "/users/update": {
-      "post": {
+      "put": {
         "tags": ["Users"],
         "summary": "Update user`s data",
         "parameters": [],

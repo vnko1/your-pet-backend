@@ -8,6 +8,10 @@ class Notices {
     static addNotice(newNotice) {
         return Notice.create(newNotice);
     }
+
+    static findNoticeById(id) {
+        return Notice.findById(id);
+      }
 }
 
 module.exports = { Notices };

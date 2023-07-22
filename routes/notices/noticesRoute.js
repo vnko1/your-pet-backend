@@ -2,7 +2,7 @@ const express = require("express");
 
 const ctrl = require("../../controllers");
 
-const { fieldValidation, authentificate } = require("../../middlewares");
+const { fieldValidation, authentificate, isValidId } = require("../../middlewares");
 
 const { Image } = require("../../services");
 
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/", ctrl.getAll);
 
-// router.get("/:contactId", authenticate, isValidId, ctrl.getById);
+router.get("/:noticeId", isValidId, ctrl.getById);
 
 router.post(
   "/add-pet",

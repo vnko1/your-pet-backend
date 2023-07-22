@@ -1,4 +1,4 @@
-const { tryCatchWrapper } = require("../../utils");
+const { tryCatchWrapper, httpError } = require("../../utils");
 
 const { Notices } = require("../../services");
 
@@ -13,12 +13,23 @@ const getAll = async (req, res) => {
 
 const add = async (req, res) => {
 	// const { id: owner } = req.user;
-	// const normalizeDate = new Date(`${req.body.date}`).getTime();
 	const response = await Notices.addNotice(req.body);
 	res.status(201).json(response);
+};
+
+const getById = async (req, res) => {
+	const { noticeId } = req.params;
+	const result = await Notices.findNoticeById(noticeId);
+	if (!result) {
+		throw httpError(404, "Not found");
+	}
+	res.json(result);
 };
 
 module.exports = {
 	add: tryCatchWrapper(add),
 	getAll: tryCatchWrapper(getAll),
+  getById: tryCatchWrapper(getById),
+
 };
+

@@ -23,9 +23,9 @@ const editUserValidation = Joi.object({
   email: Joi.string().pattern(emailRegex),
   city: Joi.string().pattern(cityRegex).min(2).max(30),
   phone: Joi.string().pattern(phoneRegex).min(13),
-  birthday: Joi.date().format("DD-MM-YYYY").min("01-01-1940"),
+  birthday: Joi.date().format("DD-MM-YYYY").utc().min("01-01-1940"),
 });
-
+//
 module.exports = {
   registerSchemaValidation,
   loginSchemaValidation,

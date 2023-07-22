@@ -77,6 +77,7 @@ const update = async (req, res) => {
   const { body } = req;
 
   const updatedUser = await Users.updateUser(id, body);
+
   const token = updatedUser.token;
   updatedUser.password = undefined;
   updatedUser.token = undefined;

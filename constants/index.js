@@ -11,7 +11,7 @@ const {
   schemaMessage,
   cityRegex,
   defaultAvatarUrl,
-} = require("./users/constants");
+} = require("./constants");
 
 module.exports = {
   emailFrom,

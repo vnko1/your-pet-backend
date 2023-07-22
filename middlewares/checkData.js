@@ -33,4 +33,22 @@ const checkUserData = async (req, res, next) => {
   next();
 };
 
-module.exports = { checkUserData };
+const checkPetData = async (req, res, next) => {
+  const { body } = req;
+
+  if (!req.file) next(httpError(400, errorMessage[400]));
+
+  const fileUrl = await Image.uploadImage(
+    req.file.path,
+    file.pet.width,
+    file.pet.height,
+    req.file.fieldname
+  );
+
+  body.fileUrl = fileUrl;
+
+  await fs.unlink(req.file.path);
+
+  next();
+};
+module.exports = { checkUserData, checkPetData };

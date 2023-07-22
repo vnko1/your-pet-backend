@@ -7,7 +7,7 @@ const addSchema = Joi.object({
 	name: Joi.string()
 		.min(2)
 		.max(16)
-		.messages({ "string": `Set nickname for pet` })
+		.messages({ string: `Set nickname for pet` })
 		.required(),
 	date: Joi.date()
 		.iso()
@@ -29,6 +29,13 @@ const addSchema = Joi.object({
 	location: Joi.string()
 		.min(2)
 		.max(16)
+		.when("category", {
+			is: Joi.valid("sell", "lost-found", "for-free"),
+			then: Joi.required(),
+		}),
+	title: Joi.string()
+		.min(3)
+		.max(30)
 		.when("category", {
 			is: Joi.valid("sell", "lost-found", "for-free"),
 			then: Joi.required(),

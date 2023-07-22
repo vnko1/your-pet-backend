@@ -14,6 +14,8 @@ router.get("/", ctrl.getAll);
 
 router.get("/:noticeId", isValidId, ctrl.getById);
 
+router.get("/:noticeId", isValidId, ctrl.getById);
+
 router.post(
   "/add-pet",
   // authentificate,

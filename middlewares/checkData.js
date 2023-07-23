@@ -8,14 +8,17 @@ const checkUserData = async (req, res, next) => {
   const { body } = req;
 
   if (req.file) {
-    const avatarUrl = await Image.uploadImage(
-      req.file.path,
-      file.avatar.width,
-      file.avatar.height,
-      req.file.fieldname
-    );
+    const { public_id, secure_url } = await Image.uploadImage({
+      imagePath: req.file.path,
+      dirName: req.file.fieldname,
+      width: file.avatar.width,
+      height: file.avatar.height,
+    });
 
-    body.avatarUrl = avatarUrl;
+    body.avatarUrl = secure_url;
+    body.avatarId = public_id;
+
+    if (req.user.avatarId) await Image.deleteImage(req.user.avatarId);
     await fs.unlink(req.file.path);
   }
 
@@ -38,14 +41,15 @@ const checkPetData = async (req, res, next) => {
 
   if (!req.file) return next(httpError(400, errorMessage[400]));
 
-  const fileUrl = await Image.uploadImage(
-    req.file.path,
-    file.pet.width,
-    file.pet.height,
-    req.file.fieldname
-  );
+  const { public_id, secure_url } = await Image.uploadImage({
+    imagePath: req.file.path,
+    dirName: req.file.fieldname,
+    width: file.pet.width,
+    height: file.pet.height,
+  });
 
-  body.fileUrl = fileUrl;
+  body.fileUrl = secure_url;
+  body.fileId = public_id;
 
   await fs.unlink(req.file.path);
 

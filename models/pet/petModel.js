@@ -21,7 +21,8 @@ const petSchema = new Schema(
       maxlength: 16,
       required: true,
     },
-    fileUrl: { type: String, required: false },
+    fileUrl: { type: String, required: true },
+    fileId: { type: String, required: true },
     comments: { type: String, maxlength: 120 },
     owner: {
       type: Schema.Types.ObjectId,

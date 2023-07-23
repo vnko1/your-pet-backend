@@ -12,7 +12,8 @@ const {
 	getById,
 	getNoticeByQuery,
 	updateNoticeById,
-	delById
+	delById,
+	updateStatus,
 } = require("./notices/noticesController");
 
 module.exports = {
@@ -26,5 +27,6 @@ module.exports = {
 	getById,
 	getNoticeByQuery,
 	updateNoticeById,
-	delById
+	delById,
+	updateStatus,
 };

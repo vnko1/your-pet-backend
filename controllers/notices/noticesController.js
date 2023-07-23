@@ -61,6 +61,17 @@ const delById = async (req, res) => {
 	res.json({ message: "Notice deleted" });
 };
 
+const updateStatus = async (req, res) => {
+  const { noticeId } = req.params;
+  const updatedStatus = await Notices.updateNotice(noticeId, req.body, {
+    new: true,
+  });
+  if (!updatedStatus) {
+    throw HttpError(404, "Not found");
+  }
+  res.json(updatedStatus);
+};
+
 module.exports = {
 	add: tryCatchWrapper(add),
 	getAll: tryCatchWrapper(getAll),
@@ -68,4 +79,5 @@ module.exports = {
 	getNoticeByQuery: tryCatchWrapper(getNoticeByQuery),
 	updateNoticeById: tryCatchWrapper(updateNoticeById),
 	delById: tryCatchWrapper(delById),
+  updateStatus: tryCatchWrapper(updateStatus),
 };

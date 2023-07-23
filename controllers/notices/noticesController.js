@@ -26,10 +26,41 @@ const getById = async (req, res) => {
 	res.json(result);
 };
 
+const getNoticeByQuery = async (req, res) => {
+	const { category, title, search } = req.query;
+
+	const { notices, total } = await Notices.findAll({
+		title,
+		category,
+		search,
+	});
+
+	// if (!!title && !category) {
+	// 	const result = await Notices.findNoticeByQuery({
+	// 		title,
+	// 	});
+
+	// 	return result;
+	// }
+
+	// if (title && category) {
+	// 	const result = await Notices.findNoticeByQuery({
+	// 		title,
+	// 		category,
+	// 	});
+
+	// 	return result;
+	// }
+
+	// if (!result) {
+	// 	throw httpError(404, "Not found");
+	// }
+	res.json({ notices, total });
+};
+
 module.exports = {
 	add: tryCatchWrapper(add),
 	getAll: tryCatchWrapper(getAll),
-  getById: tryCatchWrapper(getById),
-
+	getById: tryCatchWrapper(getById),
+	getNoticeByQuery: tryCatchWrapper(getNoticeByQuery),
 };
-

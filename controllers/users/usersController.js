@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 
-const { Users } = require("../../services");
+const { Users, Image } = require("../../services");
 const {
   tryCatchWrapper,
   httpError,
@@ -53,6 +53,7 @@ const login = async (req, res) => {
   const updatedUser = await Users.updateUser(user.id, { token });
   updatedUser.password = undefined;
   updatedUser.token = undefined;
+  updatedUser.avatarId = undefined;
 
   res.json({
     token,
@@ -63,6 +64,7 @@ const login = async (req, res) => {
 const current = async (req, res) => {
   req.user.password = undefined;
   req.user.token = undefined;
+  req.user.avatarId = undefined;
 
   res.json({ user: { ...req.user["_doc"], isNewUser: false } });
 };
@@ -84,6 +86,7 @@ const update = async (req, res) => {
   const token = updatedUser.token;
   updatedUser.password = undefined;
   updatedUser.token = undefined;
+  updatedUser.avatarId = undefined;
 
   res.json({
     token: body.token ? body.token : token,

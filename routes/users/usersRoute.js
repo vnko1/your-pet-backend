@@ -12,7 +12,7 @@ const {
   editUserValidation,
 } = require("../../schema");
 
-const { Image } = require("../../services");
+const { Image, Pets } = require("../../services");
 
 const {
   register,
@@ -20,6 +20,7 @@ const {
   current,
   logout,
   update,
+  getMe,
 } = require("../../controllers");
 
 const { file, schemaMessage } = require("../../constants");
@@ -50,5 +51,7 @@ router.put(
   checkUserData,
   update
 );
+
+router.get("/", authentificate, getMe);
 
 module.exports = router;

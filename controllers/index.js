@@ -4,6 +4,7 @@ const {
   current,
   logout,
   update,
+  getMe,
 } = require("./users/usersController");
 
 const { addPet, deletePet } = require("./pets/petsController");
@@ -14,6 +15,7 @@ module.exports = {
   current,
   logout,
   update,
+  getMe,
   addPet,
   deletePet,
 };

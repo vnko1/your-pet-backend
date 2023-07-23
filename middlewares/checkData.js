@@ -2,7 +2,7 @@ const fs = require("fs/promises");
 
 const { Users, Image, Pets } = require("../services");
 const { httpError, createToken } = require("../utils");
-const { file, errorMessage } = require("../constants");
+const { errorMessage } = require("../constants");
 
 const checkUserData = async (req, res, next) => {
   const { body } = req;
@@ -11,8 +11,6 @@ const checkUserData = async (req, res, next) => {
     const { public_id, secure_url } = await Image.uploadImage({
       imagePath: req.file.path,
       dirName: req.file.fieldname,
-      width: file.avatar.width,
-      height: file.avatar.height,
     });
 
     body.avatarUrl = secure_url;
@@ -44,8 +42,6 @@ const checkPetData = async (req, res, next) => {
   const { public_id, secure_url } = await Image.uploadImage({
     imagePath: req.file.path,
     dirName: req.file.fieldname,
-    width: file.pet.width,
-    height: file.pet.height,
   });
 
   body.fileUrl = secure_url;

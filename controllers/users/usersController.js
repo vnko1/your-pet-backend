@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 
-const { Users, Image } = require("../../services");
+const { Users } = require("../../services");
 const {
   tryCatchWrapper,
   httpError,
@@ -54,6 +54,7 @@ const login = async (req, res) => {
   updatedUser.password = undefined;
   updatedUser.token = undefined;
   updatedUser.avatarId = undefined;
+  updatedUser.pets = undefined;
 
   res.json({
     token,
@@ -65,6 +66,7 @@ const current = async (req, res) => {
   req.user.password = undefined;
   req.user.token = undefined;
   req.user.avatarId = undefined;
+  req.user.pets = undefined;
 
   res.json({ user: { ...req.user["_doc"], isNewUser: false } });
 };
@@ -87,11 +89,22 @@ const update = async (req, res) => {
   updatedUser.password = undefined;
   updatedUser.token = undefined;
   updatedUser.avatarId = undefined;
+  updatedUser.pets = undefined;
 
   res.json({
     token: body.token ? body.token : token,
     user: { ...updatedUser["_doc"], isNewUser: false },
   });
+};
+
+const getMe = async (req, res) => {
+  const { id } = req.user;
+  const response = await Users.findUserById(id).populate("pets");
+  response.password = undefined;
+  response.token = undefined;
+  response.avatarId = undefined;
+
+  res.json({ user: { ...response["_doc"], isNewUser: false } });
 };
 
 module.exports = {
@@ -100,4 +113,5 @@ module.exports = {
   current: tryCatchWrapper(current),
   logout: tryCatchWrapper(logout),
   update: tryCatchWrapper(update),
+  getMe: tryCatchWrapper(getMe),
 };

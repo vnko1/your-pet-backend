@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 
-const { Users, Image } = require("../../services");
+const { Users, Pets } = require("../../services");
 const {
   tryCatchWrapper,
   httpError,
@@ -94,10 +94,19 @@ const update = async (req, res) => {
   });
 };
 
+const getMe = async (req, res) => {
+  const { id } = req.user;
+  const response = await Pets.findAll({ owner: id });
+  console.log(response);
+
+  res.json({ response });
+};
+
 module.exports = {
   register: tryCatchWrapper(register),
   login: tryCatchWrapper(login),
   current: tryCatchWrapper(current),
   logout: tryCatchWrapper(logout),
   update: tryCatchWrapper(update),
+  getMe: tryCatchWrapper(getMe),
 };

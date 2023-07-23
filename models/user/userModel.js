@@ -26,6 +26,7 @@ const userSchema = new Schema(
       maxlength: 15,
       required: [true, "Set name for user"],
     },
+    pets: [{ type: Schema.Types.ObjectId, ref: "pet" }],
     birthday: {
       type: Date,
     },

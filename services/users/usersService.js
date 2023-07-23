@@ -16,6 +16,14 @@ class Users {
     return User.findByIdAndUpdate(id, newData, { new: true });
   }
 
+  static updateUserPets(id, petId) {
+    return User.findByIdAndUpdate(id, { $push: { pets: petId } });
+  }
+
+  static removeUserPets(id, petId) {
+    return User.findByIdAndUpdate(id, { $pull: { pets: petId } });
+  }
+
   static findUserById(id) {
     return User.findById(id);
   }

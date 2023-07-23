@@ -5,7 +5,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 require("dotenv").config();
 
-const { usersRouter, petsRouter } = require("./routes");
+const { usersRouter, petsRouter, sponsorsRouter } = require("./routes");
 const { errorMessage } = require("./constants");
 
 const app = express();
@@ -21,6 +21,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/users", usersRouter);
 
 app.use("/pets", petsRouter);
+
+app.use("/sponsors", sponsorsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: errorMessage[404] });

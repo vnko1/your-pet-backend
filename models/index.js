@@ -4,4 +4,6 @@ const { Notice } = require("./notice/noticeModel");
 
 const { Pet } = require("./pet/petModel");
 
-module.exports = { User, Notice, Pet };
+const { Sponsor } = require("./sponsor/sponsorModel");
+
+module.exports = { User, Notice, Pet, Sponsor };

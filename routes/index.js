@@ -2,4 +2,6 @@ const usersRouter = require("./users/usersRoute");
 
 const petsRouter = require("./pets/petsRoute");
 
-module.exports = { usersRouter, petsRouter };
+const sponsorsRouter = require("./sponsors/sponsorsRoute");
+
+module.exports = { usersRouter, petsRouter, sponsorsRouter };

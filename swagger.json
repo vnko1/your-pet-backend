@@ -789,74 +789,79 @@
         }
       },
       "SponsorsResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Sponsor`s id",
-              "example": "64bd39c0b38fc2fe5b5dfef8"
-            },
-            "title": {
-              "type": "string",
-              "description": "Sponsor`s title",
-              "example": "Притулок для бездомних тварин 'Сіріус'"
-            },
-            "url": {
-              "type": "string",
-              "description": "Sponsor`s page url",
-              "example": "https://dogcat.com.ua"
-            },
-            "addressUrl": {
-              "type": "string",
-              "description": "Sponsor`s address url",
-              "example": "https://goo.gl/maps/iq8NXEUf31EAQCzc6"
-            },
-            "imageUrl": {
-              "type": "string",
-              "description": "Sponsor`s image url",
-              "example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
-            },
-            "address": {
-              "type": "string",
-              "description": "Sponsor`s address",
-              "example": "Fedorivka, Kyiv Oblast, Ukraine, 07372"
-            },
-            "phone": {
-              "type": "string",
-              "description": "Sponsor`s phone number",
-              "example": "+380931934069"
-            },
-            "email": {
-              "type": "string",
-              "description": "Sponsor`s phone number",
-              "format": "email"
-            },
-            "workDays": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "_id": {
-                    "type": "string",
-                    "description": "Array id",
-                    "example": "64bd39c0b38fc2fe5b5dfef8"
-                  },
-                  "isOpen": {
-                    "type": "boolean",
-                    "description": "Sponsor is open",
-                    "example": true
-                  },
-                  "from": {
-                    "type": "string",
-                    "description": "Opening time",
-                    "example": "09:00"
-                  },
-                  "to": {
-                    "type": "string",
-                    "description": "Closing time",
-                    "example": "20:00"
+        "type": "object",
+        "properties": {
+          "sponsors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Sponsor`s id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Sponsor`s title",
+                  "example": "Притулок для бездомних тварин 'Сіріус'"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Sponsor`s page url",
+                  "example": "https://dogcat.com.ua"
+                },
+                "addressUrl": {
+                  "type": "string",
+                  "description": "Sponsor`s address url",
+                  "example": "https://goo.gl/maps/iq8NXEUf31EAQCzc6"
+                },
+                "imageUrl": {
+                  "type": "string",
+                  "description": "Sponsor`s image url",
+                  "example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
+                },
+                "address": {
+                  "type": "string",
+                  "description": "Sponsor`s address",
+                  "example": "Fedorivka, Kyiv Oblast, Ukraine, 07372"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "Sponsor`s phone number",
+                  "example": "+380931934069"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Sponsor`s phone number",
+                  "format": "email"
+                },
+                "workDays": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Array id",
+                        "example": "64bd39c0b38fc2fe5b5dfef8"
+                      },
+                      "isOpen": {
+                        "type": "boolean",
+                        "description": "Sponsor is open",
+                        "example": true
+                      },
+                      "from": {
+                        "type": "string",
+                        "description": "Opening time",
+                        "example": "09:00"
+                      },
+                      "to": {
+                        "type": "string",
+                        "description": "Closing time",
+                        "example": "20:00"
+                      }
+                    }
                   }
                 }
               }

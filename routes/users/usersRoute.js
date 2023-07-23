@@ -52,6 +52,6 @@ router.put(
   update
 );
 
-router.get("/me", authentificate, getMe);
+router.get("/", authentificate, getMe);
 
 module.exports = router;

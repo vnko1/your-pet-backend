@@ -2,7 +2,7 @@ const fs = require("fs/promises");
 
 const { Users, Image, Pets } = require("../services");
 const { httpError, createToken } = require("../utils");
-const { file, errorMessage } = require("../constants");
+const { errorMessage } = require("../constants");
 
 const checkUserData = async (req, res, next) => {
   const { body } = req;

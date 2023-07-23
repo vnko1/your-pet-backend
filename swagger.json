@@ -16,6 +16,18 @@
     { "name": "Pets", "description": "Adding and deleting pets endpoint" }
   ],
   "paths": {
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user`s and user`s pets data",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {}
+      }
+    },
     "/users/register": {
       "post": {
         "tags": ["Users"],

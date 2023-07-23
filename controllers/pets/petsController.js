@@ -1,6 +1,5 @@
 const { Pets, Image, Users } = require("../../services");
-const { tryCatchWrapper, httpError } = require("../../utils");
-const { errorMessage } = require("../../constants");
+const { tryCatchWrapper } = require("../../utils");
 
 const addPet = async (req, res) => {
   const { id: owner } = req.user;

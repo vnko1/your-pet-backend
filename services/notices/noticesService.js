@@ -1,23 +1,12 @@
 const { Notice } = require("../../models");
 
 class Notices {
-	static getAllNotices() {
-		return Notice.find();
-	}
-
 	static addNotice(newNotice) {
 		return Notice.create(newNotice);
 	}
 
 	static findNoticeById(id) {
 		return Notice.findById(id);
-	}
-
-	static findNoticeByQuery(data) {
-		const [key] = Object.keys(data);
-		const query = { [key]: data[key] };
-
-		return Notice.find(query);
 	}
 
 	static async findAll({ search, category, title }) {
@@ -35,11 +24,11 @@ class Notices {
 				item.title = title;
 				item.category = category;
 			});
-		} else if (search && title) {
+		} else if (title) {
 			findOptions.$or.forEach((item) => {
 				item.title = title;
 			});
-		} else if (search && category) {
+		} else if (category) {
 			findOptions.$or.forEach((item) => {
 				item.category = category;
 			});
@@ -54,6 +43,15 @@ class Notices {
 
 		return { notices, total };
 	}
+
+	static updateNotice(id, newData) {
+		return Notice.findByIdAndUpdate(id, newData, { new: true });
+	}
+
+  static deleteNotice(id) {
+		return Notice.findByIdAndDelete(id);
+	}
+
 }
 
 module.exports = { Notices };

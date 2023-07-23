@@ -27,35 +27,38 @@ const getById = async (req, res) => {
 };
 
 const getNoticeByQuery = async (req, res) => {
-	const { category, title, search } = req.query;
-
+	const { search = "", category, title } = req.query;
+	console.log(search);
+	console.log(category);
+	console.log(title);
 	const { notices, total } = await Notices.findAll({
-		title,
 		category,
+		title,
 		search,
 	});
 
-	// if (!!title && !category) {
-	// 	const result = await Notices.findNoticeByQuery({
-	// 		title,
-	// 	});
-
-	// 	return result;
-	// }
-
-	// if (title && category) {
-	// 	const result = await Notices.findNoticeByQuery({
-	// 		title,
-	// 		category,
-	// 	});
-
-	// 	return result;
-	// }
-
-	// if (!result) {
-	// 	throw httpError(404, "Not found");
-	// }
 	res.json({ notices, total });
+};
+
+const updateNoticeById = async (req, res) => {
+	const { noticeId } = req.params;
+
+	const updatedNotice = await Notices.updateNotice(noticeId, req.body);
+
+	if (!updatedNotice) {
+		throw httpError(404, "Not found");
+	}
+
+	res.json(updatedNotice);
+};
+
+const delById = async (req, res) => {
+	const { noticeId } = req.params;
+	const result = await Notices.deleteNotice(noticeId);
+	if (!result) {
+		throw httpError(404, "Not found");
+	}
+	res.json({ message: "Notice deleted" });
 };
 
 module.exports = {
@@ -63,4 +66,6 @@ module.exports = {
 	getAll: tryCatchWrapper(getAll),
 	getById: tryCatchWrapper(getById),
 	getNoticeByQuery: tryCatchWrapper(getNoticeByQuery),
+	updateNoticeById: tryCatchWrapper(updateNoticeById),
+	delById: tryCatchWrapper(delById),
 };

@@ -10,11 +10,13 @@ const { addSchema } = require("../../schema");
 
 const router = express.Router();
 
-router.get("/all", ctrl.getAll);
+router.get("/all", ctrl.getNoticeByQuery);
 
 router.get("/:noticeId", isValidId, ctrl.getById);
 
-router.get("/all/search", ctrl.getNoticeByQuery);
+router.put("/:noticeId", isValidId, ctrl.updateNoticeById);
+
+router.delete("/:noticeId", isValidId, ctrl.delById);
 
 router.post(
   "/add-pet",

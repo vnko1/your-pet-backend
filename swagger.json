@@ -13,7 +13,8 @@
   ],
   "tags": [
     { "name": "Users", "description": "User authorisation endpoint" },
-    { "name": "Pets", "description": "Adding and deleting pets endpoint" }
+    { "name": "Pets", "description": "Adding and deleting pets endpoint" },
+    { "name": "Sponsors", "description": "Get sponsors endpoint" }
   ],
   "paths": {
     "/users": {
@@ -44,7 +45,7 @@
     "/users/register": {
       "post": {
         "tags": ["Users"],
-        "summary": "User registration",
+        "summary": "User`s registration",
         "parameters": [],
         "requestBody": {
           "description": "Registration's object",
@@ -82,7 +83,7 @@
     "/users/login": {
       "post": {
         "tags": ["Users"],
-        "summary": "User logination",
+        "summary": "User`s logination",
         "parameters": [],
         "requestBody": {
           "description": "Login object",
@@ -119,7 +120,7 @@
     "/users/current": {
       "post": {
         "tags": ["Users"],
-        "summary": "User authentification",
+        "summary": "User`s authentification",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -144,7 +145,7 @@
     "/users/logout": {
       "post": {
         "tags": ["Users"],
-        "summary": "User logout",
+        "summary": "User`s logout",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -282,6 +283,26 @@
             "content": {}
           },
           "404": { "description": "Not found.", "content": {} }
+        }
+      }
+    },
+    "/sponsors": {
+      "get": {
+        "tags": ["Sponsors"],
+        "summary": "Get sponsors cards",
+        "parameters": [],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/SponsorsResponse" }
+              }
+            }
+          }
         }
       }
     }
@@ -762,6 +783,82 @@
                 "type": "string",
                 "description": "Pet`s description",
                 "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+              }
+            }
+          }
+        }
+      },
+      "SponsorsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Sponsor`s id",
+              "example": "64bd39c0b38fc2fe5b5dfef8"
+            },
+            "title": {
+              "type": "string",
+              "description": "Sponsor`s title",
+              "example": "Притулок для бездомних тварин 'Сіріус'"
+            },
+            "url": {
+              "type": "string",
+              "description": "Sponsor`s page url",
+              "example": "https://dogcat.com.ua"
+            },
+            "addressUrl": {
+              "type": "string",
+              "description": "Sponsor`s address url",
+              "example": "https://goo.gl/maps/iq8NXEUf31EAQCzc6"
+            },
+            "imageUrl": {
+              "type": "string",
+              "description": "Sponsor`s image url",
+              "example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
+            },
+            "address": {
+              "type": "string",
+              "description": "Sponsor`s address",
+              "example": "Fedorivka, Kyiv Oblast, Ukraine, 07372"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Sponsor`s phone number",
+              "example": "+380931934069"
+            },
+            "email": {
+              "type": "string",
+              "description": "Sponsor`s phone number",
+              "format": "email"
+            },
+            "workDays": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Array id",
+                    "example": "64bd39c0b38fc2fe5b5dfef8"
+                  },
+                  "isOpen": {
+                    "type": "boolean",
+                    "description": "Sponsor is open",
+                    "example": true
+                  },
+                  "from": {
+                    "type": "string",
+                    "description": "Opening time",
+                    "example": "09:00"
+                  },
+                  "to": {
+                    "type": "string",
+                    "description": "Closing time",
+                    "example": "20:00"
+                  }
+                }
               }
             }
           }

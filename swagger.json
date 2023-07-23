@@ -25,7 +25,20 @@
         "requestBody": {
           "content": {}
         },
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/UserResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
       }
     },
     "/users/register": {
@@ -39,7 +52,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/UserRegistrationRequest"
               }
             }
           }
@@ -49,7 +62,9 @@
             "description": "Successfull operations",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#components/schemas/RegistrationResponse" }
+                "schema": {
+                  "$ref": "#components/schemas/UserRegistrationResponse"
+                }
               }
             }
           },
@@ -75,7 +90,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/UserLoginRequest"
               }
             }
           }
@@ -85,7 +100,7 @@
             "description": "Successfull operations.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#components/schemas/LoginResponse" }
+                "schema": { "$ref": "#components/schemas/UserLoginResponse" }
               }
             }
           },
@@ -115,7 +130,7 @@
             "description": "Successfull operations.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#components/schemas/CurrentResponse" }
+                "schema": { "$ref": "#components/schemas/CurrentUserResponse" }
               }
             }
           },
@@ -137,7 +152,7 @@
         },
         "responses": {
           "204": {
-            "description": "Successfull operations.",
+            "description": "No content",
             "content": {}
           },
           "401": {
@@ -159,13 +174,13 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateFieldsRequest"
+                "$ref": "#/components/schemas/UpdateUserFieldsRequest"
               }
             },
 
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateImageAndFieldsRequest"
+                "$ref": "#/components/schemas/UpdateUserAvatarAndFieldsRequest"
               }
             }
           }
@@ -175,7 +190,7 @@
             "description": "Successfull operations",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#components/schemas/UpdateResponse" }
+                "schema": { "$ref": "#components/schemas/UpdateUserResponse" }
               }
             }
           },
@@ -273,7 +288,107 @@
   },
   "components": {
     "schemas": {
-      "RegistrationRequest": {
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name",
+                "format": "text",
+                "example": "Mango"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "isNewUser": {
+                "type": "boolean",
+                "example": false
+              },
+              "avatarUrl": {
+                "type": "string",
+                "description": "User avatar url",
+                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
+              },
+              "birthday": {
+                "type": "date",
+                "description": "User birthday date",
+                "example": "2022-12-22T00:00:00.000Z"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User avatar",
+                "example": "+380933443494"
+              },
+              "city": {
+                "type": "string",
+                "description": "User location",
+                "example": "London"
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Pet id",
+                      "example": "64bd39c0b38fc2fe5b5dfef8"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Pet name",
+                      "format": "text",
+                      "example": "Peaches"
+                    },
+
+                    "date": {
+                      "type": "date",
+                      "description": "Pet birthday date",
+                      "example": "2022-12-22T00:00:00.000Z"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Pet`s type",
+                      "example": "cat"
+                    },
+                    "fileUrl": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "User avatar file"
+                    },
+                    "comments": {
+                      "type": "string",
+                      "description": "Pet`s description",
+                      "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "User id",
+                      "example": "64bd39c0b38fc2fe5b5dfef8"
+                    },
+                    "fileId": {
+                      "type": "string",
+                      "description": "Cloudinary image id",
+                      "example": "file/file_TYy7ANX7qfp4ZAbCw3r5Y_v5wqkj"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserRegistrationRequest": {
         "type": "object",
         "required": ["name", "email", "password"],
         "properties": {
@@ -295,12 +410,13 @@
           }
         }
       },
-      "RegistrationResponse": {
+      "UserRegistrationResponse": {
         "type": "object",
         "properties": {
           "token": {
             "type": "string",
-            "description": "Security token"
+            "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
           "user": {
             "type": "object",
@@ -308,7 +424,7 @@
               "_id": {
                 "type": "string",
                 "description": "User id",
-                "example": "12314213234244asd"
+                "example": "64bd39c0b38fc2fe5b5dfef8"
               },
               "name": {
                 "type": "string",
@@ -333,7 +449,7 @@
           }
         }
       },
-      "LoginRequest": {
+      "UserLoginRequest": {
         "type": "object",
         "required": ["email", "password"],
         "properties": {
@@ -349,12 +465,13 @@
           }
         }
       },
-      "LoginResponse": {
+      "UserLoginResponse": {
         "type": "object",
         "properties": {
           "token": {
             "type": "string",
-            "description": "Security token"
+            "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
           "user": {
             "type": "object",
@@ -362,7 +479,7 @@
               "_id": {
                 "type": "string",
                 "description": "User id",
-                "example": "12314213234244asd"
+                "example": "64bd39c0b38fc2fe5b5dfef8"
               },
               "name": {
                 "type": "string",
@@ -403,7 +520,7 @@
           }
         }
       },
-      "CurrentResponse": {
+      "CurrentUserResponse": {
         "type": "object",
         "properties": {
           "user": {
@@ -412,7 +529,7 @@
               "_id": {
                 "type": "string",
                 "description": "User id",
-                "example": "12314213234244asd"
+                "example": "64bd39c0b38fc2fe5b5dfef8"
               },
               "name": {
                 "type": "string",
@@ -453,7 +570,7 @@
           }
         }
       },
-      "UpdateFieldsRequest": {
+      "UpdateUserFieldsRequest": {
         "type": "object",
         "properties": {
           "name": {
@@ -484,7 +601,7 @@
           }
         }
       },
-      "UpdateImageAndFieldsRequest": {
+      "UpdateUserAvatarAndFieldsRequest": {
         "type": "object",
         "properties": {
           "name": {
@@ -520,12 +637,13 @@
           }
         }
       },
-      "UpdateResponse": {
+      "UpdateUserResponse": {
         "type": "object",
         "properties": {
           "token": {
             "type": "string",
-            "description": "Security token"
+            "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
           "user": {
             "type": "object",
@@ -533,7 +651,7 @@
               "_id": {
                 "type": "string",
                 "description": "User id",
-                "example": "12314213234244asd"
+                "example": "64bd39c0b38fc2fe5b5dfef8"
               },
               "name": {
                 "type": "string",
@@ -613,6 +731,11 @@
           "pet": {
             "type": "object",
             "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Pet id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
               "name": {
                 "type": "string",
                 "description": "Pet name",

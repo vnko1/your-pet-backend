@@ -104,7 +104,7 @@ const getMe = async (req, res) => {
   response.token = undefined;
   response.avatarId = undefined;
 
-  res.json({ user: response });
+  res.json({ user: { ...response["_doc"], isNewUser: false } });
 };
 
 module.exports = {

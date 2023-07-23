@@ -31,7 +31,7 @@ router.patch(
 
 router.post(
 	"/add-pet",
-	// authentificate,
+	authentificate,
 	Image.uploadErrorHandler("file", "file"),
 	fieldValidation(addSchema),
 	ctrl.add

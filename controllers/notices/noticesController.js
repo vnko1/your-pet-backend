@@ -12,8 +12,9 @@ const getAll = async (req, res) => {
 };
 
 const add = async (req, res) => {
-	// const { id: owner } = req.user;
-	const response = await Notices.addNotice(req.body);
+	const { id: owner } = req.user;
+  console.log(req.user)
+	const response = await Notices.addNotice({...req.body, owner});
 	res.status(201).json(response);
 };
 

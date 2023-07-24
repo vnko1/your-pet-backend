@@ -6,10 +6,11 @@ const swaggerDocument = require("./swagger.json");
 require("dotenv").config();
 
 const {
-  usersRoute,
-  petsRoute,
-  sponsorsRoute,
-  articlesRoute,
+	usersRoute,
+	petsRoute,
+	sponsorsRoute,
+	articlesRoute,
+	noticesRouter,
 } = require("./routes");
 const { errorMessage } = require("./constants");
 
@@ -24,6 +25,8 @@ app.use(express.json());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/users", usersRoute);
+
+app.use("/notices", noticesRouter);
 
 app.use("/pets", petsRoute);
 

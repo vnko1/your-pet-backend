@@ -31,7 +31,7 @@ const register = async (req, res) => {
   res.json({
     token,
     user: {
-      _id: newUser.id,
+      uid: newUser.id,
       name: newUser.name,
       email: newUser.email,
       avatarUrl: newUser.avatarUrl,
@@ -55,22 +55,37 @@ const login = async (req, res) => {
     user.id,
     { token },
     userFieldType.user,
-    "-password -token -avatarId -pets"
+    "-password -avatarId -pets"
   );
 
   res.json({
-    token,
-    user: { ...updatedUser["_doc"], isNewUser: false },
+    token: updatedUser.token,
+    user: {
+      uid: updatedUser.id,
+      email: updatedUser.email,
+      name: updatedUser.name,
+      birthday: updatedUser.birthday,
+      phone: updatedUser.phone,
+      city: updatedUser.city,
+      avatarUrl: updatedUser.avatarUrl,
+      isNewUser: false,
+    },
   });
 };
 
 const current = async (req, res) => {
-  req.user.password = undefined;
-  req.user.token = undefined;
-  req.user.avatarId = undefined;
-  req.user.pets = undefined;
-
-  res.json({ user: { ...req.user["_doc"], isNewUser: false } });
+  res.json({
+    user: {
+      uid: req.user.id,
+      email: req.user.email,
+      name: req.user.name,
+      birthday: req.user.birthday,
+      phone: req.user.phone,
+      city: req.user.city,
+      avatarUrl: req.user.avatarUrl,
+      isNewUser: false,
+    },
+  });
 };
 
 const logout = async (req, res) => {
@@ -92,23 +107,42 @@ const update = async (req, res) => {
     "-password -avatarId -pets"
   );
 
-  const token = updatedUser.token;
-  updatedUser.token = undefined;
-
   res.json({
-    token: body.token ? body.token : token,
-    user: { ...updatedUser["_doc"], isNewUser: false },
+    token: body.token ? body.token : updatedUser.token,
+    user: {
+      uid: updatedUser.id,
+      email: updatedUser.email,
+      name: updatedUser.name,
+      birthday: updatedUser.birthday,
+      phone: updatedUser.phone,
+      city: updatedUser.city,
+      avatarUrl: updatedUser.avatarUrl,
+      isNewUser: false,
+    },
   });
 };
 
 const getMe = async (req, res) => {
   const { id } = req.user;
-  const response = await Users.findUserById(
+
+  const user = await Users.findUserById(
     id,
     "-password -token -avatarId"
   ).populate("pets");
 
-  res.json({ user: { ...response["_doc"], isNewUser: false } });
+  res.json({
+    user: {
+      uid: user.id,
+      email: user.email,
+      name: user.name,
+      birthday: user.birthday,
+      phone: user.phone,
+      city: user.city,
+      avatarUrl: user.avatarUrl,
+      isNewUser: false,
+      pets: user.pets,
+    },
+  });
 };
 
 module.exports = {

@@ -8,7 +8,6 @@ const {
 
 const {
 	add,
-	getAll,
 	getById,
 	getNoticeByQuery,
 	updateNoticeById,
@@ -23,7 +22,6 @@ module.exports = {
 	logout,
 	update,
 	add,
-	getAll,
 	getById,
 	getNoticeByQuery,
 	updateNoticeById,

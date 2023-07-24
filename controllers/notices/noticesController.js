@@ -2,18 +2,8 @@ const { tryCatchWrapper, httpError } = require("../../utils");
 
 const { Notices } = require("../../services");
 
-const getAll = async (req, res) => {
-	// const { id: owner } = req.user;
-	// const { page = 1, limit = 10, favorite, search } = req.query;
-	// const skip = (page - 1) * limit;
-	const response = await Notices.getAllNotices({}, "-createdAt -updatedAt");
-	// .populate("owner", "email");
-	res.json(response);
-};
-
 const add = async (req, res) => {
 	const { id: owner } = req.user;
-  console.log(req.user)
 	const response = await Notices.addNotice({...req.body, owner});
 	res.status(201).json(response);
 };
@@ -68,14 +58,13 @@ const updateStatus = async (req, res) => {
     new: true,
   });
   if (!updatedStatus) {
-    throw HttpError(404, "Not found");
+    throw httpError(404, "Not found");
   }
   res.json(updatedStatus);
 };
 
 module.exports = {
 	add: tryCatchWrapper(add),
-	getAll: tryCatchWrapper(getAll),
 	getById: tryCatchWrapper(getById),
 	getNoticeByQuery: tryCatchWrapper(getNoticeByQuery),
 	updateNoticeById: tryCatchWrapper(updateNoticeById),

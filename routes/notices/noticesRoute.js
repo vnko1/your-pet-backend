@@ -18,9 +18,15 @@ router.get("/all", ctrl.getNoticeByQuery);
 
 router.get("/:noticeId", isValidId, ctrl.getById);
 
-router.put("/:noticeId", isValidId, ctrl.updateNoticeById);
+router.put(
+	"/:noticeId",
+	authentificate,
+	isValidId,
+	fieldValidation(addSchema),
+	ctrl.updateNoticeById
+);
 
-router.delete("/:noticeId", isValidId, ctrl.delById);
+router.delete("/:noticeId", authentificate, isValidId, ctrl.delById);
 
 router.patch(
 	"/:noticeId/favorite",
@@ -36,23 +42,5 @@ router.post(
 	fieldValidation(addSchema),
 	ctrl.add
 );
-
-// router.delete("/:contactId", authenticate, isValidId, ctrl.delById);
-
-// router.put(
-//   "/:contactId",
-//   authenticate,
-//   isValidId,
-//   validateBody(contactSchemas.addSchema, "Missing fields"),
-//   ctrl.updateById
-// );
-
-// router.patch(
-//   "/:contactId/favorite",
-//   authenticate,
-//   isValidId,
-//   validateBody(contactSchemas.updateFavorite, "Missing field favorite"),
-//   ctrl.updateStatus
-// );
 
 module.exports = router;

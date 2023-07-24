@@ -28,6 +28,18 @@ const getNoticeByQuery = async (req, res) => {
 	res.json({ notices, total });
 };
 
+const getOwnerNotices = async (req, res) => {
+  const { id: owner } = req.user;
+	const { search, favorite } = req.query;
+	const { notices, total } = await Notices.findOwnerNotices({
+		favorite,
+		owner,
+		search,
+	});
+
+	res.json({ notices, total });
+};
+
 const updateNoticeById = async (req, res) => {
 	const { noticeId } = req.params;
 
@@ -67,4 +79,5 @@ module.exports = {
 	updateNoticeById: tryCatchWrapper(updateNoticeById),
 	delById: tryCatchWrapper(delById),
 	updateStatus: tryCatchWrapper(updateStatus),
+	getOwnerNotices: tryCatchWrapper(getOwnerNotices),
 };

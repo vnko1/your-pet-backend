@@ -17,7 +17,7 @@ class Notices {
 						{ title: { $regex: search, $options: "i" } },
 					],
 			  }
-			: { };
+			: {};
 
 		if (search && category) {
 			findOptions.$or.forEach((item) => {
@@ -38,6 +38,13 @@ class Notices {
 		});
 
 		const total = await Notice.count(findOptions);
+
+		return { notices, total };
+	}
+	static async findOwnerNotices({ owner }) {
+		const notices = await Notice.find({ owner });
+
+		const total = await Notice.count({ owner });
 
 		return { notices, total };
 	}

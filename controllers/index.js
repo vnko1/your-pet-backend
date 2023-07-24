@@ -14,6 +14,7 @@ const {
 	delById,
 	getById,
 	getNoticeByQuery,
+	getOwnerNotices,
 } = require("./notices/noticesController");
 
 const { addPet, deletePet } = require("./pets/petsController");
@@ -39,4 +40,5 @@ module.exports = {
 	delById,
 	getById,
 	getNoticeByQuery,
+	getOwnerNotices,
 };

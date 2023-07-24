@@ -17,6 +17,8 @@ const router = express.Router();
 
 router.get("/searchQuery", ctrl.getNoticeByQuery);
 
+router.get("/owner", authentificate, ctrl.getOwnerNotices);
+
 router.get("/:noticeId", isValidIdNotice, ctrl.getById);
 
 router.put(

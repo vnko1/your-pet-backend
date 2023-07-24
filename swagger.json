@@ -378,7 +378,7 @@
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -505,7 +505,7 @@
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -560,7 +560,7 @@
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -610,7 +610,7 @@
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -732,7 +732,7 @@
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"

@@ -26,12 +26,14 @@ const userSchema = new Schema(
       maxlength: 15,
       required: [true, "Set name for user"],
     },
+    pets: [{ type: Schema.Types.ObjectId, ref: "pet" }],
     birthday: {
       type: Date,
     },
     phone: { type: String, match: phoneRegex },
     city: { type: String, match: cityRegex, minlength: 2, maxlength: 30 },
     avatarUrl: { type: String },
+    avatarId: { type: String, default: "" },
   },
   { versionKey: false, timestamps: false }
 );

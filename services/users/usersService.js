@@ -16,6 +16,11 @@ class Users {
     return User.findByIdAndUpdate(id, newData, { new: true });
   }
 
+  static updateUserPets(id, data) {
+    const key = Object.keys(data);
+    return User.findByIdAndUpdate(id, { [key]: { pets: data[key] } });
+  }
+
   static findUserById(id) {
     return User.findById(id);
   }

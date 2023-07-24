@@ -10,7 +10,8 @@ const {
   passwordRegex,
   schemaMessage,
   cityRegex,
-} = require("./users/constants");
+  defaultAvatarUrl,
+} = require("./constants");
 
 module.exports = {
   emailFrom,
@@ -24,4 +25,5 @@ module.exports = {
   phoneRegex,
   schemaMessage,
   cityRegex,
+  defaultAvatarUrl,
 };

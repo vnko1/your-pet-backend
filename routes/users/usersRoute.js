@@ -3,15 +3,16 @@ const express = require("express");
 const {
   authentificate,
   fieldValidation,
-  checkUpdateData,
+  checkUserData,
 } = require("../../middlewares");
+
 const {
   registerSchemaValidation,
   loginSchemaValidation,
   editUserValidation,
 } = require("../../schema");
 
-const { Image } = require("../../services");
+const { Image, Pets } = require("../../services");
 
 const {
   register,
@@ -19,6 +20,7 @@ const {
   current,
   logout,
   update,
+  getMe,
 } = require("../../controllers");
 
 const { file, schemaMessage } = require("../../constants");
@@ -46,8 +48,10 @@ router.put(
   authentificate,
   Image.uploadErrorHandler(file.avatar.fieldName, file.avatar.fileName),
   fieldValidation(editUserValidation, schemaMessage.auth),
-  checkUpdateData,
+  checkUserData,
   update
 );
+
+router.get("/", authentificate, getMe);
 
 module.exports = router;

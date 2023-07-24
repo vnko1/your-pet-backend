@@ -4,16 +4,23 @@ const {
 	current,
 	logout,
 	update,
+	getMe,
 } = require("./users/usersController");
 
 const {
 	add,
+	updateNoticeById,
+	updateStatus,
+	delById,
 	getById,
 	getNoticeByQuery,
-	updateNoticeById,
-	delById,
-	updateStatus,
 } = require("./notices/noticesController");
+
+const { addPet, deletePet } = require("./pets/petsController");
+
+const { getSponsors } = require("./sponsors/sponsorsController");
+
+const { getArticles } = require("./articles/articlesController");
 
 module.exports = {
 	register,
@@ -21,10 +28,15 @@ module.exports = {
 	current,
 	logout,
 	update,
+	getMe,
+	addPet,
+	deletePet,
+	getSponsors,
+	getArticles,
 	add,
+	updateNoticeById,
+	updateStatus,
+	delById,
 	getById,
 	getNoticeByQuery,
-	updateNoticeById,
-	delById,
-	updateStatus,
 };

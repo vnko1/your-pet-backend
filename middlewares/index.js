@@ -1,12 +1,14 @@
 const { fieldValidation, checkFile } = require("./fieldValidation");
 const { authentificate } = require("./authentification");
-const { checkUpdateData } = require("./checkUpdateData");
-const { isValidId } = require("./isValidId");
+const { checkUserData, checkPetData, checkUserAuth } = require("./checkData");
+const { isValidId } = require("./isValdId");
 
 module.exports = {
-	fieldValidation,
-	checkFile,
-	authentificate,
-	checkUpdateData,
-	isValidId
+  fieldValidation,
+  checkFile,
+  authentificate,
+  checkUserData,
+  checkPetData,
+  checkUserAuth,
+  isValidId,
 };

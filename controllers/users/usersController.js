@@ -7,7 +7,7 @@ const {
   createToken,
   hashPassword,
 } = require("../../utils");
-const { errorMessage } = require("../../constants");
+const { errorMessage, defaultAvatarUrl } = require("../../constants");
 
 const register = async (req, res) => {
   const { email, password, name } = req.body;
@@ -17,12 +17,14 @@ const register = async (req, res) => {
 
   const hashPass = await hashPassword(password);
   const token = createToken({ email });
+  const avatarUrl = defaultAvatarUrl;
 
   const newUser = await Users.createUser({
     email,
     password: hashPass,
     token,
     name,
+    avatarUrl,
   });
 
   res.json({
@@ -31,6 +33,7 @@ const register = async (req, res) => {
       _id: newUser.id,
       name: newUser.name,
       email: newUser.email,
+      avatarUrl: newUser.avatarUrl,
       isNewUser: true,
     },
   });
@@ -50,6 +53,8 @@ const login = async (req, res) => {
   const updatedUser = await Users.updateUser(user.id, { token });
   updatedUser.password = undefined;
   updatedUser.token = undefined;
+  updatedUser.avatarId = undefined;
+  updatedUser.pets = undefined;
 
   res.json({
     token,
@@ -60,6 +65,8 @@ const login = async (req, res) => {
 const current = async (req, res) => {
   req.user.password = undefined;
   req.user.token = undefined;
+  req.user.avatarId = undefined;
+  req.user.pets = undefined;
 
   res.json({ user: { ...req.user["_doc"], isNewUser: false } });
 };
@@ -81,11 +88,23 @@ const update = async (req, res) => {
   const token = updatedUser.token;
   updatedUser.password = undefined;
   updatedUser.token = undefined;
+  updatedUser.avatarId = undefined;
+  updatedUser.pets = undefined;
 
   res.json({
     token: body.token ? body.token : token,
     user: { ...updatedUser["_doc"], isNewUser: false },
   });
+};
+
+const getMe = async (req, res) => {
+  const { id } = req.user;
+  const response = await Users.findUserById(id).populate("pets");
+  response.password = undefined;
+  response.token = undefined;
+  response.avatarId = undefined;
+
+  res.json({ user: { ...response["_doc"], isNewUser: false } });
 };
 
 module.exports = {
@@ -94,4 +113,5 @@ module.exports = {
   current: tryCatchWrapper(current),
   logout: tryCatchWrapper(logout),
   update: tryCatchWrapper(update),
+  getMe: tryCatchWrapper(getMe),
 };

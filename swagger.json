@@ -1,12 +1,988 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "2.0.2",
-    "title": "My pet api",
-    "description": "description",
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
+    "version": "1.0.1",
+    "title": "My pet API",
+    "description": "My pet server documentation"
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [
+    { "url": "http://localhost:3000" },
+    { "url": "https://my-pet-app-8sz1.onrender.com" }
+  ],
+  "tags": [
+    { "name": "Users", "description": "User authorisation endpoint" },
+    { "name": "Pets", "description": "Adding and deleting pets endpoint" },
+    { "name": "Sponsors", "description": "Sponsors list endpoint" },
+    { "name": "News", "description": "News list endpoint" }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Return user`s and user`s pets cards",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/UserResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User`s registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/UserRegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "409": {
+            "description": "Email in use.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User`s logination",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/UserLoginResponse" }
+              }
+            }
+          },
+
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized / Email or password is wrong.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User`s authentification",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/CurrentUserResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User`s logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "204": {
+            "description": "No content",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/update": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update user`s data",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updating object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserFieldsRequest"
+              }
+            },
+
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserAvatarAndFieldsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/UpdateUserResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "409": {
+            "description": "Email in use.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/pets": {
+      "post": {
+        "tags": ["Pets"],
+        "summary": "Add user`s pet card",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updating object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/PetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/pets/:petId": {
+      "delete": {
+        "tags": ["Pets"],
+        "summary": "Delete user`s pet card",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petId",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Pet`s id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/PetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
+        }
+      }
+    },
+    "/sponsors": {
+      "get": {
+        "tags": ["Sponsors"],
+        "summary": "Return sponsors cards",
+        "parameters": [],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/SponsorsResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/articles": {
+      "get": {
+        "tags": ["News"],
+        "summary": "Return news cards",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": { "type": "string" },
+            "example": "The White House Pushes",
+            "required": false,
+            "description": "Get all items matching query in any of the fields of title or text"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "enum": ["desc", "asc"],
+              "default": "desc"
+            },
+            "required": false,
+            "description": "Sort news cards by date"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 6,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to return."
+          }
+        ],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/ArticlesResponse" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name",
+                "format": "text",
+                "example": "Mango"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "isNewUser": {
+                "type": "boolean",
+                "example": false
+              },
+              "avatarUrl": {
+                "type": "string",
+                "description": "User avatar url",
+                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
+              },
+              "birthday": {
+                "type": "date",
+                "description": "User birthday date",
+                "example": "2022-12-22T00:00:00.000Z"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User avatar",
+                "example": "+380933443494"
+              },
+              "city": {
+                "type": "string",
+                "description": "User location",
+                "example": "London"
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Pet id",
+                      "example": "64bd39c0b38fc2fe5b5dfef8"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Pet name",
+                      "format": "text",
+                      "example": "Peaches"
+                    },
+
+                    "date": {
+                      "type": "date",
+                      "description": "Pet birthday date",
+                      "example": "2022-12-22T00:00:00.000Z"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Pet`s type",
+                      "example": "cat"
+                    },
+                    "fileUrl": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "User avatar file"
+                    },
+                    "comments": {
+                      "type": "string",
+                      "description": "Pet`s description",
+                      "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "User id",
+                      "example": "64bd39c0b38fc2fe5b5dfef8"
+                    },
+                    "fileId": {
+                      "type": "string",
+                      "description": "Cloudinary image id",
+                      "example": "file/file_TYy7ANX7qfp4ZAbCw3r5Y_v5wqkj"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "UserRegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "text",
+            "example": "Mango"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "Qw123456"
+          }
+        }
+      },
+      "UserRegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name",
+                "format": "text"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "isNewUser": {
+                "type": "boolean",
+                "example": true
+              },
+              "avatarUrl": {
+                "type": "string",
+                "description": "User avatar",
+                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
+              }
+            }
+          }
+        }
+      },
+      "UserLoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "Qw123456"
+          }
+        }
+      },
+      "UserLoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name",
+                "format": "text",
+                "example": "Mango"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "isNewUser": {
+                "type": "boolean",
+                "example": false
+              },
+              "avatarUrl": {
+                "type": "string",
+                "description": "User avatar url",
+                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
+              },
+              "birthday": {
+                "type": "date",
+                "description": "User birthday date",
+                "example": "2022-12-22T00:00:00.000Z"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User avatar",
+                "example": "+380933443494"
+              },
+              "city": {
+                "type": "string",
+                "description": "User location",
+                "example": "London"
+              }
+            }
+          }
+        }
+      },
+      "CurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name",
+                "format": "text",
+                "example": "Mango"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "isNewUser": {
+                "type": "boolean",
+                "example": false
+              },
+              "avatarUrl": {
+                "type": "string",
+                "description": "User avatar url",
+                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
+              },
+              "birthday": {
+                "type": "date",
+                "description": "User birthday date",
+                "example": "2022-12-22T00:00:00.000Z"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User avatar",
+                "example": "+380933443494"
+              },
+              "city": {
+                "type": "string",
+                "description": "User location",
+                "example": "London"
+              }
+            }
+          }
+        }
+      },
+      "UpdateUserFieldsRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "text",
+            "example": "Mango"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "birthday": {
+            "type": "date",
+            "description": "User birthday date",
+            "example": "2022-12-22T00:00:00.000Z"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User avatar",
+            "example": "+380933443494"
+          },
+          "city": {
+            "type": "string",
+            "description": "User location",
+            "example": "London"
+          }
+        }
+      },
+      "UpdateUserAvatarAndFieldsRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "format": "text",
+            "example": "Mango"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "birthday": {
+            "type": "date",
+            "description": "User birthday date",
+            "example": "2022-12-22T00:00:00.000Z"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User avatar",
+            "example": "+380933443494"
+          },
+          "city": {
+            "type": "string",
+            "description": "User location",
+            "example": "London"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary",
+            "description": "User avatar file"
+          }
+        }
+      },
+      "UpdateUserResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "User id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "name": {
+                "type": "string",
+                "description": "User name",
+                "format": "text",
+                "example": "Mango"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email",
+                "format": "email"
+              },
+              "isNewUser": {
+                "type": "boolean",
+                "example": false
+              },
+              "avatarUrl": {
+                "type": "string",
+                "description": "User avatar url",
+                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
+              },
+              "birthday": {
+                "type": "date",
+                "description": "User birthday date",
+                "example": "2022-12-22T00:00:00.000Z"
+              },
+              "phone": {
+                "type": "string",
+                "description": "User avatar",
+                "example": "+380933443494"
+              },
+              "city": {
+                "type": "string",
+                "description": "User location",
+                "example": "London"
+              }
+            }
+          }
+        }
+      },
+      "AddPetRequest": {
+        "type": "object",
+        "required": ["name", "date", "type", "file"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pet name",
+            "format": "text",
+            "example": "Peaches"
+          },
+
+          "date": {
+            "type": "date",
+            "description": "Pet birthday date",
+            "example": "2022-12-22T00:00:00.000Z"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet`s type",
+            "example": "cat"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "User avatar file"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Pet`s description",
+            "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+          }
+        }
+      },
+      "PetResponse": {
+        "type": "object",
+        "properties": {
+          "pet": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Pet id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "name": {
+                "type": "string",
+                "description": "Pet name",
+                "format": "text",
+                "example": "Peaches"
+              },
+
+              "date": {
+                "type": "date",
+                "description": "Pet birthday date",
+                "example": "2022-12-22T00:00:00.000Z"
+              },
+              "type": {
+                "type": "string",
+                "description": "Pet`s type",
+                "example": "cat"
+              },
+              "fileUrl": {
+                "type": "string",
+                "format": "binary",
+                "description": "User avatar file"
+              },
+              "comments": {
+                "type": "string",
+                "description": "Pet`s description",
+                "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+              }
+            }
+          }
+        }
+      },
+      "SponsorsResponse": {
+        "type": "object",
+        "properties": {
+          "sponsors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Sponsor`s id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Sponsor`s title",
+                  "example": "Притулок для бездомних тварин 'Сіріус'"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Sponsor`s page url",
+                  "example": "https://dogcat.com.ua"
+                },
+                "addressUrl": {
+                  "type": "string",
+                  "description": "Sponsor`s address url",
+                  "example": "https://goo.gl/maps/iq8NXEUf31EAQCzc6"
+                },
+                "imageUrl": {
+                  "type": "string",
+                  "description": "Sponsor`s image url",
+                  "example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
+                },
+                "address": {
+                  "type": "string",
+                  "description": "Sponsor`s address",
+                  "example": "Fedorivka, Kyiv Oblast, Ukraine, 07372"
+                },
+                "phone": {
+                  "type": "string",
+                  "description": "Sponsor`s phone number",
+                  "example": "+380931934069"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "Sponsor`s phone number",
+                  "format": "email"
+                },
+                "workDays": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Array id",
+                        "example": "64bd39c0b38fc2fe5b5dfef8"
+                      },
+                      "isOpen": {
+                        "type": "boolean",
+                        "description": "Sponsor is open",
+                        "example": true
+                      },
+                      "from": {
+                        "type": "string",
+                        "description": "Opening time",
+                        "example": "09:00"
+                      },
+                      "to": {
+                        "type": "string",
+                        "description": "Closing time",
+                        "example": "20:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "ArticlesResponse": {
+        "type": "object",
+        "properties": {
+          "articles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Article`s id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                },
+                "imgUrl": {
+                  "type": "string",
+                  "description": "Article`s image url",
+                  "example": "https://www.nytimes.com/images/2023/05/04/multimedia/04evening-nl-WH/04evening-nl-WH-blog480-v3.jpg"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Article`s title",
+                  "example": "The White House Pushes A.I. Leaders on Risks"
+                },
+
+                "text": {
+                  "type": "string",
+                  "description": "Article`s text",
+                  "example": "Also, four Proud Boys are found guilty of sedition. Here’s the latest at the end of Thursday."
+                },
+                "date": {
+                  "type": "date",
+                  "description": "Article`s date publication",
+                  "example": "2023-05-04T21:55:17.000Z"
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Article`s url",
+                  "example": "https://www.nytimes.com/2023/05/04/briefing/white-house-ai-leaders-proud-boys-trial.html"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
   }
 }

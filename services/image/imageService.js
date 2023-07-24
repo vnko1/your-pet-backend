@@ -1,3 +1,4 @@
+const fs = require("fs/promises");
 const Jimp = require("jimp");
 const multer = require("multer");
 const path = require("path");
@@ -59,25 +60,38 @@ class Image {
     };
   }
 
-  static async uploadImage(imagePath, width, height, dirName) {
+  static async uploadImage({
+    imagePath,
+    dirName,
+    unique_filename = true,
+    overwrite = false,
+    width,
+    height,
+  }) {
     const options = {
       folder: dirName,
       allowed_formats: fileFormats,
       use_filename: true,
-      unique_filename: false,
-      overwrite: false,
+      unique_filename,
+      overwrite,
     };
 
     try {
-      const image = await Jimp.read(imagePath);
-      image.resize(width, height).write(imagePath);
+      if (width && height) {
+        const image = await Jimp.read(imagePath);
+        image.resize(width, height).write(imagePath);
+      }
 
-      const result = await cloudinary.uploader.upload(imagePath, options);
-
-      return result.secure_url;
+      return await cloudinary.uploader.upload(imagePath, options);
     } catch (error) {
+      await fs.unlink(imagePath);
+
       throw httpError(500, error.message);
     }
+  }
+
+  static async deleteImage(id) {
+    return await cloudinary.uploader.destroy(id, "image");
   }
 }
 

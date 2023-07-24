@@ -14,7 +14,7 @@ const { addSchema, updateFavorite } = require("../../schema");
 
 const router = express.Router();
 
-router.get("/all", ctrl.getNoticeByQuery);
+router.get("/searchQuery", ctrl.getNoticeByQuery);
 
 router.get("/:noticeId", isValidId, ctrl.getById);
 
@@ -29,7 +29,14 @@ router.put(
 router.delete("/:noticeId", authentificate, isValidId, ctrl.delById);
 
 router.patch(
-	"/:noticeId/favorite",
+	"/:noticeId/addFavorite",
+	isValidId,
+	fieldValidation(updateFavorite, "Missing field favorite"),
+	ctrl.updateStatus
+);
+
+router.patch(
+	"/:noticeId/delFavorite",
 	isValidId,
 	fieldValidation(updateFavorite, "Missing field favorite"),
 	ctrl.updateStatus

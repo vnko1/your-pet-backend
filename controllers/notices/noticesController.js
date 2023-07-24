@@ -4,7 +4,7 @@ const { Notices } = require("../../services");
 
 const add = async (req, res) => {
 	const { id: owner } = req.user;
-	const response = await Notices.addNotice({...req.body, owner});
+	const response = await Notices.addNotice({ ...req.body, owner });
 	res.status(201).json(response);
 };
 
@@ -18,10 +18,7 @@ const getById = async (req, res) => {
 };
 
 const getNoticeByQuery = async (req, res) => {
-	const { search = "", category, title } = req.query;
-	console.log(search);
-	console.log(category);
-	console.log(title);
+	const { search, category, title } = req.query;
 	const { notices, total } = await Notices.findAll({
 		category,
 		title,
@@ -53,14 +50,14 @@ const delById = async (req, res) => {
 };
 
 const updateStatus = async (req, res) => {
-  const { noticeId } = req.params;
-  const updatedStatus = await Notices.updateNotice(noticeId, req.body, {
-    new: true,
-  });
-  if (!updatedStatus) {
-    throw httpError(404, "Not found");
-  }
-  res.json(updatedStatus);
+	const { noticeId } = req.params;
+	const updatedStatus = await Notices.updateNotice(noticeId, req.body, {
+		new: true,
+	});
+	if (!updatedStatus) {
+		throw httpError(404, "Not found");
+	}
+	res.json(updatedStatus);
 };
 
 module.exports = {
@@ -69,5 +66,5 @@ module.exports = {
 	getNoticeByQuery: tryCatchWrapper(getNoticeByQuery),
 	updateNoticeById: tryCatchWrapper(updateNoticeById),
 	delById: tryCatchWrapper(delById),
-  updateStatus: tryCatchWrapper(updateStatus),
+	updateStatus: tryCatchWrapper(updateStatus),
 };

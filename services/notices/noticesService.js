@@ -17,16 +17,16 @@ class Notices {
 						{ title: { $regex: search, $options: "i" } },
 					],
 			  }
-			: {};
+			: { };
 
-		if (search && title && category) {
+		if (search && category) {
 			findOptions.$or.forEach((item) => {
-				item.title = title;
+				item.title = search;
 				item.category = category;
 			});
 		} else if (search) {
 			findOptions.$or.forEach((item) => {
-				item.title = title;
+				item.title = search;
 			});
 		} else if (category) {
 			findOptions.category = category;

@@ -11,6 +11,8 @@ const { addPet, deletePet } = require("./pets/petsController");
 
 const { getSponsors } = require("./sponsors/sponsorsController");
 
+const { getArticles } = require("./articles/articlesController");
+
 module.exports = {
   register,
   login,
@@ -21,4 +23,5 @@ module.exports = {
   addPet,
   deletePet,
   getSponsors,
+  getArticles,
 };

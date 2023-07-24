@@ -24,14 +24,12 @@ class Notices {
 				item.title = title;
 				item.category = category;
 			});
-		} else if (title) {
+		} else if (search) {
 			findOptions.$or.forEach((item) => {
 				item.title = title;
 			});
 		} else if (category) {
-			findOptions.$or.forEach((item) => {
-				item.category = category;
-			});
+			findOptions.category = category;
 		}
 
 		const notices = await Notice.find(findOptions).sort({
@@ -48,10 +46,9 @@ class Notices {
 		return Notice.findByIdAndUpdate(id, newData, { new: true });
 	}
 
-  static deleteNotice(id) {
+	static deleteNotice(id) {
 		return Notice.findByIdAndDelete(id);
 	}
-
 }
 
 module.exports = { Notices };

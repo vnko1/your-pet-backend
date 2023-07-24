@@ -271,7 +271,7 @@
             "description": "Successfull operations",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#components/schemas/PetResponse" }
+                "schema": { "$ref": "#components/schemas/DeletePetResponse" }
               }
             }
           },
@@ -839,8 +839,8 @@
               },
               "fileUrl": {
                 "type": "string",
-                "format": "binary",
-                "description": "User avatar file"
+                "description": "Pet image url",
+                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
               },
               "comments": {
                 "type": "string",
@@ -848,6 +848,16 @@
                 "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
               }
             }
+          }
+        }
+      },
+      "DeletePetResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Pet id",
+            "example": "64bd39c0b38fc2fe5b5dfef8"
           }
         }
       },
@@ -973,6 +983,11 @@
                 }
               }
             }
+          },
+          "total": {
+            "type": "integer",
+            "description": "Return total counts of documents",
+            "example": "1121"
           }
         }
       }

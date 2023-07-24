@@ -11,6 +11,7 @@ const {
   schemaMessage,
   cityRegex,
   defaultAvatarUrl,
+  userFieldType,
 } = require("./constants");
 
 module.exports = {
@@ -26,4 +27,5 @@ module.exports = {
   schemaMessage,
   cityRegex,
   defaultAvatarUrl,
+  userFieldType,
 };

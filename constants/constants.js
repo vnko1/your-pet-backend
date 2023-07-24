@@ -1,5 +1,7 @@
 const emailFrom = "valenkoedu@gmail.com";
 
+const userFieldType = { pets: "pets", user: "user" };
+
 const file = {
   avatar: {
     fieldName: "avatar",
@@ -65,4 +67,5 @@ module.exports = {
   phoneRegex,
   cityRegex,
   defaultAvatarUrl,
+  userFieldType,
 };

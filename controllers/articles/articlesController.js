@@ -2,12 +2,12 @@ const { tryCatchWrapper } = require("../../utils");
 const { Articles } = require("../../services");
 
 const getArticles = async (req, res) => {
-  const { page, limit, sort, query } = req.query;
+  const { page, limit, sort, filter } = req.query;
   const { articles, total } = await Articles.getAll({
     page,
     limit,
     sort,
-    query,
+    filter,
   });
 
   res.json({ articles, total });

@@ -1,13 +1,13 @@
 const { Article } = require("../../models");
 
 class Articles {
-  static async getAll({ query = "", page = 1, limit = 6, sort = "desc" }) {
+  static async getAll({ filter = "", page = 1, limit = 6, sort = "desc" }) {
     const perPage = page > 0 ? (page - 1) * limit : 0;
-    const findOptions = query
+    const findOptions = filter
       ? {
           $or: [
-            { title: { $regex: query, $options: "i" } },
-            { text: { $regex: query, $options: "i" } },
+            { title: { $regex: filter, $options: "i" } },
+            { text: { $regex: filter, $options: "i" } },
           ],
         }
       : {};

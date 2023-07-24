@@ -18,11 +18,13 @@ const getById = async (req, res) => {
 };
 
 const getNoticeByQuery = async (req, res) => {
-	const { search, category, title } = req.query;
+	const { page, limit, sort, search, category } = req.query;
 	const { notices, total } = await Notices.findAll({
-		category,
-		title,
+		page,
+		limit,
+		sort,
 		search,
+		category,
 	});
 
 	res.json({ notices, total });

@@ -9,7 +9,14 @@ class Notices {
 		return Notice.findById(id);
 	}
 
-	static async findAll({ search, category, title }) {
+	static async findAll({
+		search = "",
+		category,
+		page = 1,
+		limit = 6,
+		sort = "desc",
+	}) {
+		const perPage = page > 0 ? (page - 1) * limit : 0;
 		const findOptions = search
 			? {
 					$or: [
@@ -18,23 +25,17 @@ class Notices {
 			  }
 			: {};
 
-		if (search && category) {
-			findOptions.$or.forEach((item) => {
-				item.title = search;
-				item.category = category;
-			});
-		} else if (search) {
-			findOptions.$or.forEach((item) => {
-				item.title = search;
-			});
-		} else if (category) {
+		if (category) {
 			findOptions.category = category;
 		}
 
-		const notices = await Notice.find(findOptions).sort({
-			category: "desc",
-			title: "desc",
-		});
+		const notices = await Notice.find(findOptions)
+			.skip(perPage)
+			.limit(limit)
+			.sort({
+				category: sort,
+				title: sort,
+			});
 
 		const total = await Notice.count(findOptions);
 

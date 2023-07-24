@@ -13,7 +13,6 @@ class Notices {
 		const findOptions = search
 			? {
 					$or: [
-						{ category: { $regex: search, $options: "i" } },
 						{ title: { $regex: search, $options: "i" } },
 					],
 			  }

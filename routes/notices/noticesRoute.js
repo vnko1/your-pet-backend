@@ -6,6 +6,7 @@ const {
 	fieldValidation,
 	authentificate,
 	isValidId,
+	isValidIdNotice,
 } = require("../../middlewares");
 
 const { Image } = require("../../services");
@@ -16,7 +17,7 @@ const router = express.Router();
 
 router.get("/searchQuery", ctrl.getNoticeByQuery);
 
-router.get("/:noticeId", isValidId, ctrl.getById);
+router.get("/:noticeId", isValidIdNotice, ctrl.getById);
 
 router.put(
 	"/:noticeId",

@@ -1,7 +1,7 @@
 const { isValidObjectId } = require("mongoose");
 const { httpError } = require("../utils");
 
-const isValidId = (req, res, next) => {
+const isValidIdNotice = (req, res, next) => {
 	const { noticeId } = req.params;
 	if (!isValidObjectId(noticeId)) {
 		next(httpError(400, `${noticeId} is not valid id`));
@@ -9,4 +9,4 @@ const isValidId = (req, res, next) => {
 	next();
 };
 
-module.exports = { isValidId };
+module.exports = { isValidIdNotice };

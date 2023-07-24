@@ -16,7 +16,7 @@ class Articles {
       .limit(limit)
       .sort({ date: sort });
 
-    const total = await Article.estimatedDocumentCount(findOptions);
+    const total = await Article.countDocuments(findOptions);
 
     return { articles, total };
   }

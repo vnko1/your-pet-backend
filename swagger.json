@@ -21,7 +21,7 @@
     "/users": {
       "get": {
         "tags": ["Users"],
-        "summary": "Get user`s and user`s pets data",
+        "summary": "Return user`s and user`s pets cards",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -290,7 +290,7 @@
     "/sponsors": {
       "get": {
         "tags": ["Sponsors"],
-        "summary": "Get sponsors cards",
+        "summary": "Return sponsors cards",
         "parameters": [],
         "requestBody": {
           "content": {}

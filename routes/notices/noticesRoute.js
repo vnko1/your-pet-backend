@@ -19,12 +19,14 @@ router.get("/searchQuery", ctrl.getNoticeByQuery);
 
 router.get("/owner", authentificate, ctrl.getOwnerNotices);
 
+router.get("/owner/favorite", authentificate, ctrl.getOwnerFavNotices);
+
 router.get("/:noticeId", isValidIdNotice, ctrl.getById);
 
 router.put(
 	"/:noticeId",
 	authentificate,
-	isValidId,
+	isValidIdNotice,
 	fieldValidation(addSchema),
 	ctrl.updateNoticeById
 );
@@ -33,14 +35,14 @@ router.delete("/:noticeId", authentificate, isValidId, ctrl.delById);
 
 router.patch(
 	"/:noticeId/addFavorite",
-	isValidId,
+	isValidIdNotice,
 	fieldValidation(updateFavorite, "Missing field favorite"),
 	ctrl.updateStatus
 );
 
 router.patch(
 	"/:noticeId/delFavorite",
-	isValidId,
+	isValidIdNotice,
 	fieldValidation(updateFavorite, "Missing field favorite"),
 	ctrl.updateStatus
 );

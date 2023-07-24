@@ -41,10 +41,19 @@ class Notices {
 
 		return { notices, total };
 	}
+
 	static async findOwnerNotices({ owner }) {
 		const notices = await Notice.find({ owner });
 
 		const total = await Notice.count({ owner });
+
+		return { notices, total };
+	}
+
+	static async findOwnerFavNotices({ favorite }) {
+		const notices = await Notice.find({ favorite });
+
+		const total = await Notice.count({ favorite });
 
 		return { notices, total };
 	}

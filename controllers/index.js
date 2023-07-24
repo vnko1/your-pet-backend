@@ -15,6 +15,7 @@ const {
 	getById,
 	getNoticeByQuery,
 	getOwnerNotices,
+	getOwnerFavNotices,
 } = require("./notices/noticesController");
 
 const { addPet, deletePet } = require("./pets/petsController");
@@ -41,4 +42,5 @@ module.exports = {
 	getById,
 	getNoticeByQuery,
 	getOwnerNotices,
+	getOwnerFavNotices,
 };

@@ -29,12 +29,18 @@ const getNoticeByQuery = async (req, res) => {
 };
 
 const getOwnerNotices = async (req, res) => {
-  const { id: owner } = req.user;
-	const { search, favorite } = req.query;
+	const { id: owner } = req.user;
 	const { notices, total } = await Notices.findOwnerNotices({
-		favorite,
 		owner,
-		search,
+	});
+
+	res.json({ notices, total });
+};
+
+const getOwnerFavNotices = async (req, res) => {
+	const { favorite } = req.query;
+	const { notices, total } = await Notices.findOwnerFavNotices({
+		favorite,
 	});
 
 	res.json({ notices, total });
@@ -80,4 +86,5 @@ module.exports = {
 	delById: tryCatchWrapper(delById),
 	updateStatus: tryCatchWrapper(updateStatus),
 	getOwnerNotices: tryCatchWrapper(getOwnerNotices),
+	getOwnerFavNotices: tryCatchWrapper(getOwnerFavNotices),
 };

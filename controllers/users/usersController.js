@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { userFieldType } = require("../../constants");
 
 const { Users } = require("../../services");
 const {
@@ -50,11 +51,12 @@ const login = async (req, res) => {
 
   const token = createToken({ id: user.id });
 
-  const updatedUser = await Users.updateUser(user.id, { token });
-  updatedUser.password = undefined;
-  updatedUser.token = undefined;
-  updatedUser.avatarId = undefined;
-  updatedUser.pets = undefined;
+  const updatedUser = await Users.updateUser(
+    user.id,
+    { token },
+    userFieldType.user,
+    "-password -token -avatarId -pets"
+  );
 
   res.json({
     token,
@@ -74,7 +76,7 @@ const current = async (req, res) => {
 const logout = async (req, res) => {
   const { id } = req.user;
 
-  await Users.updateUser(id, { token: "" });
+  await Users.updateUser(id, { token: "" }, userFieldType.user);
 
   res.sendStatus(204);
 };
@@ -83,13 +85,15 @@ const update = async (req, res) => {
   const { id } = req.user;
   const { body } = req;
 
-  const updatedUser = await Users.updateUser(id, body);
+  const updatedUser = await Users.updateUser(
+    id,
+    body,
+    userFieldType.user,
+    "-password -avatarId -pets"
+  );
 
   const token = updatedUser.token;
-  updatedUser.password = undefined;
   updatedUser.token = undefined;
-  updatedUser.avatarId = undefined;
-  updatedUser.pets = undefined;
 
   res.json({
     token: body.token ? body.token : token,
@@ -99,10 +103,10 @@ const update = async (req, res) => {
 
 const getMe = async (req, res) => {
   const { id } = req.user;
-  const response = await Users.findUserById(id).populate("pets");
-  response.password = undefined;
-  response.token = undefined;
-  response.avatarId = undefined;
+  const response = await Users.findUserById(
+    id,
+    "-password -token -avatarId"
+  ).populate("pets");
 
   res.json({ user: { ...response["_doc"], isNewUser: false } });
 };

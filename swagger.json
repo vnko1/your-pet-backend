@@ -310,7 +310,7 @@
     "/articles": {
       "get": {
         "tags": ["News"],
-        "summary": "Get news cards",
+        "summary": "Return news cards",
         "parameters": [
           {
             "in": "query",

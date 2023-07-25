@@ -820,6 +820,11 @@
                 "description": "Pet id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
               },
+              "category": {
+                "type": "string",
+                "description": "Pet category",
+                "example": "my-pet"
+              },
               "name": {
                 "type": "string",
                 "description": "Pet name",

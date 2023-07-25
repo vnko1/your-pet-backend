@@ -69,12 +69,11 @@ const login = async (req, res) => {
     process.env.REFRESH_TOKEN_LIFE
   );
 
-  const updatedUser = await Users.updateUser(
-    user.id,
-    { token, refreshToken },
-    userFieldType.user,
-    "-password -avatarId -pets"
-  );
+  const updatedUser = await Users.updateUser({
+    id: user.id,
+    data: { token, refreshToken },
+    projection: "-password -avatarId -pets",
+  });
 
   res.json({
     token: updatedUser.token,
@@ -113,7 +112,7 @@ const refresh = async (req, res) => {
     process.env.JWT_KEY,
     process.env.TOKEN_LIFE
   );
-  await Users.updateUser(req.user.id, { token }, userFieldType.user);
+  await Users.updateUser({ id: req.user.id, data: { token } });
 
   res.json({ token });
 };
@@ -121,11 +120,7 @@ const refresh = async (req, res) => {
 const logout = async (req, res) => {
   const { id } = req.user;
 
-  await Users.updateUser(
-    id,
-    { token: "", refreshToken: "" },
-    userFieldType.user
-  );
+  await Users.updateUser({ id, data: { token: "", refreshToken: "" } });
 
   res.sendStatus(204);
 };
@@ -134,12 +129,11 @@ const update = async (req, res) => {
   const { id } = req.user;
   const { body } = req;
 
-  const updatedUser = await Users.updateUser(
+  const updatedUser = await Users.updateUser({
     id,
-    body,
-    userFieldType.user,
-    "-password -avatarId -pets"
-  );
+    data: body,
+    projection: "-password -avatarId -pets",
+  });
 
   res.json({
     token: body.token ? body.token : updatedUser.token,

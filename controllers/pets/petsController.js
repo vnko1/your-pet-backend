@@ -7,7 +7,11 @@ const addPet = async (req, res) => {
   const { body } = req;
 
   const pet = await Pets.add({ ...body, owner });
-  await Users.updateUser(owner, { $push: pet.id }, userFieldType.pets);
+  await Users.updateUser({
+    id: owner,
+    fieldName: "pets",
+    data: { $push: pet.id },
+  });
 
   res.json({
     pet: {
@@ -26,8 +30,14 @@ const deletePet = async (req, res) => {
   const { petId } = req.params;
 
   const pet = await Pets.remove(petId);
+
   await Image.deleteImage(pet.fileId);
-  await Users.updateUser(pet.owner, { $pull: pet.id }, userFieldType.pets);
+
+  await Users.updateUser({
+    id: pet.owner,
+    data: { $pull: pet.id },
+    fieldName: "pets",
+  });
 
   res.json({ _id: pet.id });
 };

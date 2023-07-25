@@ -13,11 +13,14 @@ class Users {
     return User.findOne(query);
   }
 
-  static updateUser(id, data, fieldType, projection = null) {
-    if (fieldType === userFieldType.pets) {
+  static updateUser({ id, data, fieldName = null, projection = null }) {
+    if (fieldName) {
       const key = Object.keys(data);
-      return User.findByIdAndUpdate(id, { [key]: { pets: data[key] } });
+      return User.findByIdAndUpdate(id, {
+        [key]: { [fieldName]: data[key] },
+      });
     }
+
     return User.findByIdAndUpdate(id, data, { new: true, projection });
   }
 

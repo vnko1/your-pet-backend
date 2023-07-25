@@ -29,8 +29,6 @@ const errorMessage = {
   409: "Email in use.",
 };
 
-const expiresIn = "7d";
-
 const fileFormats = ["jpg", "png"];
 
 const serverMessage = {
@@ -58,7 +56,6 @@ module.exports = {
   emailFrom,
   file,
   errorMessage,
-  expiresIn,
   fileFormats,
   serverMessage,
   schemaMessage,

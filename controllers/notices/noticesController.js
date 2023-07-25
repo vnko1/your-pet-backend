@@ -1,6 +1,6 @@
 const { tryCatchWrapper, httpError } = require("../../utils");
 
-const { Notices } = require("../../services");
+const { Notices, Users } = require("../../services");
 
 const add = async (req, res) => {
 	const { id: owner } = req.user;
@@ -40,13 +40,10 @@ const getOwnerNotices = async (req, res) => {
 };
 
 const getOwnerFavNotices = async (req, res) => {
-  const { id: owner } = req.user;
-	const user = req.user.favorite;
-	console.log(owner);
-	const { favorites, total } = await Notices.findOwnerFavNotices({owner}, {
-		user,
-	});
-
+	const { id } = req.user;
+	const response = await Users.findUserById(id).populate("favorites");
+	const favorites = response.favorites;
+	const total = favorites.length;
 	res.json({ favorites, total });
 };
 

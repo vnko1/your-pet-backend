@@ -49,12 +49,12 @@ class Notices {
 		return { notices, total };
 	}
 
-	static async findOwnerFavNotices(id) {
-		const favorites = await User.find(id);
+	static async findOwnerFavNotices({}) {
+		const notices = await User.find(id);
 
 		const total = await User.count(id);
 
-		return { favorites, total };
+		return { notices, total };
 	}
 
 	static addUserFavorites(id, data) {

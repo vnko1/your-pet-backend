@@ -52,7 +52,7 @@ router.post(
 	"/add-pet",
 	authentificate,
 	Image.uploadErrorHandler(file.notice.fieldName, file.notice.fileName),
-	// checkPetData,
+	checkPetData,
 	fieldValidation(addSchema),
 	ctrl.add
 );

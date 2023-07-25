@@ -40,12 +40,14 @@ const getOwnerNotices = async (req, res) => {
 };
 
 const getOwnerFavNotices = async (req, res) => {
-	const { favorite } = req.query;
-	const { notices, total } = await Notices.findOwnerFavNotices({
-		favorite,
+  const { id: owner } = req.user;
+	const user = req.user.favorite;
+	console.log(owner);
+	const { favorites, total } = await Notices.findOwnerFavNotices({owner}, {
+		user,
 	});
 
-	res.json({ notices, total });
+	res.json({ favorites, total });
 };
 
 const updateNoticeById = async (req, res) => {
@@ -69,16 +71,34 @@ const delById = async (req, res) => {
 	res.json({ message: "Notice deleted" });
 };
 
-const updateStatus = async (req, res) => {
+const addFavorite = async (req, res) => {
 	const { id: owner } = req.user;
 	const { noticeId } = req.params;
-	const updatedStatus = await Notices.updateUserFavs(
+	const updatedStatus = await Notices.addUserFavorites(
 		owner,
-		{ $push: noticeId },
+		{ $addToSet: noticeId },
 		{
 			new: true,
 		}
 	);
+
+	if (!updatedStatus) {
+		throw httpError(404, "Not found");
+	}
+	res.json(updatedStatus);
+};
+
+const deleteFavorite = async (req, res) => {
+	const { id: owner } = req.user;
+	const { noticeId } = req.params;
+	const updatedStatus = await Notices.deleteUserFavorites(
+		owner,
+		{ $pull: noticeId },
+		{
+			new: true,
+		}
+	);
+
 	if (!updatedStatus) {
 		throw httpError(404, "Not found");
 	}
@@ -91,7 +111,8 @@ module.exports = {
 	getNoticeByQuery: tryCatchWrapper(getNoticeByQuery),
 	updateNoticeById: tryCatchWrapper(updateNoticeById),
 	delById: tryCatchWrapper(delById),
-	updateStatus: tryCatchWrapper(updateStatus),
+	addFavorite: tryCatchWrapper(addFavorite),
 	getOwnerNotices: tryCatchWrapper(getOwnerNotices),
 	getOwnerFavNotices: tryCatchWrapper(getOwnerFavNotices),
+	deleteFavorite: tryCatchWrapper(deleteFavorite),
 };

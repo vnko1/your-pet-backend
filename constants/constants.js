@@ -15,6 +15,14 @@ const file = {
     height: 182,
     fileSize: 1024 * 1024,
   },
+  notice: {
+    fieldName: "file",
+    fileName: "file",
+    width: 182,
+    height: 182,
+    fileSize: 1024 * 1024,
+  },
+
 };
 
 const errorMessage = {

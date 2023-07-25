@@ -10,12 +10,13 @@ const {
 const {
 	add,
 	updateNoticeById,
-	updateStatus,
+	addFavorite,
 	delById,
 	getById,
 	getNoticeByQuery,
 	getOwnerNotices,
 	getOwnerFavNotices,
+	deleteFavorite,
 } = require("./notices/noticesController");
 
 const { addPet, deletePet } = require("./pets/petsController");
@@ -37,10 +38,11 @@ module.exports = {
 	getArticles,
 	add,
 	updateNoticeById,
-	updateStatus,
+	addFavorite,
 	delById,
 	getById,
 	getNoticeByQuery,
 	getOwnerNotices,
 	getOwnerFavNotices,
+	deleteFavorite,
 };

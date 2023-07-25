@@ -1,17 +1,16 @@
 const express = require("express");
 
-const ctrl = require("../../controllers");
-
 const {
 	fieldValidation,
 	authentificate,
 	isValidId,
 	isValidIdNotice,
+	checkPetData,
 } = require("../../middlewares");
-
+const ctrl = require("../../controllers");
 const { Image } = require("../../services");
-
-const { addSchema, updateFavorite } = require("../../schema");
+const { addSchema, editUserValidation } = require("../../schema");
+const { file, schemaMessage } = require("../../constants");
 
 const router = express.Router();
 
@@ -37,21 +36,23 @@ router.patch(
 	"/:noticeId/addFavorite",
 	authentificate,
 	isValidIdNotice,
-	// fieldValidation(updateFavorite, "Missing field favorite"),
-	ctrl.updateStatus
+	fieldValidation(editUserValidation, schemaMessage.auth),
+	ctrl.addFavorite
 );
 
 router.patch(
 	"/:noticeId/delFavorite",
+	authentificate,
 	isValidIdNotice,
-	fieldValidation(updateFavorite, "Missing field favorite"),
-	ctrl.updateStatus
+	fieldValidation(editUserValidation, schemaMessage.auth),
+	ctrl.deleteFavorite
 );
 
 router.post(
 	"/add-pet",
 	authentificate,
-	Image.uploadErrorHandler("file", "file"),
+	Image.uploadErrorHandler(file.notice.fieldName, file.notice.fileName),
+	checkPetData,
 	fieldValidation(addSchema),
 	ctrl.add
 );

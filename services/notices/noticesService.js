@@ -49,21 +49,30 @@ class Notices {
 		return { notices, total };
 	}
 
-	static async findOwnerFavNotices({ favorites }) {
-		const notices = await Notice.find({ favorites });
+	static async findOwnerFavNotices(id) {
+		const favorites = await User.find(id);
 
-		const total = await Notice.count({ favorites });
+		const total = await User.count(id);
 
-		return { notices, total };
+		return { favorites, total };
 	}
 
-  static updateUserFavs(id, data) {
-    const key = Object.keys(data);
-    return User.findByIdAndUpdate(id, { [key]: { faves: data[key] } });
-  }
+	static addUserFavorites(id, data) {
+		const key = Object.keys(data);
+		return User.findByIdAndUpdate(
+			id,
+			{ [key]: { favorites: data[key] } },
+			{ new: true }
+		);
+	}
 
-	static deleteNotice(id) {
-		return Notice.findByIdAndDelete(id);
+	static deleteUserFavorites(id, data) {
+		const key = Object.keys(data);
+		return User.findByIdAndUpdate(
+			id,
+			{ [key]: { favorites: data[key] } },
+			{ new: true }
+		);
 	}
 }
 

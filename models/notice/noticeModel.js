@@ -36,10 +36,6 @@ const noticeSchema = new Schema(
 		price: {
 			type: Number,
 		},
-		favorite: {
-			type: Boolean,
-			default: false,
-		},
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: "user",

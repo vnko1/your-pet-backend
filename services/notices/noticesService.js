@@ -57,16 +57,7 @@ class Notices {
 		return { notices, total };
 	}
 
-	static addUserFavorites(id, data) {
-		const key = Object.keys(data);
-		return User.findByIdAndUpdate(
-			id,
-			{ [key]: { favorites: data[key] } },
-			{ new: true }
-		);
-	}
-
-	static deleteUserFavorites(id, data) {
+	static changeUserFavorites(id, data) {
 		const key = Object.keys(data);
 		return User.findByIdAndUpdate(
 			id,

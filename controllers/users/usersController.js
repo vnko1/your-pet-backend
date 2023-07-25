@@ -8,7 +8,7 @@ const {
   createToken,
   hashPassword,
 } = require("../../utils");
-const { errorMessage, defaultAvatarUrl } = require("../../constants");
+const { errorMessage } = require("../../constants");
 
 const register = async (req, res) => {
   const { email, password, name } = req.body;
@@ -17,19 +17,28 @@ const register = async (req, res) => {
   if (user) throw httpError(409, errorMessage[409]);
 
   const hashPass = await hashPassword(password);
-  const token = createToken({ email });
-  const avatarUrl = defaultAvatarUrl;
+  const token = createToken(
+    { email },
+    process.env.JWT_KEY,
+    process.env.TOKEN_LIFE
+  );
+  const refreshToken = createToken(
+    { email },
+    process.env.REFRESH_JWT_KEY,
+    process.env.REFRESH_TOKEN_LIFE
+  );
 
   const newUser = await Users.createUser({
     email,
     password: hashPass,
     token,
     name,
-    avatarUrl,
+    refreshToken,
   });
 
   res.json({
     token,
+    refreshToken,
     user: {
       uid: newUser.id,
       name: newUser.name,
@@ -49,17 +58,27 @@ const login = async (req, res) => {
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) throw httpError(401, errorMessage[401].wrongLogin);
 
-  const token = createToken({ id: user.id });
+  const token = createToken(
+    { id: user.id },
+    process.env.JWT_KEY,
+    process.env.TOKEN_LIFE
+  );
+  const refreshToken = createToken(
+    { email },
+    process.env.REFRESH_JWT_KEY,
+    process.env.REFRESH_TOKEN_LIFE
+  );
 
   const updatedUser = await Users.updateUser(
     user.id,
-    { token },
+    { token, refreshToken },
     userFieldType.user,
     "-password -avatarId -pets"
   );
 
   res.json({
     token: updatedUser.token,
+    refreshToken: updatedUser.refreshToken,
     user: {
       uid: updatedUser.id,
       email: updatedUser.email,
@@ -88,10 +107,25 @@ const current = async (req, res) => {
   });
 };
 
+const refresh = async (req, res) => {
+  const token = createToken(
+    { id: req.user.id },
+    process.env.JWT_KEY,
+    process.env.TOKEN_LIFE
+  );
+  await Users.updateUser(req.user.id, { token }, userFieldType.user);
+
+  res.json({ token });
+};
+
 const logout = async (req, res) => {
   const { id } = req.user;
 
-  await Users.updateUser(id, { token: "" }, userFieldType.user);
+  await Users.updateUser(
+    id,
+    { token: "", refreshToken: "" },
+    userFieldType.user
+  );
 
   res.sendStatus(204);
 };
@@ -109,6 +143,9 @@ const update = async (req, res) => {
 
   res.json({
     token: body.token ? body.token : updatedUser.token,
+    refreshToken: body.refreshToken
+      ? body.refreshToken
+      : updatedUser.refreshToken,
     user: {
       uid: updatedUser.id,
       email: updatedUser.email,
@@ -149,6 +186,7 @@ module.exports = {
   register: tryCatchWrapper(register),
   login: tryCatchWrapper(login),
   current: tryCatchWrapper(current),
+  refresh: tryCatchWrapper(refresh),
   logout: tryCatchWrapper(logout),
   update: tryCatchWrapper(update),
   getMe: tryCatchWrapper(getMe),

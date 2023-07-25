@@ -25,7 +25,16 @@ const checkUserData = async (req, res, next) => {
 
     if (user) next(httpError(409, errorMessage[409]));
 
-    body.token = createToken({ email: body.email });
+    body.token = createToken(
+      { email: body.email },
+      process.env.JWT_KEY,
+      process.env.TOKEN_LIFE
+    );
+    body.refreshToken = createToken(
+      { email: body.email },
+      process.env.REFRESH_JWT_KEY,
+      process.env.REFRESH_TOKEN_LIFE
+    );
   }
 
   const keys = Object.keys(body);

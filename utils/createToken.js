@@ -1,14 +1,11 @@
 const jwt = require("jsonwebtoken");
 
-const { expiresIn } = require("../constants");
-
-const createToken = (payloadData) => {
+const createToken = (payloadData, secretKey, tokenLife) => {
   const key = Object.keys(payloadData);
 
-  const token = jwt.sign({ [key]: payloadData[key] }, process.env.JWT_KEY, {
-    expiresIn: expiresIn,
+  return jwt.sign({ [key]: payloadData[key] }, secretKey, {
+    expiresIn: tokenLife,
   });
-  return token;
 };
 
 module.exports = { createToken };

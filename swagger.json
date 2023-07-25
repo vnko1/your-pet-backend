@@ -118,6 +118,38 @@
         }
       }
     },
+    "/users/refresh": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Refresh security token endpoint",
+        "parameters": [],
+        "requestBody": {
+          "description": "Refresh token string",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/RefreshResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
     "/users/current": {
       "post": {
         "tags": ["Users"],
@@ -502,6 +534,11 @@
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
           "user": {
             "type": "object",
             "properties": {
@@ -555,6 +592,11 @@
           "token": {
             "type": "string",
             "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
           "user": {
@@ -654,6 +696,27 @@
           }
         }
       },
+      "RefreshRequest": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          }
+        }
+      },
+      "RefreshResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          }
+        }
+      },
       "UpdateUserFieldsRequest": {
         "type": "object",
         "properties": {
@@ -727,6 +790,11 @@
           "token": {
             "type": "string",
             "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
           "user": {
@@ -819,6 +887,11 @@
                 "type": "string",
                 "description": "Pet id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "category": {
+                "type": "string",
+                "description": "Pet category",
+                "example": "my-pet"
               },
               "name": {
                 "type": "string",

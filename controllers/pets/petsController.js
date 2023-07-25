@@ -8,10 +8,18 @@ const addPet = async (req, res) => {
 
   const pet = await Pets.add({ ...body, owner });
   await Users.updateUser(owner, { $push: pet.id }, userFieldType.pets);
-  pet.owner = undefined;
-  pet.fileId = undefined;
 
-  res.json({ pet });
+  res.json({
+    pet: {
+      _id: pet.id,
+      category: pet.category,
+      name: pet.name,
+      date: pet.date,
+      type: pet.type,
+      fileUrl: pet.fileUrl,
+      owner: pet.owner,
+    },
+  });
 };
 
 const deletePet = async (req, res) => {

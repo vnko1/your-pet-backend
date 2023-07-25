@@ -10,7 +10,6 @@ const noticeSchema = new Schema(
 		},
 		category: {
 			type: String,
-			default: "my-pet",
 		},
 		date: {
 			type: Date,

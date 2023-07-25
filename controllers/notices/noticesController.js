@@ -70,10 +70,15 @@ const delById = async (req, res) => {
 };
 
 const updateStatus = async (req, res) => {
+	const { id: owner } = req.user;
 	const { noticeId } = req.params;
-	const updatedStatus = await Notices.updateNotice(noticeId, req.body, {
-		new: true,
-	});
+	const updatedStatus = await Notices.updateUserFavs(
+		owner,
+		{ $push: noticeId },
+		{
+			new: true,
+		}
+	);
 	if (!updatedStatus) {
 		throw httpError(404, "Not found");
 	}

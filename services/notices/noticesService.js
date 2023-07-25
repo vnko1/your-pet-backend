@@ -1,4 +1,5 @@
 const { Notice } = require("../../models");
+const { User } = require("../../models");
 
 class Notices {
 	static addNotice(newNotice) {
@@ -19,9 +20,7 @@ class Notices {
 		const perPage = page > 0 ? (page - 1) * limit : 0;
 		const findOptions = search
 			? {
-					$or: [
-						{ title: { $regex: search, $options: "i" } },
-					],
+					$or: [{ title: { $regex: search, $options: "i" } }],
 			  }
 			: {};
 
@@ -50,17 +49,18 @@ class Notices {
 		return { notices, total };
 	}
 
-	static async findOwnerFavNotices({ favorite }) {
-		const notices = await Notice.find({ favorite });
+	static async findOwnerFavNotices({ favorites }) {
+		const notices = await Notice.find({ favorites });
 
-		const total = await Notice.count({ favorite });
+		const total = await Notice.count({ favorites });
 
 		return { notices, total };
 	}
 
-	static updateNotice(id, newData) {
-		return Notice.findByIdAndUpdate(id, newData, { new: true });
-	}
+  static updateUserFavs(id, data) {
+    const key = Object.keys(data);
+    return User.findByIdAndUpdate(id, { [key]: { faves: data[key] } });
+  }
 
 	static deleteNotice(id) {
 		return Notice.findByIdAndDelete(id);

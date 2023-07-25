@@ -35,8 +35,9 @@ router.delete("/:noticeId", authentificate, isValidId, ctrl.delById);
 
 router.patch(
 	"/:noticeId/addFavorite",
+	authentificate,
 	isValidIdNotice,
-	fieldValidation(updateFavorite, "Missing field favorite"),
+	// fieldValidation(updateFavorite, "Missing field favorite"),
 	ctrl.updateStatus
 );
 

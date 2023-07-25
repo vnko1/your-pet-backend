@@ -43,7 +43,7 @@ const checkUserData = async (req, res, next) => {
   next();
 };
 
-const checkPetData = async (req, res, next) => {
+const checkFieldData = async (req, res, next) => {
   const { body } = req;
 
   if (!req.file) return next(httpError(400, errorMessage[400]));
@@ -75,4 +75,4 @@ const checkUserAuth = async (req, res, next) => {
   next();
 };
 
-module.exports = { checkUserData, checkPetData, checkUserAuth };
+module.exports = { checkUserData, checkFieldData, checkUserAuth };

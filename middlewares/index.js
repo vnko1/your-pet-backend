@@ -3,7 +3,7 @@ const {
   authentificate,
   authentificateByRefreshToken,
 } = require("./authentification");
-const { checkUserData, checkPetData, checkUserAuth } = require("./checkData");
+const { checkUserData, checkFieldData, checkUserAuth } = require("./checkData");
 const { isValidId } = require("./isValdId");
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
   authentificate,
   authentificateByRefreshToken,
   checkUserData,
-  checkPetData,
+  checkFieldData,
   checkUserAuth,
   isValidId,
 };

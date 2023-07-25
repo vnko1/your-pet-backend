@@ -7,19 +7,23 @@ const noticeSchema = new Schema(
 	{
 		name: {
 			type: String,
+			minlength: 2,
+			maxlength: 15,
+			required: [true, "Set name for pet"],
 		},
 		category: {
 			type: String,
+			required: true,
 		},
 		date: {
 			type: Date,
+			required: [true, "Set birthday date for pet"],
 		},
 		type: {
 			type: String,
 		},
-		file: {
-			type: String,
-		},
+		fileUrl: { type: String, required: true },
+		fileId: { type: String, required: true },
 		comments: {
 			type: String,
 		},

@@ -1,9 +1,7 @@
 const Joi = require("joi").extend(require("@joi/date"));
 
 const addSchema = Joi.object({
-	category: Joi.string()
-		.valid("sell", "lost-found", "for-free", "my-pet")
-		.required(),
+	category: Joi.string().valid("sell", "lost-found", "for-free").required(),
 	name: Joi.string()
 		.min(2)
 		.max(16)
@@ -20,6 +18,8 @@ const addSchema = Joi.object({
 		.max(16)
 		.messages({ "string.valid": `Enter the breed of pet` })
 		.required(),
+	fileUrl: Joi.string(),
+	fileId: Joi.string(),
 	sex: Joi.string()
 		.valid("male", "female")
 		.when("category", {
@@ -48,8 +48,4 @@ const addSchema = Joi.object({
 	favorite: Joi.boolean,
 });
 
-const updateFavorite = Joi.object({
-	favorite: Joi.boolean().required(),
-});
-
-module.exports = { addSchema, updateFavorite };
+module.exports = { addSchema };

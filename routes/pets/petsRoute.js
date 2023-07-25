@@ -3,7 +3,7 @@ const express = require("express");
 const {
   authentificate,
   fieldValidation,
-  checkPetData,
+  checkFieldData,
   checkUserAuth,
   isValidId,
 } = require("../../middlewares");
@@ -19,7 +19,7 @@ router.use(authentificate);
 router.post(
   "/",
   Image.uploadErrorHandler(file.pet.fieldName, file.pet.fileName),
-  checkPetData,
+  checkFieldData,
   fieldValidation(addPetSchemaValidation, schemaMessage.pet),
   addPet
 );

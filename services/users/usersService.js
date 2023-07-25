@@ -27,6 +27,13 @@ class Users {
   static findUserById(id, projection = null) {
     return User.findById(id, projection);
   }
+
+  static async findUserFavNotices(id) {
+    const notices = await User.find(id);
+    const total = await User.countDocuments(id);
+
+    return { notices, total };
+  }
 }
 
 module.exports = { Users };

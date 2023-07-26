@@ -10,11 +10,11 @@ const add = async (req, res) => {
 
 const getById = async (req, res) => {
 	const { noticeId } = req.params;
-	const result = await Notices.findNoticeById(noticeId);
-	if (!result) {
+	const response = await Notices.findNoticeById(noticeId);
+	if (!response) {
 		throw httpError(404, "Not found");
 	}
-	res.json(result);
+	res.json(response);
 };
 
 const getNoticeByQuery = async (req, res) => {
@@ -56,7 +56,7 @@ const updateNoticeById = async (req, res) => {
 		throw httpError(404, "Not found");
 	}
 
-	res.json(updatedNotice);
+	res.json({ data: updatedNotice });
 };
 
 const delById = async (req, res) => {
@@ -65,7 +65,7 @@ const delById = async (req, res) => {
 	if (!result) {
 		throw httpError(404, "Not found");
 	}
-	res.json({ message: "Notice deleted" });
+	res.json({ id: "Notice deleted" });
 };
 
 const addFavorite = async (req, res) => {
@@ -82,7 +82,7 @@ const addFavorite = async (req, res) => {
 	if (!updatedStatus) {
 		throw httpError(404, "Not found");
 	}
-	res.json(updatedStatus);
+	res.json({ data: updatedStatus });
 };
 
 const deleteFavorite = async (req, res) => {
@@ -99,7 +99,7 @@ const deleteFavorite = async (req, res) => {
 	if (!updatedStatus) {
 		throw httpError(404, "Not found");
 	}
-	res.json(updatedStatus);
+	res.json({ data: updatedStatus });
 };
 
 module.exports = {

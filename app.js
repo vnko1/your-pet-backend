@@ -10,7 +10,7 @@ const {
 	petsRoute,
 	sponsorsRoute,
 	articlesRoute,
-	noticesRouter,
+	noticesRoute,
 } = require("./routes");
 const { errorMessage } = require("./constants");
 
@@ -26,7 +26,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/users", usersRoute);
 
-app.use("/notices", noticesRouter);
+app.use("/notices", noticesRoute);
 
 app.use("/pets", petsRoute);
 

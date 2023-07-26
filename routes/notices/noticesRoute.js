@@ -36,7 +36,6 @@ router.patch(
 	"/:noticeId/addFavorite",
 	authentificate,
 	isValidIdNotice,
-	fieldValidation(editUserValidation, schemaMessage.auth),
 	ctrl.addFavorite
 );
 
@@ -44,7 +43,6 @@ router.patch(
 	"/:noticeId/delFavorite",
 	authentificate,
 	isValidIdNotice,
-	fieldValidation(editUserValidation, schemaMessage.auth),
 	ctrl.deleteFavorite
 );
 

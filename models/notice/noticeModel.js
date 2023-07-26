@@ -1,14 +1,12 @@
 const { Schema, model } = require("mongoose");
-
 const { schemaError } = require("../../utils");
-const { date } = require("joi");
 
 const noticeSchema = new Schema(
 	{
 		name: {
 			type: String,
 			minlength: 2,
-			maxlength: 15,
+			maxlength: 16,
 			required: [true, "Set name for pet"],
 		},
 		category: {
@@ -21,17 +19,20 @@ const noticeSchema = new Schema(
 		},
 		type: {
 			type: String,
+			required: true,
 		},
 		fileUrl: { type: String, required: true },
 		fileId: { type: String, required: true },
 		comments: {
 			type: String,
+			maxlength: 120,
 		},
 		title: {
 			type: String,
 		},
 		sex: {
 			type: String,
+			required: true,
 		},
 		location: {
 			type: String,

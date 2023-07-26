@@ -29,6 +29,12 @@ const userSchema = new Schema(
       required: [true, "Set name for user"],
     },
     pets: [{ type: Schema.Types.ObjectId, ref: "pet" }],
+    favorites: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "notice",
+      },
+    ],
     birthday: {
       type: Date,
     },

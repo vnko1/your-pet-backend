@@ -453,51 +453,17 @@
               "pets": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "description": "Pet id",
-                      "example": "64bd39c0b38fc2fe5b5dfef8"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "Pet name",
-                      "format": "text",
-                      "example": "Peaches"
-                    },
-
-                    "date": {
-                      "type": "date",
-                      "description": "Pet birthday date",
-                      "example": "2022-12-22T00:00:00.000Z"
-                    },
-                    "type": {
-                      "type": "string",
-                      "description": "Pet`s type",
-                      "example": "cat"
-                    },
-                    "fileUrl": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "User avatar file"
-                    },
-                    "comments": {
-                      "type": "string",
-                      "description": "Pet`s description",
-                      "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
-                    },
-                    "owner": {
-                      "type": "string",
-                      "description": "User id",
-                      "example": "64bd39c0b38fc2fe5b5dfef8"
-                    },
-                    "fileId": {
-                      "type": "string",
-                      "description": "Cloudinary image id",
-                      "example": "file/file_TYy7ANX7qfp4ZAbCw3r5Y_v5wqkj"
-                    }
-                  }
+                  "type": "string",
+                  "description": "Pet`s card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Notice card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
                 }
               }
             }
@@ -641,6 +607,22 @@
                 "type": "string",
                 "description": "User location",
                 "example": "London"
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Pet`s card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Notice card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
               }
             }
           }
@@ -691,6 +673,22 @@
                 "type": "string",
                 "description": "User location",
                 "example": "London"
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Pet`s card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Notice card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
               }
             }
           }
@@ -839,6 +837,22 @@
                 "type": "string",
                 "description": "User location",
                 "example": "London"
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Pet`s card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Notice card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
               }
             }
           }

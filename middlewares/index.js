@@ -10,9 +10,9 @@ module.exports = {
   fieldValidation,
   checkFile,
   authentificate,
-  authentificateByRefreshToken,
   checkUserData,
-  checkFieldData,
   checkUserAuth,
   isValidId,
+  authentificateByRefreshToken,
+  checkFieldData,
 };

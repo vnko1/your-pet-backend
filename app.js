@@ -6,10 +6,11 @@ const swaggerDocument = require("./swagger.json");
 require("dotenv").config();
 
 const {
-  usersRoute,
-  petsRoute,
-  sponsorsRoute,
-  articlesRoute,
+	usersRoute,
+	petsRoute,
+	sponsorsRoute,
+	articlesRoute,
+	noticesRoute,
 } = require("./routes");
 const { errorMessage } = require("./constants");
 
@@ -25,6 +26,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/users", usersRoute);
 
+app.use("/notices", noticesRoute);
+
 app.use("/pets", petsRoute);
 
 app.use("/sponsors", sponsorsRoute);
@@ -32,12 +35,12 @@ app.use("/sponsors", sponsorsRoute);
 app.use("/articles", articlesRoute);
 
 app.use((req, res) => {
-  res.status(404).json({ message: errorMessage[404] });
+	res.status(404).json({ message: errorMessage[404] });
 });
 
 app.use((err, _, res, next) => {
-  const { status = 500 } = err;
-  res.status(status).json({ message: err.message });
+	const { status = 500 } = err;
+	res.status(status).json({ message: err.message });
 });
 
 module.exports = app;

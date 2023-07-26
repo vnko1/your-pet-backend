@@ -8,6 +8,17 @@ const {
   getMe,
 } = require("./users/usersController");
 
+const {
+  add,
+  addFavorite,
+  delById,
+  getById,
+  getNoticeByQuery,
+  getOwnerNotices,
+  getOwnerFavNotices,
+  deleteFavorite,
+} = require("./notices/noticesController");
+
 const { addPet, deletePet } = require("./pets/petsController");
 
 const { getSponsors } = require("./sponsors/sponsorsController");
@@ -26,4 +37,12 @@ module.exports = {
   deletePet,
   getSponsors,
   getArticles,
+  add,
+  addFavorite,
+  delById,
+  getById,
+  getNoticeByQuery,
+  getOwnerNotices,
+  getOwnerFavNotices,
+  deleteFavorite,
 };

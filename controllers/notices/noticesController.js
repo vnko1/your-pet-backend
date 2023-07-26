@@ -84,7 +84,7 @@ const delById = async (req, res) => {
 const addFavorite = async (req, res) => {
 	const { id: owner } = req.user;
 	const { noticeId } = req.params;
-	const updatedStatus = await Notices.changeUserFavorites(
+	const updatedStatus = await Users.updateUser(
 		owner,
 		{ $addToSet: noticeId },
 		{
@@ -101,7 +101,7 @@ const addFavorite = async (req, res) => {
 const deleteFavorite = async (req, res) => {
 	const { id: owner } = req.user;
 	const { noticeId } = req.params;
-	const updatedStatus = await Notices.changeUserFavorites(
+	const updatedStatus = await Users.updateUser(
 		owner,
 		{ $pull: noticeId },
 		{

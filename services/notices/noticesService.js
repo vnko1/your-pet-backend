@@ -38,7 +38,7 @@ class Notices {
 				comments: sort,
 			});
 
-		const total = await Notice.count(findOptions);
+		const total = await Notice.countDocuments(findOptions);
 
 		return { notices, total };
 	}
@@ -46,7 +46,7 @@ class Notices {
 	static async findOwnerNotices({ owner }) {
 		const notices = await Notice.find({ owner });
 
-		const total = await Notice.count({ owner });
+		const total = await Notice.countDocuments({ owner });
 
 		return { notices, total };
 	}
@@ -54,18 +54,9 @@ class Notices {
 	static async findOwnerFavNotices({}) {
 		const notices = await User.find(id);
 
-		const total = await User.count(id);
+		const total = await User.countDocuments(id);
 
 		return { notices, total };
-	}
-
-	static changeUserFavorites(id, data) {
-		const key = Object.keys(data);
-		return User.findByIdAndUpdate(
-			id,
-			{ [key]: { favorites: data[key] } },
-			{ new: true }
-		);
 	}
 
 	static deleteById(id) {

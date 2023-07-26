@@ -36,6 +36,8 @@ const noticeSchema = new Schema(
 		},
 		location: {
 			type: String,
+			minlength: 2,
+			maxlength: 16,
 		},
 		price: {
 			type: Number,

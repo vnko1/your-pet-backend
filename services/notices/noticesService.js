@@ -51,14 +51,6 @@ class Notices {
 		return { notices, total };
 	}
 
-	static async findOwnerFavNotices({}) {
-		const notices = await User.find(id);
-
-		const total = await User.countDocuments(id);
-
-		return { notices, total };
-	}
-
 	static deleteById(id) {
 		return Notice.findByIdAndDelete(id);
 	}

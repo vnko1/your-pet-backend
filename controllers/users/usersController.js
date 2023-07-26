@@ -72,7 +72,7 @@ const login = async (req, res) => {
   const updatedUser = await Users.updateUser({
     id: user.id,
     data: { token, refreshToken },
-    projection: "-password -avatarId -pets",
+    projection: "-password -avatarId",
   });
 
   res.json({

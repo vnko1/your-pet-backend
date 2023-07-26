@@ -5,7 +5,7 @@ const { Notices, Users, Image } = require("../../services");
 const add = async (req, res) => {
 	const { id: owner } = req.user;
 	const response = await Notices.addNotice({ ...req.body, owner });
-	res.status(201).json(response);
+	res.status(201).json({data: response});
 };
 
 const getById = async (req, res) => {
@@ -14,7 +14,7 @@ const getById = async (req, res) => {
 	if (!response) {
 		throw httpError(404, "Not found");
 	}
-	res.json(response);
+	res.json({data: response});
 };
 
 const getNoticeByQuery = async (req, res) => {
@@ -27,7 +27,7 @@ const getNoticeByQuery = async (req, res) => {
 		category,
 	});
 
-	res.json({ notices, total });
+	res.json({ data: { notices, total } });
 };
 
 const getOwnerNotices = async (req, res) => {
@@ -36,7 +36,7 @@ const getOwnerNotices = async (req, res) => {
 		owner,
 	});
 
-	res.json({ notices, total });
+	res.json({ data: { notices, total } });
 };
 
 const getOwnerFavNotices = async (req, res) => {
@@ -66,31 +66,28 @@ const delById = async (req, res) => {
 	const { notices } = await Notices.findOwnerNotices({
 		owner,
 	});
-	const card = notices.find(notice => notice.id === noticeId);
+	const card = notices.find((notice) => notice.id === noticeId);
 
 	if (card) {
 		const notice = await Notices.deleteById(noticeId);
 		await Image.deleteImage(notice.fileId);
 	} else {
-    throw httpError(404, `${noticeId} not exist or you not owner`);
-  }
+		throw httpError(404, `${noticeId} not exist or you not owner`);
+	}
 
-	if (!notice) {
+	if (!card) {
 		throw httpError(404, "Not found");
 	}
-	res.json({ message: `${noticeId} deleted` });
+	res.json({ _id: noticeId });
 };
 
 const addFavorite = async (req, res) => {
 	const { id: owner } = req.user;
 	const { noticeId } = req.params;
-	const updatedStatus = await Users.updateUser(
+	const updatedStatus = await Users.updateUser({
 		owner,
-		{ $addToSet: noticeId },
-		{
-			new: true,
-		}
-	);
+		$addToSet: noticeId,
+	});
 
 	if (!updatedStatus) {
 		throw httpError(404, "Not found");
@@ -101,13 +98,10 @@ const addFavorite = async (req, res) => {
 const deleteFavorite = async (req, res) => {
 	const { id: owner } = req.user;
 	const { noticeId } = req.params;
-	const updatedStatus = await Users.updateUser(
+	const updatedStatus = await Users.updateUser({
 		owner,
-		{ $pull: noticeId },
-		{
-			new: true,
-		}
-	);
+		$addToSet: noticeId,
+	});
 
 	if (!updatedStatus) {
 		throw httpError(404, "Not found");

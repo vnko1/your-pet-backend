@@ -4,13 +4,12 @@ const {
 	fieldValidation,
 	authentificate,
 	isValidId,
-	isValidIdNotice,
 	checkFieldData,
 } = require("../../middlewares");
 const ctrl = require("../../controllers");
 const { Image } = require("../../services");
-const { addSchema, editUserValidation } = require("../../schema");
-const { file, schemaMessage } = require("../../constants");
+const { addSchema } = require("../../schema");
+const { file, errorMessage } = require("../../constants");
 
 const router = express.Router();
 
@@ -20,29 +19,34 @@ router.get("/owner", authentificate, ctrl.getOwnerNotices);
 
 router.get("/owner/favorite", authentificate, ctrl.getOwnerFavNotices);
 
-router.get("/:noticeId", isValidIdNotice, ctrl.getById);
+router.get("/:noticeId", isValidId(400, errorMessage[400]), ctrl.getById);
 
 router.put(
 	"/:noticeId",
 	authentificate,
-	isValidIdNotice,
+	isValidId(400, errorMessage[400]),
 	fieldValidation(addSchema),
 	ctrl.updateNoticeById
 );
 
-router.delete("/:noticeId", authentificate, isValidIdNotice, ctrl.delById);
+router.delete(
+	"/:noticeId",
+	authentificate,
+	isValidId(400, errorMessage[400]),
+	ctrl.delById
+);
 
 router.patch(
 	"/:noticeId/addFavorite",
 	authentificate,
-	isValidIdNotice,
+	isValidId(400, errorMessage[400]),
 	ctrl.addFavorite
 );
 
 router.patch(
 	"/:noticeId/delFavorite",
 	authentificate,
-	isValidIdNotice,
+	isValidId(400, errorMessage[400]),
 	ctrl.deleteFavorite
 );
 

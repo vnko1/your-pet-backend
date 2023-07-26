@@ -21,6 +21,7 @@ class Notices {
 		const findOptions = search
 			? {
 					$or: [{ title: { $regex: search, $options: "i" } }],
+					$or: [{ comments: { $regex: search, $options: "i" } }],
 			  }
 			: {};
 
@@ -34,6 +35,7 @@ class Notices {
 			.sort({
 				category: sort,
 				title: sort,
+				comments: sort,
 			});
 
 		const total = await Notice.count(findOptions);

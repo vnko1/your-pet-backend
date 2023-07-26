@@ -65,7 +65,7 @@ const delById = async (req, res) => {
 	if (!result) {
 		throw httpError(404, "Not found");
 	}
-	res.json({ message: `${noticeId} deleted`});
+	res.json({ message: `${noticeId} deleted` });
 };
 
 const addFavorite = async (req, res) => {

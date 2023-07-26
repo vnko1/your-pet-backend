@@ -65,6 +65,10 @@ class Notices {
 			{ new: true }
 		);
 	}
+
+	static deleteById(id) {
+		return Notice.findByIdAndDelete(id);
+	}
 }
 
 module.exports = { Notices };

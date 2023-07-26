@@ -61,11 +61,11 @@ const updateNoticeById = async (req, res) => {
 
 const delById = async (req, res) => {
 	const { noticeId } = req.params;
-	const result = await Notices.deleteNotice(noticeId);
+	const result = await Notices.deleteById(noticeId);
 	if (!result) {
 		throw httpError(404, "Not found");
 	}
-	res.json({ id: "Notice deleted" });
+	res.json({ message: `${noticeId} deleted`});
 };
 
 const addFavorite = async (req, res) => {

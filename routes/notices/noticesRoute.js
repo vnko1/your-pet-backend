@@ -5,7 +5,7 @@ const {
 	authentificate,
 	isValidId,
 	isValidIdNotice,
-	checkPetData,
+	checkFieldData,
 } = require("../../middlewares");
 const ctrl = require("../../controllers");
 const { Image } = require("../../services");
@@ -52,7 +52,7 @@ router.post(
 	"/add-pet",
 	authentificate,
 	Image.uploadErrorHandler(file.notice.fieldName, file.notice.fileName),
-	checkPetData,
+	checkFieldData,
 	fieldValidation(addSchema),
 	ctrl.add
 );

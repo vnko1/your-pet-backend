@@ -11,7 +11,6 @@ module.exports = {
 	checkFile,
 	authentificate,
 	checkUserData,
-	checkPetData,
 	checkUserAuth,
 	isValidId,
 	isValidIdNotice,

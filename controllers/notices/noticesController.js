@@ -67,12 +67,13 @@ const delById = async (req, res) => {
 		owner,
 	});
 	const card = notices.find(notice => notice.id === noticeId);
-	console.log(card);
 
 	if (card) {
 		const notice = await Notices.deleteById(noticeId);
 		await Image.deleteImage(notice.fileId);
-	}
+	} else {
+    throw httpError(404, `${noticeId} not exist or you not owner`);
+  }
 
 	if (!notice) {
 		throw httpError(404, "Not found");

@@ -136,7 +136,7 @@ const update = async (req, res) => {
   const updatedUser = await Users.updateUser({
     id,
     data: body,
-    projection: "-password -avatarId -pets",
+    projection: "-password -avatarId",
   });
 
   res.json({

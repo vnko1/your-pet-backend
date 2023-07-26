@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   authentificate,
+  authentificateByRefreshToken,
   fieldValidation,
   checkUserData,
 } = require("../../middlewares");
@@ -12,13 +13,14 @@ const {
   editUserValidation,
 } = require("../../schema");
 
-const { Image, Pets } = require("../../services");
+const { Image } = require("../../services");
 
 const {
   register,
   login,
   current,
   logout,
+  refresh,
   update,
   getMe,
 } = require("../../controllers");
@@ -38,6 +40,7 @@ router.post(
   fieldValidation(loginSchemaValidation, schemaMessage.auth),
   login
 );
+router.post("/refresh", authentificateByRefreshToken, refresh);
 
 router.post("/current", authentificate, current);
 

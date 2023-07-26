@@ -1,3 +1,6 @@
+# My Pet API docs
+<a href='https://my-pet-app-8sz1.onrender.com/api-docs/'>API docs</a>
+
 # Git Guide for Team
 
 This guide provides instructions on how to use Git effectively for your team's backend development work.

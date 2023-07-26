@@ -29,4 +29,30 @@ const authentificate = async (req, _, next) => {
   }
 };
 
-module.exports = { authentificate: tryCatchWrapper(authentificate) };
+const authentificateByRefreshToken = async (req, _, next) => {
+  const { refreshToken } = req.body;
+
+  if (!refreshToken) return next(httpError(401, errorMessage[401].wrongAuth));
+
+  try {
+    const userToken = jwt.verify(refreshToken, process.env.REFRESH_JWT_KEY);
+    console.log(userToken);
+    let user = null;
+    if (userToken.id) user = await Users.findUserById(userToken.id);
+    if (userToken.email)
+      user = await Users.findUserByQuery({ email: userToken.email });
+
+    if (!user || !user.refreshToken || user.refreshToken !== refreshToken)
+      return next(httpError(401, errorMessage[401].wrongAuth));
+
+    req.user = user;
+    next();
+  } catch (error) {
+    next(httpError(401, errorMessage[401].wrongAuth));
+  }
+};
+
+module.exports = {
+  authentificate: tryCatchWrapper(authentificate),
+  authentificateByRefreshToken: tryCatchWrapper(authentificateByRefreshToken),
+};

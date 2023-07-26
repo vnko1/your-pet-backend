@@ -2,7 +2,6 @@ const {
   emailFrom,
   file,
   errorMessage,
-  expiresIn,
   fileFormats,
   serverMessage,
   emailRegex,
@@ -11,13 +10,13 @@ const {
   schemaMessage,
   cityRegex,
   defaultAvatarUrl,
+  userFieldType,
 } = require("./constants");
 
 module.exports = {
   emailFrom,
   file,
   errorMessage,
-  expiresIn,
   fileFormats,
   serverMessage,
   emailRegex,
@@ -26,4 +25,5 @@ module.exports = {
   schemaMessage,
   cityRegex,
   defaultAvatarUrl,
+  userFieldType,
 };

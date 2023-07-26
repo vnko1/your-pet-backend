@@ -3,14 +3,14 @@ const express = require("express");
 const {
   authentificate,
   fieldValidation,
-  checkPetData,
+  checkFieldData,
   checkUserAuth,
   isValidId,
 } = require("../../middlewares");
 const { addPetSchemaValidation } = require("../../schema");
 const { Image } = require("../../services");
 const { addPet, deletePet } = require("../../controllers");
-const { file, schemaMessage } = require("../../constants");
+const { file, schemaMessage, errorMessage } = require("../../constants");
 
 const router = express.Router();
 
@@ -19,11 +19,16 @@ router.use(authentificate);
 router.post(
   "/",
   Image.uploadErrorHandler(file.pet.fieldName, file.pet.fileName),
-  checkPetData,
+  checkFieldData,
   fieldValidation(addPetSchemaValidation, schemaMessage.pet),
   addPet
 );
 
-router.delete("/:petId", isValidId, checkUserAuth, deletePet);
+router.delete(
+  "/:petId",
+  isValidId(400, errorMessage[400]),
+  checkUserAuth,
+  deletePet
+);
 
 module.exports = router;

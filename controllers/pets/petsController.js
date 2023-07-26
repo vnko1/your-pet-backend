@@ -1,28 +1,45 @@
 const { Pets, Image, Users } = require("../../services");
 const { tryCatchWrapper } = require("../../utils");
+const { userFieldType } = require("../../constants");
 
 const addPet = async (req, res) => {
   const { id: owner } = req.user;
   const { body } = req;
 
   const pet = await Pets.add({ ...body, owner });
-  await Users.updateUserPets(owner, { $push: pet.id });
-  pet.owner = undefined;
-  pet.fileId = undefined;
+  await Users.updateUser({
+    id: owner,
+    fieldName: "pets",
+    data: { $push: pet.id },
+  });
 
-  res.json({ pet });
+  res.json({
+    pet: {
+      _id: pet.id,
+      category: pet.category,
+      name: pet.name,
+      date: pet.date,
+      type: pet.type,
+      fileUrl: pet.fileUrl,
+      owner: pet.owner,
+    },
+  });
 };
 
 const deletePet = async (req, res) => {
   const { petId } = req.params;
 
   const pet = await Pets.remove(petId);
-  await Image.deleteImage(pet.fileId);
-  await Users.updateUserPets(pet.owner, { $pull: pet.id });
-  pet.owner = undefined;
-  pet.fileId = undefined;
 
-  res.json({ pet });
+  await Image.deleteImage(pet.fileId);
+
+  await Users.updateUser({
+    id: pet.owner,
+    data: { $pull: pet.id },
+    fieldName: "pets",
+  });
+
+  res.json({ _id: pet.id });
 };
 
 module.exports = {

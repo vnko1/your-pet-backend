@@ -118,6 +118,38 @@
         }
       }
     },
+    "/users/refresh": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Refresh security token endpoint",
+        "parameters": [],
+        "requestBody": {
+          "description": "Refresh token string",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/RefreshResponse" }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
     "/users/current": {
       "post": {
         "tags": ["Users"],
@@ -271,7 +303,7 @@
             "description": "Successfull operations",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#components/schemas/PetResponse" }
+                "schema": { "$ref": "#components/schemas/DeletePetResponse" }
               }
             }
           },
@@ -378,7 +410,7 @@
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -421,51 +453,17 @@
               "pets": {
                 "type": "array",
                 "items": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "string",
-                      "description": "Pet id",
-                      "example": "64bd39c0b38fc2fe5b5dfef8"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "Pet name",
-                      "format": "text",
-                      "example": "Peaches"
-                    },
-
-                    "date": {
-                      "type": "date",
-                      "description": "Pet birthday date",
-                      "example": "2022-12-22T00:00:00.000Z"
-                    },
-                    "type": {
-                      "type": "string",
-                      "description": "Pet`s type",
-                      "example": "cat"
-                    },
-                    "fileUrl": {
-                      "type": "string",
-                      "format": "binary",
-                      "description": "User avatar file"
-                    },
-                    "comments": {
-                      "type": "string",
-                      "description": "Pet`s description",
-                      "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
-                    },
-                    "owner": {
-                      "type": "string",
-                      "description": "User id",
-                      "example": "64bd39c0b38fc2fe5b5dfef8"
-                    },
-                    "fileId": {
-                      "type": "string",
-                      "description": "Cloudinary image id",
-                      "example": "file/file_TYy7ANX7qfp4ZAbCw3r5Y_v5wqkj"
-                    }
-                  }
+                  "type": "string",
+                  "description": "Pet`s card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Notice card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
                 }
               }
             }
@@ -502,10 +500,15 @@
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -557,10 +560,15 @@
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -599,6 +607,22 @@
                 "type": "string",
                 "description": "User location",
                 "example": "London"
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Pet`s card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Notice card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
               }
             }
           }
@@ -610,7 +634,7 @@
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -649,8 +673,45 @@
                 "type": "string",
                 "description": "User location",
                 "example": "London"
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Pet`s card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Notice card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
               }
             }
+          }
+        }
+      },
+      "RefreshRequest": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          }
+        }
+      },
+      "RefreshResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           }
         }
       },
@@ -729,10 +790,15 @@
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
           "user": {
             "type": "object",
             "properties": {
-              "_id": {
+              "uid": {
                 "type": "string",
                 "description": "User id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
@@ -771,6 +837,22 @@
                 "type": "string",
                 "description": "User location",
                 "example": "London"
+              },
+              "pets": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Pet`s card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "Notice card id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
               }
             }
           }
@@ -820,6 +902,11 @@
                 "description": "Pet id",
                 "example": "64bd39c0b38fc2fe5b5dfef8"
               },
+              "category": {
+                "type": "string",
+                "description": "Pet category",
+                "example": "my-pet"
+              },
               "name": {
                 "type": "string",
                 "description": "Pet name",
@@ -839,8 +926,8 @@
               },
               "fileUrl": {
                 "type": "string",
-                "format": "binary",
-                "description": "User avatar file"
+                "description": "Pet image url",
+                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
               },
               "comments": {
                 "type": "string",
@@ -848,6 +935,16 @@
                 "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
               }
             }
+          }
+        }
+      },
+      "DeletePetResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Pet id",
+            "example": "64bd39c0b38fc2fe5b5dfef8"
           }
         }
       },
@@ -973,6 +1070,11 @@
                 }
               }
             }
+          },
+          "total": {
+            "type": "integer",
+            "description": "Return total counts of documents",
+            "example": "1121"
           }
         }
       }

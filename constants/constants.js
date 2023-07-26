@@ -1,5 +1,7 @@
 const emailFrom = "valenkoedu@gmail.com";
 
+const userFieldType = { pets: "pets", user: "user" };
+
 const file = {
   avatar: {
     fieldName: "avatar",
@@ -35,8 +37,6 @@ const errorMessage = {
   409: "Email in use.",
 };
 
-const expiresIn = "7d";
-
 const fileFormats = ["jpg", "png"];
 
 const serverMessage = {
@@ -64,7 +64,6 @@ module.exports = {
   emailFrom,
   file,
   errorMessage,
-  expiresIn,
   fileFormats,
   serverMessage,
   schemaMessage,
@@ -73,4 +72,5 @@ module.exports = {
   phoneRegex,
   cityRegex,
   defaultAvatarUrl,
+  userFieldType,
 };

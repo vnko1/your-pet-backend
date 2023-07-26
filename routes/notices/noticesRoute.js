@@ -1,10 +1,10 @@
 const express = require("express");
 
 const {
-	fieldValidation,
-	authentificate,
-	isValidId,
-	checkFieldData,
+  fieldValidation,
+  authentificate,
+  isValidId,
+  checkFieldData,
 } = require("../../middlewares");
 const ctrl = require("../../controllers");
 const { Image } = require("../../services");
@@ -21,42 +21,42 @@ router.get("/owner/favorite", authentificate, ctrl.getOwnerFavNotices);
 
 router.get("/:noticeId", isValidId(400, errorMessage[400]), ctrl.getById);
 
-router.put(
-	"/:noticeId",
-	authentificate,
-	isValidId(400, errorMessage[400]),
-	fieldValidation(addSchema),
-	ctrl.updateNoticeById
+router.patch(
+  "/:noticeId",
+  authentificate,
+  isValidId(400, errorMessage[400]),
+  fieldValidation(addSchema),
+  ctrl.updateNoticeById
 );
 
 router.delete(
-	"/:noticeId",
-	authentificate,
-	isValidId(400, errorMessage[400]),
-	ctrl.delById
+  "/:noticeId",
+  authentificate,
+  isValidId(400, errorMessage[400]),
+  ctrl.delById
 );
 
 router.patch(
-	"/:noticeId/addFavorite",
-	authentificate,
-	isValidId(400, errorMessage[400]),
-	ctrl.addFavorite
+  "/:noticeId/addFavorite",
+  authentificate,
+  isValidId(400, errorMessage[400]),
+  ctrl.addFavorite
 );
 
 router.patch(
-	"/:noticeId/delFavorite",
-	authentificate,
-	isValidId(400, errorMessage[400]),
-	ctrl.deleteFavorite
+  "/:noticeId/delFavorite",
+  authentificate,
+  isValidId(400, errorMessage[400]),
+  ctrl.deleteFavorite
 );
 
 router.post(
-	"/add-pet",
-	authentificate,
-	Image.uploadErrorHandler(file.notice.fieldName, file.notice.fileName),
-	checkFieldData,
-	fieldValidation(addSchema),
-	ctrl.add
+  "/add-pet",
+  authentificate,
+  Image.uploadErrorHandler(file.notice.fieldName, file.notice.fileName),
+  checkFieldData,
+  fieldValidation(addSchema),
+  ctrl.add
 );
 
 module.exports = router;

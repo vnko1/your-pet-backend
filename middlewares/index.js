@@ -5,15 +5,14 @@ const {
 } = require("./authentification");
 const { checkUserData, checkFieldData, checkUserAuth } = require("./checkData");
 const { isValidId } = require("./isValdId");
-const { isValidIdNotice } = require("./isValidIdNotice");
+
 module.exports = {
-	fieldValidation,
-	checkFile,
-	authentificate,
-	checkUserData,
-	checkUserAuth,
-	isValidId,
-	isValidIdNotice,
+  fieldValidation,
+  checkFile,
+  authentificate,
+  checkUserData,
+  checkUserAuth,
+  isValidId,
   authentificateByRefreshToken,
   checkFieldData,
 };

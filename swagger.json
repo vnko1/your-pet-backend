@@ -406,9 +406,19 @@
     "schemas": {
       "UserResponse": {
         "type": "object",
+        "required": ["user"],
         "properties": {
           "user": {
             "type": "object",
+            "required": [
+              "uid",
+              "name",
+              "email",
+              "isNewUser",
+              "avatarUrl",
+              "favorites",
+              "pets"
+            ],
             "properties": {
               "uid": {
                 "type": "string",
@@ -494,6 +504,7 @@
       },
       "UserRegistrationResponse": {
         "type": "object",
+        "required": ["token", "user"],
         "properties": {
           "token": {
             "type": "string",
@@ -507,6 +518,7 @@
           },
           "user": {
             "type": "object",
+            "required": ["uid", "name", "email", "isNewUser", "avatarUrl"],
             "properties": {
               "uid": {
                 "type": "string",
@@ -554,6 +566,7 @@
       },
       "UserLoginResponse": {
         "type": "object",
+        "required": ["token", "user"],
         "properties": {
           "token": {
             "type": "string",
@@ -567,6 +580,15 @@
           },
           "user": {
             "type": "object",
+            "required": [
+              "uid",
+              "name",
+              "email",
+              "isNewUser",
+              "avatarUrl",
+              "favorites",
+              "pets"
+            ],
             "properties": {
               "uid": {
                 "type": "string",
@@ -630,9 +652,19 @@
       },
       "CurrentUserResponse": {
         "type": "object",
+        "required": ["user"],
         "properties": {
           "user": {
             "type": "object",
+            "required": [
+              "uid",
+              "name",
+              "email",
+              "isNewUser",
+              "avatarUrl",
+              "favorites",
+              "pets"
+            ],
             "properties": {
               "uid": {
                 "type": "string",
@@ -707,6 +739,7 @@
       },
       "RefreshResponse": {
         "type": "object",
+        "required": ["token"],
         "properties": {
           "token": {
             "type": "string",
@@ -784,6 +817,7 @@
       },
       "UpdateUserResponse": {
         "type": "object",
+        "required": ["token", "user"],
         "properties": {
           "token": {
             "type": "string",
@@ -797,6 +831,15 @@
           },
           "user": {
             "type": "object",
+            "required": [
+              "uid",
+              "name",
+              "email",
+              "isNewUser",
+              "avatarUrl",
+              "favorites",
+              "pets"
+            ],
             "properties": {
               "uid": {
                 "type": "string",
@@ -893,9 +936,11 @@
       },
       "PetResponse": {
         "type": "object",
+        "required": ["pet"],
         "properties": {
           "pet": {
             "type": "object",
+            "required": ["_id", "category", "name", "date", "type", "fileUrl"],
             "properties": {
               "_id": {
                 "type": "string",
@@ -940,6 +985,7 @@
       },
       "DeletePetResponse": {
         "type": "object",
+        "required": ["_id"],
         "properties": {
           "_id": {
             "type": "string",
@@ -950,11 +996,23 @@
       },
       "SponsorsResponse": {
         "type": "object",
+        "required": ["sponsors"],
         "properties": {
           "sponsors": {
             "type": "array",
             "items": {
               "type": "object",
+              "required": [
+                "_id",
+                "title",
+                "url",
+                "addressUrl",
+                "imageUrl",
+                "address",
+                "phone",
+                "email",
+                "workDays"
+              ],
               "properties": {
                 "_id": {
                   "type": "string",
@@ -1000,6 +1058,7 @@
                   "type": "array",
                   "items": {
                     "type": "object",
+                    "required": ["_id", "isOpen", "form", "to"],
                     "properties": {
                       "_id": {
                         "type": "string",
@@ -1031,11 +1090,13 @@
       },
       "ArticlesResponse": {
         "type": "object",
+        "required": ["articles", "total"],
         "properties": {
           "articles": {
             "type": "array",
             "items": {
               "type": "object",
+              "required": ["_id", "imgUrl", "title", "text", "date", "url"],
               "properties": {
                 "_id": {
                   "type": "string",

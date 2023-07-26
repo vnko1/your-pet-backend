@@ -11,17 +11,17 @@ class Notices {
 	}
 
 	static async findAll({
-		search = "",
+		filter = "",
 		category,
 		page = 1,
 		limit = 6,
 		sort = "desc",
 	}) {
 		const perPage = page > 0 ? (page - 1) * limit : 0;
-		const findOptions = search
+		const findOptions = filter
 			? {
-					$or: [{ title: { $regex: search, $options: "i" } }],
-					$or: [{ comments: { $regex: search, $options: "i" } }],
+					$or: [{ title: { $regex: filter, $options: "i" } }],
+					$or: [{ comments: { $regex: filter, $options: "i" } }],
 			  }
 			: {};
 

@@ -10,7 +10,7 @@ const {
 const { addPetSchemaValidation } = require("../../schema");
 const { Image } = require("../../services");
 const { addPet, deletePet } = require("../../controllers");
-const { file, schemaMessage } = require("../../constants");
+const { file, schemaMessage, errorMessage } = require("../../constants");
 
 const router = express.Router();
 
@@ -24,6 +24,11 @@ router.post(
   addPet
 );
 
-router.delete("/:petId", isValidId, checkUserAuth, deletePet);
+router.delete(
+  "/:petId",
+  isValidId(400, errorMessage[400]),
+  checkUserAuth,
+  deletePet
+);
 
 module.exports = router;

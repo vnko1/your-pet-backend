@@ -30,7 +30,7 @@ router.put(
 	ctrl.updateNoticeById
 );
 
-router.delete("/:noticeId", authentificate, isValidId, ctrl.delById);
+router.delete("/:noticeId", authentificate, isValidIdNotice, ctrl.delById);
 
 router.patch(
 	"/:noticeId/addFavorite",

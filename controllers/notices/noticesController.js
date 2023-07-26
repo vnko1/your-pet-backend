@@ -1,6 +1,6 @@
 const { tryCatchWrapper, httpError } = require("../../utils");
 
-const { Notices, Users } = require("../../services");
+const { Notices, Users, Image } = require("../../services");
 
 const add = async (req, res) => {
 	const { id: owner } = req.user;
@@ -61,8 +61,20 @@ const updateNoticeById = async (req, res) => {
 
 const delById = async (req, res) => {
 	const { noticeId } = req.params;
-	const result = await Notices.deleteById(noticeId);
-	if (!result) {
+	const { id: owner } = req.user;
+
+	const { notices } = await Notices.findOwnerNotices({
+		owner,
+	});
+	const card = notices.find(notice => notice.id === noticeId);
+	console.log(card);
+
+	if (card) {
+		const notice = await Notices.deleteById(noticeId);
+		await Image.deleteImage(notice.fileId);
+	}
+
+	if (!notice) {
 		throw httpError(404, "Not found");
 	}
 	res.json({ message: `${noticeId} deleted` });

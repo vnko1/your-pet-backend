@@ -43,10 +43,12 @@ const getOwnerNotices = async (req, res) => {
 const getOwnerFavNotices = async (req, res) => {
 	const { id } = req.user;
 	const response = await Users.findUserById(id).populate("favorites");
-	const favorites = response.favorites;
-	const total = favorites.length;
-	res.json({ data: { favorites, total } });
+	const updatedFavorites = response.favorites;
+	const total = updatedFavorites.length;
+
+	res.json({ data: { favorites: updatedFavorites, total } });
 };
+``;
 
 const updateNoticeById = async (req, res) => {
 	const { noticeId } = req.params;

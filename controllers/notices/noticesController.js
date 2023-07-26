@@ -1,20 +1,21 @@
 const { tryCatchWrapper, httpError } = require("../../utils");
 
 const { Notices, Users, Image } = require("../../services");
+const { errorMessage } = require("../../constants");
 
 const add = async (req, res) => {
 	const { id: owner } = req.user;
 	const response = await Notices.addNotice({ ...req.body, owner });
-	res.status(200).json({data: response});
+	res.status(200).json({ data: response });
 };
 
 const getById = async (req, res) => {
 	const { noticeId } = req.params;
 	const response = await Notices.findNoticeById(noticeId);
 	if (!response) {
-		throw httpError(404, "Not found");
+		throw httpError(404, errorMessage[404]);
 	}
-	res.json({data: response});
+	res.json({ data: response });
 };
 
 const getNoticeByQuery = async (req, res) => {
@@ -44,7 +45,7 @@ const getOwnerFavNotices = async (req, res) => {
 	const response = await Users.findUserById(id).populate("favorites");
 	const favorites = response.favorites;
 	const total = favorites.length;
-	res.json({ favorites, total });
+	res.json({ data: { favorites, total } });
 };
 
 const updateNoticeById = async (req, res) => {
@@ -53,7 +54,7 @@ const updateNoticeById = async (req, res) => {
 	const updatedNotice = await Notices.updateNotice(noticeId, req.body);
 
 	if (!updatedNotice) {
-		throw httpError(404, "Not found");
+		throw httpError(404, errorMessage[404]);
 	}
 
 	res.json({ data: updatedNotice });
@@ -71,13 +72,14 @@ const delById = async (req, res) => {
 	if (card) {
 		const notice = await Notices.deleteById(noticeId);
 		await Image.deleteImage(notice.fileId);
+
+		if (!notice) {
+			throw httpError(404, errorMessage[404]);
+		}
 	} else {
-		throw httpError(404, `${noticeId} not exist or you not owner`);
+		throw httpError(401, errorMessage[401].wrongAuth);
 	}
 
-	if (!card) {
-		throw httpError(404, "Not found");
-	}
 	res.json({ _id: noticeId });
 };
 
@@ -85,28 +87,34 @@ const addFavorite = async (req, res) => {
 	const { id: owner } = req.user;
 	const { noticeId } = req.params;
 	const updatedStatus = await Users.updateUser({
-		owner,
-		$addToSet: noticeId,
+		id: owner,
+		fieldName: "favorites",
+		data: { $addToSet: noticeId },
 	});
 
 	if (!updatedStatus) {
-		throw httpError(404, "Not found");
+		throw httpError(404, errorMessage[404]);
 	}
-	res.json({ data: updatedStatus });
+	res.json({
+		data: { favorites: updatedStatus.favorites, name: updatedStatus.name },
+	});
 };
 
 const deleteFavorite = async (req, res) => {
 	const { id: owner } = req.user;
 	const { noticeId } = req.params;
 	const updatedStatus = await Users.updateUser({
-		owner,
-		$addToSet: noticeId,
+		id: owner,
+		fieldName: "favorites",
+		data: { $pull: noticeId },
 	});
 
 	if (!updatedStatus) {
-		throw httpError(404, "Not found");
+		throw httpError(404, errorMessage[404]);
 	}
-	res.json({ data: updatedStatus });
+	res.json({
+		data: { favorites: updatedStatus.favorites, name: updatedStatus.name },
+	});
 };
 
 module.exports = {

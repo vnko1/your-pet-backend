@@ -5,7 +5,7 @@ const { Notices, Users, Image } = require("../../services");
 const add = async (req, res) => {
 	const { id: owner } = req.user;
 	const response = await Notices.addNotice({ ...req.body, owner });
-	res.status(201).json({data: response});
+	res.status(200).json({data: response});
 };
 
 const getById = async (req, res) => {

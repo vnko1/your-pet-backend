@@ -50,18 +50,6 @@ const getOwnerFavNotices = async (req, res) => {
 };
 ``;
 
-const updateNoticeById = async (req, res) => {
-  const { noticeId } = req.params;
-
-  const updatedNotice = await Notices.updateNotice(noticeId, req.body);
-
-  if (!updatedNotice) {
-    throw httpError(404, errorMessage[404]);
-  }
-
-  res.json({ data: updatedNotice });
-};
-
 const delById = async (req, res) => {
   const { noticeId } = req.params;
   const { id: owner } = req.user;
@@ -128,7 +116,6 @@ module.exports = {
   add: tryCatchWrapper(add),
   getById: tryCatchWrapper(getById),
   getNoticeByQuery: tryCatchWrapper(getNoticeByQuery),
-  updateNoticeById: tryCatchWrapper(updateNoticeById),
   delById: tryCatchWrapper(delById),
   addFavorite: tryCatchWrapper(addFavorite),
   getOwnerNotices: tryCatchWrapper(getOwnerNotices),

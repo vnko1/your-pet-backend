@@ -21,14 +21,6 @@ router.get("/owner/favorite", authentificate, ctrl.getOwnerFavNotices);
 
 router.get("/:noticeId", isValidId(400, errorMessage[400]), ctrl.getById);
 
-router.patch(
-  "/:noticeId",
-  authentificate,
-  isValidId(400, errorMessage[400]),
-  fieldValidation(addSchema),
-  ctrl.updateNoticeById
-);
-
 router.delete(
   "/:noticeId",
   authentificate,

@@ -1554,7 +1554,6 @@
 										"category",
 										"date",
 										"type",
-										"fileUrl",
 										"comments",
 										"title",
 										"sex",
@@ -1586,17 +1585,6 @@
 											"description": "Breed of pet",
 											"example": "greyhound"
 										},
-										"fileUrl": {
-											"type": "string",
-											"description": "Notice`s image url",
-											"example": "https://www.nytimes.com/images/2023/05/04/multimedia/04evening-nl-WH/04evening-nl-WH-blog480-v3.jpg"
-										},
-										"fileId": {
-											"type": "string",
-											"description": "Notice`s image id",
-											"example": "file/file_5qhY9rIZidNQ7HmJFJkv1_x8fhfw"
-										},
-
 										"comments": {
 											"type": "string",
 											"description": "Notice`s comments",

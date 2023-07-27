@@ -19,13 +19,15 @@ const getById = async (req, res) => {
 };
 
 const getNoticeByQuery = async (req, res) => {
-  const { page, limit, sort, filter, category } = req.query;
+  const { page, limit, sort, filter, category, sex, date } = req.query;
   const { notices, total } = await Notices.findAll({
     page,
     limit,
     sort,
     filter,
     category,
+    sex,
+    date,
   });
 
   res.json({ data: { notices, total } });

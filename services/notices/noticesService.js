@@ -6,7 +6,7 @@ class Notices {
   }
 
   static findNoticeById(id) {
-    return Notice.findById(id);
+    return Notice.findById(id).populate("owner", "email phone");
   }
 
   static async findAll({
@@ -15,6 +15,8 @@ class Notices {
     page = 1,
     limit = 6,
     sort = "desc",
+    sex,
+    date = 0,
   }) {
     const perPage = page > 0 ? (page - 1) * limit : 0;
     const findOptions = filter
@@ -26,8 +28,24 @@ class Notices {
         }
       : {};
 
+    if (date > 0) {
+      const currentDate = new Date();
+      if (date < 1 && date > 0) {
+        const from = currentDate.setMonth(currentDate.getMonth() - 3);
+        const to = currentDate.setFullYear(currentDate.getFullYear() - 1);
+        findOptions.date = { $lte: from, $gte: to };
+      } else {
+        const from = currentDate.setFullYear(currentDate.getFullYear() - date);
+        findOptions.date = { $lte: from };
+      }
+    }
+
     if (category) {
       findOptions.category = category;
+    }
+
+    if (sex) {
+      findOptions.sex = sex;
     }
 
     const notices = await Notice.find(findOptions)

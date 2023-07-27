@@ -24,17 +24,16 @@ const file = {
     height: 182,
     fileSize: 1024 * 1024,
   },
-
 };
 
 const errorMessage = {
-  400: "Bad request! Missing required name field or wrong field name.",
+  400: "Bad request! Empty request body, missing field, wrong field name, your file is not valid or wrong id",
   401: {
-    wrongAuth: "Not authorized.",
-    wrongLogin: "Email or password is wrong.",
+    wrongAuth: "Not authorized",
+    wrongLogin: "Email or password is wrong",
   },
-  404: "Not found.",
-  409: "Email in use.",
+  404: "Not found",
+  409: "Email in use",
 };
 
 const fileFormats = ["jpg", "png"];

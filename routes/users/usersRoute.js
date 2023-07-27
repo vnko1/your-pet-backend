@@ -29,17 +29,10 @@ const { file, schemaMessage } = require("../../constants");
 
 const router = express.Router();
 
-router.post(
-  "/register",
-  fieldValidation(registerSchemaValidation, schemaMessage.auth),
-  register
-);
+router.post("/register", fieldValidation(registerSchemaValidation), register);
 
-router.post(
-  "/login",
-  fieldValidation(loginSchemaValidation, schemaMessage.auth),
-  login
-);
+router.post("/login", fieldValidation(loginSchemaValidation), login);
+
 router.post("/refresh", authentificateByRefreshToken, refresh);
 
 router.post("/current", authentificate, current);
@@ -50,7 +43,7 @@ router.put(
   "/update",
   authentificate,
   Image.uploadErrorHandler(file.avatar.fieldName, file.avatar.fileName),
-  fieldValidation(editUserValidation, schemaMessage.auth),
+  fieldValidation(editUserValidation),
   checkUserData,
   update
 );

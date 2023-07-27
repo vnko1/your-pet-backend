@@ -35,20 +35,37 @@ const getNoticeByQuery = async (req, res) => {
 
 const getOwnerNotices = async (req, res) => {
   const { id: owner } = req.user;
-  const { notices, total } = await Notices.findOwnerNotices({
+  const { page, limit, sort, filter, category, sex, date } = req.query;
+  const response = await Notices.findAll({
     owner,
+    page,
+    limit,
+    sort,
+    filter,
+    category,
+    sex,
+    date,
   });
 
-  res.json({ data: { notices, total } });
+  res.json({ data: response });
 };
 
 const getOwnerFavNotices = async (req, res) => {
-  const { id } = req.user;
-  const response = await Users.findUserById(id);
-  const updatedFavorites = response.favorites;
-  const total = updatedFavorites.length;
+  const { id: owner } = req.user;
+  const { page, limit, sort, filter, category, sex, date } = req.query;
+  const response = await Notices.findAll({
+    owner,
+    page,
+    limit,
+    sort,
+    filter,
+    category,
+    sex,
+    date,
+    searchfield: "favorites",
+  });
 
-  res.json({ data: { favorites: updatedFavorites, total } });
+  res.json({ data: response });
 };
 ``;
 
@@ -83,6 +100,13 @@ const delById = async (req, res) => {
 const addFavorite = async (req, res) => {
   const { id: owner } = req.user;
   const { noticeId } = req.params;
+
+  await Notices.updateNotice({
+    id: noticeId,
+    fieldName: "favorites",
+    data: { $addToSet: owner },
+  });
+
   const updatedStatus = await Users.updateUser({
     id: owner,
     fieldName: "favorites",
@@ -100,6 +124,13 @@ const addFavorite = async (req, res) => {
 const deleteFavorite = async (req, res) => {
   const { id: owner } = req.user;
   const { noticeId } = req.params;
+
+  await Notices.updateNotice({
+    id: noticeId,
+    fieldName: "favorites",
+    data: { $pull: owner },
+  });
+
   const updatedStatus = await Users.updateUser({
     id: owner,
     fieldName: "favorites",

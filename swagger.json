@@ -402,7 +402,404 @@
           }
         }
       }
+    },
+    "/searchQuery": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Return notices cards",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": { "type": "string" },
+            "example": "Gog",
+            "required": false,
+            "description": "Get all items matching query in any of the fields of title"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string",
+              "enum": ["sell", "for-free", "lost-found"]
+            },
+            "required": false,
+            "description": "Get all items matching query in category field"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 6,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to return."
+          }
+        ],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/ArticlesResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/:noticeId": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Return notice card by Id",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": { "type": "string" },
+            "example": "Gog",
+            "required": false,
+            "description": "Get all items matching query in any of the fields of title"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string",
+              "enum": ["sell", "for-free", "lost-found"]
+            },
+            "required": false,
+            "description": "Get all items matching query in category field"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 6,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to return."
+          }
+        ],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/ArticlesResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Return notices cards created by owner",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": { "type": "string" },
+            "example": "Gog",
+            "required": false,
+            "description": "Get all items matching query in any of the fields of title"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string",
+              "enum": ["sell", "for-free", "lost-found"]
+            },
+            "required": false,
+            "description": "Get all items matching query in category field"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 6,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to return."
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/ArticlesResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/owner/favorites": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Return owner favorites notices cards",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": { "type": "string" },
+            "example": "Gog",
+            "required": false,
+            "description": "Get all items matching query in any of the fields of title"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string",
+              "enum": ["sell", "for-free", "lost-found"]
+            },
+            "required": false,
+            "description": "Get all items matching query in category field"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 6,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to return."
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/ArticlesResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/add-pet": {
+      "post": {
+        "tags": ["Notices"],
+        "summary": "Add user`s notice card",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updating object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/PetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/:noticeId/addFavorite": {
+      "patch": {
+        "tags": ["Notices"],
+        "summary": "Add notice card to user favorites",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updating object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/PetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/:noticeId/delFavorite": {
+      "patch": {
+        "tags": ["Notices"],
+        "summary": "Delete notice card from user favorites",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updating object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AddPetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/PetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/:noticeId/delete": {
+      "delete": {
+        "tags": ["Notices"],
+        "summary": "Delete notice card created by user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petId",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Pet`s id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/DeletePetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
+        }
+      }
     }
+
   },
   "components": {
     "schemas": {

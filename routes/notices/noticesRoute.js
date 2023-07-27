@@ -22,7 +22,7 @@ router.get("/owner/favorite", authentificate, ctrl.getOwnerFavNotices);
 router.get("/:noticeId", isValidId(400, errorMessage[400]), ctrl.getById);
 
 router.delete(
-  "/:noticeId",
+  "/:noticeId/delete",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.delById

@@ -28,15 +28,28 @@ class Notices {
         }
       : {};
 
-    if (date > 0) {
+    if (date) {
       const currentDate = new Date();
-      if (date < 1 && date > 0) {
-        const from = currentDate.setMonth(currentDate.getMonth() - 3);
-        const to = currentDate.setFullYear(currentDate.getFullYear() - 1);
-        findOptions.date = { $lte: from, $gte: to };
-      } else {
-        const from = currentDate.setFullYear(currentDate.getFullYear() - date);
+      const dateFields = date.split(",");
+
+      if (dateFields.length > 1) {
+        const dates = dateFields.map((item) => {
+          if (item < 1) return currentDate.setMonth(currentDate.getMonth() - 3);
+          return currentDate.setFullYear(currentDate.getFullYear() - item);
+        });
+        const from = Math.max(...dates);
         findOptions.date = { $lte: from };
+      } else {
+        if (date < 1 && date > 0) {
+          const from = currentDate.setMonth(currentDate.getMonth() - 3);
+          const to = currentDate.setFullYear(currentDate.getFullYear() - 1);
+          findOptions.date = { $lte: from, $gte: to };
+        } else {
+          const from = currentDate.setFullYear(
+            currentDate.getFullYear() - date
+          );
+          findOptions.date = { $lte: from };
+        }
       }
     }
 
@@ -45,7 +58,7 @@ class Notices {
     }
 
     if (sex) {
-      findOptions.sex = sex;
+      findOptions.sex = sex.split(",");
     }
 
     const notices = await Notice.find(findOptions)

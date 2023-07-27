@@ -15,20 +15,29 @@ class Notices {
     page = 1,
     limit = 6,
     sort = "desc",
+    sex,
+    date,
   }) {
     const perPage = page > 0 ? (page - 1) * limit : 0;
-    const findOptions = filter
-      ? {
-          $or: [
-            { title: { $regex: filter, $options: "i" } },
-            { comments: { $regex: filter, $options: "i" } },
-          ],
-        }
-      : {};
+    // const findOptions = filter
+    //   ? {
+    //       $or: [
+    //         { title: { $regex: filter, $options: "i" } },
+    //         { comments: { $regex: filter, $options: "i" } },
+    //       ],
+    //     }
+    //   : {};
 
-    if (category) {
-      findOptions.category = category;
-    }
+    const findOptions = { date: { $gt: 1 } };
+    // const findOptions = {};
+
+    // if (category) {
+    //   findOptions.category = category;
+    // }
+
+    // if (sex) {
+    //   findOptions.sex = sex;
+    // }
 
     const notices = await Notice.find(findOptions)
       .skip(perPage)

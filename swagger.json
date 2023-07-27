@@ -1554,10 +1554,13 @@
 										"category",
 										"date",
 										"type",
+										"fileUrl",
+										"fileId",
 										"comments",
 										"title",
 										"sex",
-										"location"
+										"location",
+										"owner"
 									],
 									"properties": {
 										"_id": {
@@ -1585,6 +1588,16 @@
 											"description": "Breed of pet",
 											"example": "greyhound"
 										},
+										"fileUrl": {
+											"type": "string",
+											"description": "Notice`s image url",
+											"example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
+										},
+										"fileId": {
+											"type": "string",
+											"description": "Notice`s image id",
+											"example": "file/file_Ui9Y3XC5AOwJCyBEqRxOr_drxmxf"
+										},
 										"comments": {
 											"type": "string",
 											"description": "Notice`s comments",
@@ -1604,6 +1617,11 @@
 											"type": "string",
 											"description": "Pet's location, city",
 											"example": "London"
+										},
+										"owner": {
+											"type": "string",
+											"description": "Owner's id",
+											"example": "64bd3f149eabb55e4798955b"
 										}
 									}
 								}

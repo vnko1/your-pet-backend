@@ -1,5 +1,6 @@
 class Search {
   constructor({
+    owner,
     filter,
     category,
     sex,
@@ -7,7 +8,9 @@ class Search {
     page = 1,
     limit = 6,
     sort = "desc",
+    searchfield,
   }) {
+    this.id = owner;
     this.filter = filter;
     this.category = category;
     this.sex = sex;
@@ -15,6 +18,7 @@ class Search {
     this.page = page || 1;
     this.limit = limit || 6;
     this.sort = sort || "desc";
+    this.searchfield = searchfield;
   }
 
   getArticlesSearchOptions() {
@@ -70,6 +74,14 @@ class Search {
 
     if (this.sex) {
       findOptions.sex = this.sex.split(",");
+    }
+
+    if (this.id && this.searchfield === "favorites") {
+      findOptions[this.searchfield] = {
+        $elemMatch: { $eq: this.id },
+      };
+    } else if (this.id) {
+      findOptions.owner = this.id;
     }
 
     return findOptions;

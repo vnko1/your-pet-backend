@@ -1,5 +1,4 @@
 const { User } = require("../../models");
-const { userFieldType } = require("../../constants");
 
 class Users {
   static createUser(newUser) {
@@ -30,13 +29,6 @@ class Users {
 
   static findUserById(id, projection = null) {
     return User.findById(id, projection);
-  }
-
-  static async findUserFavNotices(id) {
-    const notices = await User.find(id);
-    const total = await User.countDocuments(id);
-
-    return { notices, total };
   }
 }
 

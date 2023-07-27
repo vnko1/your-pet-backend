@@ -10,8 +10,19 @@ class Notices {
     return Notice.findById(id).populate("owner", "email phone");
   }
 
-  static async findAll({ filter, category, sex, date, page, limit, sort }) {
+  static async findAll({
+    owner,
+    filter,
+    category,
+    sex,
+    date,
+    page,
+    limit,
+    sort,
+    searchfield,
+  }) {
     const findOptions = new Search({
+      owner,
       filter,
       category,
       sex,
@@ -19,6 +30,7 @@ class Notices {
       page,
       limit,
       sort,
+      searchfield,
     });
 
     const notices = await Notice.find(findOptions.getNoticesSearchOptions())
@@ -29,6 +41,17 @@ class Notices {
     const total = await Notice.count(findOptions.getNoticesSearchOptions());
 
     return { notices, total };
+  }
+
+  static updateNotice({ id, data, fieldName, projection = null }) {
+    const key = Object.keys(data);
+    return Notice.findByIdAndUpdate(
+      id,
+      {
+        [key]: { [fieldName]: data[key] },
+      },
+      { new: true, projection }
+    );
   }
 
   static async findOwnerNotices({ owner }) {

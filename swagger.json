@@ -406,7 +406,7 @@
     "/notices": {
       "get": {
         "tags": ["Notices"],
-        "summary": "Return notices cards",
+        "summary": "Returns a list of cards by search query.",
         "parameters": [
           {
             "in": "query",
@@ -467,7 +467,7 @@
     "/notices/:noticeId": {
       "get": {
         "tags": ["Notices"],
-        "summary": "Return notice card by Id",
+        "summary": "Returns the card by id",
         "parameters": [
           {
             "in": "query",
@@ -528,7 +528,7 @@
     "/notices/owner": {
       "get": {
         "tags": ["Notices"],
-        "summary": "Return notices cards created by owner",
+        "summary": "Returns a list of notices cards created by the user.",
         "parameters": [
           {
             "in": "query",
@@ -590,7 +590,7 @@
     "/notices/owner/favorites": {
       "get": {
         "tags": ["Notices"],
-        "summary": "Return owner favorites notices cards",
+        "summary": "Returns a list of the user's favorite notices cards",
         "parameters": [
           {
             "in": "query",
@@ -652,7 +652,7 @@
     "/notices/add-pet": {
       "post": {
         "tags": ["Notices"],
-        "summary": "Add user`s notice card",
+        "summary": "Adds the notice card",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -689,7 +689,7 @@
     "/notices/addFavorite/:noticeId": {
       "patch": {
         "tags": ["Notices"],
-        "summary": "Add notice card to user favorites",
+        "summary": "Adds the notice card to the user's favorites list.",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -726,7 +726,7 @@
     "/notices/delFavorite/:noticeId": {
       "patch": {
         "tags": ["Notices"],
-        "summary": "Delete notice card from user favorites",
+        "summary": "Removes the notice card from the user's favorites list.",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -763,7 +763,7 @@
     "/notices/del-pet/:noticeId": {
       "delete": {
         "tags": ["Notices"],
-        "summary": "Delete notice card created by user",
+        "summary": "Deletes a notice card created by a user.",
         "parameters": [
           {
             "in": "path",

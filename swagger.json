@@ -15,7 +15,9 @@
     { "name": "Users", "description": "User authorisation endpoint" },
     { "name": "Pets", "description": "Adding and deleting pets endpoint" },
     { "name": "Sponsors", "description": "Sponsors list endpoint" },
-    { "name": "News", "description": "News list endpoint" }
+    { "name": "News", "description": "News list endpoint" },
+    { "name": "Notices", "description": "Notices list endpoint" }
+
   ],
   "paths": {
     "/users": {

@@ -469,44 +469,12 @@
 				"summary": "Returns the card by id",
 				"parameters": [
 					{
-						"in": "query",
-						"name": "filter",
+						"in": "path",
+						"name": "noticeId",
+						"required": true,
 						"schema": { "type": "string" },
-						"example": "Gog",
-						"required": false,
-						"description": "Get all items matching query in any of the fields of title"
-					},
-					{
-						"in": "query",
-						"name": "category",
-						"schema": {
-							"type": "string",
-							"enum": ["sell", "for-free", "lost-found"]
-						},
-						"required": false,
-						"description": "Get all items matching query in category field"
-					},
-					{
-						"in": "query",
-						"name": "page",
-						"schema": {
-							"type": "integer",
-							"default": 1,
-							"minimum": 1
-						},
-						"required": false,
-						"description": "The number of items to skip before starting to collect the result set"
-					},
-					{
-						"in": "query",
-						"name": "limit",
-						"schema": {
-							"type": "integer",
-							"default": 6,
-							"minimum": 1
-						},
-						"required": false,
-						"description": "The number of items to return."
+						"example": "64c0277c86e69c5b96dc2fdf",
+						"description": "Notice`s id"
 					}
 				],
 				"requestBody": {
@@ -517,10 +485,13 @@
 						"description": "Successfull operations",
 						"content": {
 							"application/json": {
-								"schema": { "$ref": "#components/schemas/ArticlesResponse" }
+								"schema": {
+									"$ref": "#components/schemas/NoticesResponseGetById"
+								}
 							}
 						}
-					}
+					},
+					"404": { "description": "Not found.", "content": {} }
 				}
 			}
 		},
@@ -1632,6 +1603,15 @@
 								"example": "1121"
 							}
 						}
+					}
+				}
+			},
+			"NoticesResponseGetById": {
+				"type": "object",
+				"required": ["data"],
+				"properties": {
+					"data": {
+						"type": "object"
 					}
 				}
 			}

@@ -403,7 +403,7 @@
         }
       }
     },
-    "/searchQuery": {
+    "/notices": {
       "get": {
         "tags": ["Notices"],
         "summary": "Return notices cards",
@@ -464,7 +464,7 @@
         }
       }
     },
-    "/:noticeId": {
+    "/notices/:noticeId": {
       "get": {
         "tags": ["Notices"],
         "summary": "Return notice card by Id",
@@ -525,7 +525,7 @@
         }
       }
     },
-    "/owner": {
+    "/notices/owner": {
       "get": {
         "tags": ["Notices"],
         "summary": "Return notices cards created by owner",
@@ -587,7 +587,7 @@
         }
       }
     },
-    "/owner/favorites": {
+    "/notices/owner/favorites": {
       "get": {
         "tags": ["Notices"],
         "summary": "Return owner favorites notices cards",
@@ -649,7 +649,7 @@
         }
       }
     },
-    "/add-pet": {
+    "/notices/add-pet": {
       "post": {
         "tags": ["Notices"],
         "summary": "Add user`s notice card",
@@ -686,7 +686,7 @@
         }
       }
     },
-    "/:noticeId/addFavorite": {
+    "/notices/addFavorite/:noticeId": {
       "patch": {
         "tags": ["Notices"],
         "summary": "Add notice card to user favorites",
@@ -723,7 +723,7 @@
         }
       }
     },
-    "/:noticeId/delFavorite": {
+    "/notices/delFavorite/:noticeId": {
       "patch": {
         "tags": ["Notices"],
         "summary": "Delete notice card from user favorites",
@@ -760,7 +760,7 @@
         }
       }
     },
-    "/:noticeId/delete": {
+    "/notices/del-pet/:noticeId": {
       "delete": {
         "tags": ["Notices"],
         "summary": "Delete notice card created by user",

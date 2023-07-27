@@ -13,30 +13,30 @@ const { file, errorMessage } = require("../../constants");
 
 const router = express.Router();
 
-router.get("/searchQuery", ctrl.getNoticeByQuery);
+router.get("/", ctrl.getNoticeByQuery);
 
 router.get("/owner", authentificate, ctrl.getOwnerNotices);
 
-router.get("/owner/favorite", authentificate, ctrl.getOwnerFavNotices);
+router.get("/owner/favorites", authentificate, ctrl.getOwnerFavNotices);
 
 router.get("/:noticeId", isValidId(400, errorMessage[400]), ctrl.getById);
 
 router.delete(
-  "/:noticeId/delete",
+  "/del-pet/:noticeId",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.delById
 );
 
 router.patch(
-  "/:noticeId/addFavorite",
+  "addFavorite/:noticeId",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.addFavorite
 );
 
 router.patch(
-  "/:noticeId/delFavorite",
+  "delFavorite/:noticeId",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.deleteFavorite

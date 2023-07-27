@@ -4,6 +4,7 @@ const { schemaError } = require("./schemaError");
 const { hashEmail } = require("./hashEmail");
 const { createToken } = require("./createToken");
 const { hashPassword } = require("./hashPassword");
+const { Search } = require("./Search");
 
 module.exports = {
   tryCatchWrapper,
@@ -12,4 +13,5 @@ module.exports = {
   hashEmail,
   createToken,
   hashPassword,
+  Search,
 };

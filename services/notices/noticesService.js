@@ -1,4 +1,5 @@
 const { Notice } = require("../../models");
+const { Search } = require("../../utils");
 
 class Notices {
   static addNotice(newNotice) {
@@ -6,38 +7,26 @@ class Notices {
   }
 
   static findNoticeById(id) {
-    return Notice.findById(id);
+    return Notice.findById(id).populate("owner", "email phone");
   }
 
-  static async findAll({
-    filter = "",
-    category,
-    page = 1,
-    limit = 6,
-    sort = "desc",
-  }) {
-    const perPage = page > 0 ? (page - 1) * limit : 0;
-    const findOptions = filter
-      ? {
-          $or: [
-            { title: { $regex: filter, $options: "i" } },
-            { comments: { $regex: filter, $options: "i" } },
-          ],
-        }
-      : {};
+  static async findAll({ filter, category, sex, date, page, limit, sort }) {
+    const findOptions = new Search({
+      filter,
+      category,
+      sex,
+      date,
+      page,
+      limit,
+      sort,
+    });
 
-    if (category) {
-      findOptions.category = category;
-    }
+    const notices = await Notice.find(findOptions.getNoticesSearchOptions())
+      .skip(findOptions.getPage())
+      .limit(findOptions.getLimit())
+      .sort(findOptions.getSort("date"));
 
-    const notices = await Notice.find(findOptions)
-      .skip(perPage)
-      .limit(limit)
-      .sort({
-        date: sort,
-      });
-
-    const total = await Notice.count(findOptions);
+    const total = await Notice.count(findOptions.getNoticesSearchOptions());
 
     return { notices, total };
   }

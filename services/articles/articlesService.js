@@ -1,22 +1,21 @@
 const { Article } = require("../../models");
+const { Search } = require("../../utils");
 
 class Articles {
-  static async getAll({ filter = "", page = 1, limit = 6, sort = "desc" }) {
-    const perPage = page > 0 ? (page - 1) * limit : 0;
-    const findOptions = filter
-      ? {
-          $or: [
-            { title: { $regex: filter, $options: "i" } },
-            { text: { $regex: filter, $options: "i" } },
-          ],
-        }
-      : {};
-    const articles = await Article.find(findOptions, "-id")
-      .skip(perPage)
-      .limit(limit)
-      .sort({ date: sort });
+  static async getAll({ filter, page, limit, sort }) {
+    const findOptions = new Search({ filter, page, limit, sort });
 
-    const total = await Article.countDocuments(findOptions);
+    const articles = await Article.find(
+      findOptions.getArticlesSearchOptions(),
+      "-id"
+    )
+      .skip(findOptions.getPage())
+      .limit(findOptions.getLimit())
+      .sort(findOptions.getSort("date"));
+
+    const total = await Article.countDocuments(
+      findOptions.getArticlesSearchOptions()
+    );
 
     return { articles, total };
   }

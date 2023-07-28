@@ -581,7 +581,7 @@
 					"content": {
 						"multipart/form-data": {
 							"schema": {
-								"$ref": "#/components/schemas/AddPetRequest"
+								"$ref": "#/components/schemas/AddNoticeRequest"
 							}
 						}
 					}
@@ -591,7 +591,7 @@
 						"description": "Successfull operations",
 						"content": {
 							"application/json": {
-								"schema": { "$ref": "#components/schemas/PetResponse" }
+								"schema": { "$ref": "#components/schemas/AddNoticeRequest" }
 							}
 						}
 					},
@@ -1502,7 +1502,7 @@
 										"date": {
 											"type": "date",
 											"description": "Pet birthday",
-											"example": "2022-12-22T00:00:00.000Z"
+											"example": "22-09-2009"
 										},
 										"type": {
 											"type": "string",
@@ -1532,6 +1532,7 @@
 										"sex": {
 											"type": "string",
 											"description": "Pet gender",
+											"enum": ["male", "female"],
 											"example": "male"
 										},
 										"location": {
@@ -1863,6 +1864,77 @@
 						"type": "string",
 						"description": "Notice id",
 						"example": "64bd39c0b38fc2fe5b5dfef8"
+					}
+				}
+			},
+			"AddNoticeRequest": {
+				"type": "object",
+				"required": [
+					"category",
+					"name",
+					"date",
+					"type",
+					"file",
+					"comments",
+					"sex",
+					"location",
+					"title",
+					"owner"
+				],
+				"properties": {
+					"category": {
+						"type": "string",
+						"description": "Pet nickname",
+						"format": "text",
+						"enum": ["sell", "lost-found", "for-free"],
+						"example": "sell"
+					},
+					"name": {
+						"type": "string",
+						"description": "Pet name",
+						"format": "text",
+						"example": "Peaches"
+					},
+					"date": {
+						"type": "date",
+						"description": "Pet birthday date",
+						"example": "22-12-2022"
+					},
+					"type": {
+						"type": "string",
+						"description": "Pet`s breed",
+						"example": "Hellhound"
+					},
+					"file": {
+						"type": "string",
+						"format": "binary",
+						"description": "User avatar file"
+					},
+					"comments": {
+						"type": "string",
+						"description": "Pet`s description",
+						"example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+					},
+					"title": {
+						"type": "string",
+						"description": "Notice`s title",
+						"example": "The White House"
+					},
+					"sex": {
+						"type": "string",
+						"description": "Pet gender",
+						"enum": ["male", "female"],
+						"example": "male"
+					},
+					"price": {
+						"type": "integer",
+						"description": "price only for {sell} category",
+						"example": 12
+					},
+					"location": {
+						"type": "string",
+						"description": "Pet's location, city",
+						"example": "London"
 					}
 				}
 			}

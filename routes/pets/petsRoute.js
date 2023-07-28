@@ -20,7 +20,7 @@ router.post(
   "/",
   Image.uploadErrorHandler(file.pet.fieldName, file.pet.fileName),
   checkFieldData,
-  fieldValidation(addPetSchemaValidation, schemaMessage.pet),
+  fieldValidation(addPetSchemaValidation),
   addPet
 );
 

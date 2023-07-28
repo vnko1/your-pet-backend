@@ -44,6 +44,12 @@ const noticeSchema = new Schema(
       type: Number,
       min: 1,
     },
+    favorites: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",

@@ -1667,9 +1667,9 @@
                       "example": "lost-found"
                     },
                     "date": {
-                      "type": "string",
+                      "type": "date",
                       "description": "Pet birthday",
-                      "example": "22-09-2009"
+                      "example": "2022-12-22T00:00:00.000Z"
                     },
                     "type": {
                       "type": "string",

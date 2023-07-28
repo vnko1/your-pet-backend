@@ -610,18 +610,18 @@
 			"patch": {
 				"tags": ["Notices"],
 				"summary": "Adds the notice card to the user's favorites list.",
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "noticeId",
+						"required": true,
+						"schema": { "type": "string" },
+						"description": "Notice`s id"
+					}
+				],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {
-					"description": "Updating object",
-					"required": true,
-					"content": {
-						"multipart/form-data": {
-							"schema": {
-								"$ref": "#/components/schemas/AddPetRequest"
-							}
-						}
-					}
+					"content": {}
 				},
 				"responses": {
 					"200": {
@@ -639,7 +639,8 @@
 					"401": {
 						"description": "Not authorized.",
 						"content": {}
-					}
+					},
+					"404": { "description": "Not found.", "content": {} }
 				}
 			}
 		},
@@ -1755,7 +1756,7 @@
 					}
 				}
 			},
-      "NoticesResponseOwnerFavorites": {
+			"NoticesResponseOwnerFavorites": {
 				"type": "object",
 				"required": ["data"],
 				"properties": {
@@ -1854,7 +1855,7 @@
 					}
 				}
 			},
-      "NoticeResponseDelete": {
+			"NoticeResponseDelete": {
 				"type": "object",
 				"required": ["_id"],
 				"properties": {

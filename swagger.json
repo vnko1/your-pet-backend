@@ -689,7 +689,7 @@
         }
       }
     },
-    "/notices/add-pet": {
+    "/notices/add-notice": {
       "post": {
         "tags": ["Notices"],
         "summary": "Adds the notice card",

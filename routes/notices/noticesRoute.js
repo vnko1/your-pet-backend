@@ -43,7 +43,7 @@ router.patch(
 );
 
 router.post(
-  "/add-pet",
+  "/add-notice",
   authentificate,
   Image.uploadErrorHandler(file.notice.fieldName, file.notice.fileName),
   checkFieldData,

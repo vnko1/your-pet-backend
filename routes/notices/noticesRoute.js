@@ -17,26 +17,26 @@ router.get("/", ctrl.getNoticeByQuery);
 
 router.get("/owner", authentificate, ctrl.getOwnerNotices);
 
-router.get("/owner/favorites", authentificate, ctrl.getOwnerFavNotices);
+router.get("/favorites", authentificate, ctrl.getOwnerFavNotices);
 
 router.get("/:noticeId", isValidId(400, errorMessage[400]), ctrl.getById);
 
 router.delete(
-  "/del-pet/:noticeId",
+  "/:noticeId",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.delById
 );
 
 router.patch(
-  "/addFavorite/:noticeId",
+  "/favorites/addFavorite/:noticeId",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.addFavorite
 );
 
 router.patch(
-  "/delFavorite/:noticeId",
+  "/favorites/delFavorite/:noticeId",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.deleteFavorite

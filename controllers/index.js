@@ -1,7 +1,6 @@
 const {
   register,
   login,
-  current,
   refresh,
   logout,
   update,
@@ -28,7 +27,6 @@ const { getArticles } = require("./articles/articlesController");
 module.exports = {
   register,
   login,
-  current,
   refresh,
   logout,
   update,

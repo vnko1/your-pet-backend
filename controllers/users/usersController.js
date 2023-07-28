@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const { userFieldType } = require("../../constants");
 
 const { Users } = require("../../services");
 const {
@@ -53,6 +52,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await Users.findUserByQuery({ email });
+
   if (!user) throw httpError(401, errorMessage[401].wrongLogin);
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -88,23 +88,6 @@ const login = async (req, res) => {
       favorites: updatedUser.favorites,
       pets: updatedUser.pets,
       avatarUrl: updatedUser.avatarUrl,
-      isNewUser: false,
-    },
-  });
-};
-
-const current = async (req, res) => {
-  res.json({
-    user: {
-      uid: req.user.id,
-      email: req.user.email,
-      name: req.user.name,
-      birthday: req.user.birthday,
-      phone: req.user.phone,
-      favorites: req.user.favorites,
-      pets: req.user.pets,
-      city: req.user.city,
-      avatarUrl: req.user.avatarUrl,
       isNewUser: false,
     },
   });
@@ -186,7 +169,6 @@ const getMe = async (req, res) => {
 module.exports = {
   register: tryCatchWrapper(register),
   login: tryCatchWrapper(login),
-  current: tryCatchWrapper(current),
   refresh: tryCatchWrapper(refresh),
   logout: tryCatchWrapper(logout),
   update: tryCatchWrapper(update),

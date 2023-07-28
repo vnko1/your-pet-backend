@@ -5,12 +5,13 @@ const addSchema = Joi.object({
   name: Joi.string()
     .min(2)
     .max(16)
-    .messages({ string: `Set nickname for pet` })
+    .messages({ string: `Set name for pet` })
     .required(),
   date: Joi.date()
     .iso()
     .format("DD-MM-YYYY")
     .min("01-01-2000")
+    .max(new Date())
     .messages({ "date.format": `Date format is DD-MM-YYYY` })
     .required(),
   type: Joi.string()
@@ -43,7 +44,7 @@ const addSchema = Joi.object({
     .integer()
     .greater(0)
     .when("category", { is: "sell", then: Joi.required() }),
-  comments: Joi.string().max(120).required(),
+  comments: Joi.string().max(120),
 });
 
 module.exports = { addSchema };

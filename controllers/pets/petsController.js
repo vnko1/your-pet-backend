@@ -1,11 +1,10 @@
 const { Pets, Image, Users } = require("../../services");
 const { tryCatchWrapper } = require("../../utils");
-const { userFieldType } = require("../../constants");
 
 const addPet = async (req, res) => {
   const { id: owner } = req.user;
   const { body } = req;
-
+  console.log(req);
   const pet = await Pets.add({ ...body, owner });
   await Users.updateUser({
     id: owner,
@@ -16,7 +15,6 @@ const addPet = async (req, res) => {
   res.json({
     pet: {
       _id: pet.id,
-      category: pet.category,
       name: pet.name,
       date: pet.date,
       type: pet.type,

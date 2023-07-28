@@ -5,9 +5,14 @@ class Users {
     return User.create(newUser);
   }
 
-  static findUserByQuery(data) {
-    const [key] = Object.keys(data);
-    const query = { [key]: data[key] };
+  static findUserByQuery(searchParam, exception = {}) {
+    const [key] = Object.keys(searchParam);
+    const query = { [key]: searchParam[key] };
+
+    const [exceptionKey] = Object.keys(exception);
+
+    if (exceptionKey)
+      query.$nor = [{ [exceptionKey]: exception[exceptionKey] }];
 
     return User.findOne(query);
   }

@@ -15,36 +15,36 @@ const router = express.Router();
 
 router.get("/", ctrl.getNoticeByQuery);
 
-router.get("/owner", authentificate, ctrl.getOwnerNotices);
+router.get("/owner", authentificate("token"), ctrl.getOwnerNotices);
 
-router.get("/favorites", authentificate, ctrl.getOwnerFavNotices);
+router.get("/favorites", authentificate("token"), ctrl.getOwnerFavNotices);
 
 router.get("/:noticeId", isValidId(400, errorMessage[400]), ctrl.getById);
 
 router.delete(
-  "/:noticeId",
-  authentificate,
+  "/delete/:noticeId",
+  authentificate("token"),
   isValidId(400, errorMessage[400]),
   ctrl.delById
 );
 
 router.patch(
-  "/favorites/addFavorite/:noticeId",
-  authentificate,
+  "/favorites/add/:noticeId",
+  authentificate("token"),
   isValidId(400, errorMessage[400]),
   ctrl.addFavorite
 );
 
 router.patch(
-  "/favorites/delFavorite/:noticeId",
-  authentificate,
+  "/favorites/delete/:noticeId",
+  authentificate("token"),
   isValidId(400, errorMessage[400]),
   ctrl.deleteFavorite
 );
 
 router.post(
-  "/add-notice",
-  authentificate,
+  "/add",
+  authentificate("token"),
   Image.uploadErrorHandler(file.notice.fieldName, file.notice.fileName),
   checkFieldData,
   fieldValidation(addSchema),

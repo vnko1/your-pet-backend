@@ -4,7 +4,6 @@ const { schemaError } = require("../../utils");
 
 const petSchema = new Schema(
   {
-    category: { type: String, required: true, default: "my-pet" },
     name: {
       type: String,
       minlength: 2,
@@ -14,6 +13,8 @@ const petSchema = new Schema(
     date: {
       type: Date,
       required: [true, "Set birthday date for pet"],
+      min: "2000-01-01",
+      max: new Date(),
     },
     type: {
       type: String,

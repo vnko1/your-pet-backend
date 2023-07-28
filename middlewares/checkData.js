@@ -5,7 +5,8 @@ const { httpError, createToken } = require("../utils");
 const { errorMessage } = require("../constants");
 
 const checkUserData = async (req, res, next) => {
-  const { body } = req;
+  const { email } = req.body;
+  const { id } = req.user;
 
   if (req.file) {
     const { public_id, secure_url } = await Image.uploadImage({
@@ -20,24 +21,23 @@ const checkUserData = async (req, res, next) => {
     await fs.unlink(req.file.path);
   }
 
-  if (body.email) {
-    const user = await Users.findUserByQuery({ email: body.email });
+  if (email) {
+    const user = await Users.findUserByQuery({ email }, { _id: id });
 
-    if (user) next(httpError(409, errorMessage[409]));
-
-    body.token = createToken(
-      { email: body.email },
+    if (user) return next(httpError(409, errorMessage[409]));
+    req.body.token = createToken(
+      { email },
       process.env.JWT_KEY,
       process.env.TOKEN_LIFE
     );
-    body.refreshToken = createToken(
-      { email: body.email },
+    req.body.refreshToken = createToken(
+      { email },
       process.env.REFRESH_JWT_KEY,
       process.env.REFRESH_TOKEN_LIFE
     );
   }
 
-  const keys = Object.keys(body);
+  const keys = Object.keys(req.body);
   if (!keys.length && !req.file) next(httpError(400, errorMessage[400]));
 
   next();

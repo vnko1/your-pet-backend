@@ -17,10 +17,14 @@ const noticeSchema = new Schema(
     date: {
       type: Date,
       required: [true, "Set birthday date for pet"],
+      min: "2000-01-01",
+      max: new Date(),
     },
     type: {
       type: String,
       required: true,
+      minlength: 2,
+      maxlength: 16,
     },
     fileUrl: { type: String, required: true },
     fileId: { type: String, required: true },
@@ -30,6 +34,8 @@ const noticeSchema = new Schema(
     },
     title: {
       type: String,
+      minlength: 3,
+      maxlength: 30,
     },
     sex: {
       type: String,

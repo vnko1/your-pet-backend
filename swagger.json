@@ -12,6 +12,7 @@
     { "url": "https://my-pet-app-8sz1.onrender.com" }
   ],
   "tags": [
+    { "name": "Notices", "description": "Notices list endpoint" },
     { "name": "Users", "description": "User authorisation endpoint" },
     { "name": "Pets", "description": "Adding and deleting pets endpoint" },
     { "name": "Sponsors", "description": "Sponsors list endpoint" },
@@ -280,7 +281,7 @@
         }
       }
     },
-    "/pets/:petId": {
+    "/pets/{petId}": {
       "delete": {
         "tags": ["Pets"],
         "summary": "Delete user`s pet card",
@@ -304,6 +305,492 @@
             "content": {
               "application/json": {
                 "schema": { "$ref": "#components/schemas/DeletePetResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
+        }
+      }
+    },
+    "/notices": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Returns a list of cards by search query.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": { "type": "string" },
+            "example": "Gog",
+            "required": false,
+            "description": "Gets all the items matching the search query by the title field."
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string",
+              "enum": ["sell", "for-free", "lost-found"]
+            },
+            "required": false,
+            "description": "Gets all items matching the search query by the category field."
+          },
+          {
+            "in": "query",
+            "name": "sex",
+            "schema": {
+              "type": "string",
+              "enum": ["male", "female"]
+            },
+            "required": false,
+            "description": "Gets all items matching the search query by gender."
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 6,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to return."
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "integer",
+              "enum": [0.5, 1, 2]
+            },
+            "required": false,
+            "description": "Return filtred notices by pet`s age"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "enum": ["desc", "asc"],
+              "default": "desc"
+            },
+            "required": false,
+            "description": "Sort notices cards by date"
+          }
+        ],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/NoticesResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notices/{noticeId}": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Returns the card by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "schema": { "type": "string" },
+            "example": "64c0d5b7a594175f6cf5c088",
+            "description": "Notice`s id"
+          }
+        ],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/NoticesResponseGetById"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
+        }
+      },
+      "delete": {
+        "tags": ["Notices"],
+        "summary": "Deletes a notice card created by a user.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Notice`s id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/NoticeResponseDelete" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
+        }
+      }
+    },
+    "/notices/owner": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Returns a list of notices cards created by the user.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": { "type": "string" },
+            "example": "Gog",
+            "required": false,
+            "description": "Gets all the items matching the search query by the title field."
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string",
+              "enum": ["sell", "for-free", "lost-found"]
+            },
+            "required": false,
+            "description": "Gets all items matching the search query by the category field."
+          },
+          {
+            "in": "query",
+            "name": "sex",
+            "schema": {
+              "type": "string",
+              "enum": ["male", "female"]
+            },
+            "required": false,
+            "description": "Gets all items matching the search query by gender."
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 6,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to return."
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "integer",
+              "enum": [0.5, 1, 2]
+            },
+            "required": false,
+            "description": "Return filtred notices by pet`s age"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "enum": ["desc", "asc"],
+              "default": "desc"
+            },
+            "required": false,
+            "description": "Sort notices cards by date"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/NoticesResponseOwner" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
+        }
+      }
+    },
+    "/notices/favorites": {
+      "get": {
+        "tags": ["Notices"],
+        "summary": "Returns a list of the user's favorite notices cards",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "schema": { "type": "string" },
+            "example": "Gog",
+            "required": false,
+            "description": "Gets all the items matching the search query by the title field."
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "schema": {
+              "type": "string",
+              "enum": ["sell", "for-free", "lost-found"]
+            },
+            "required": false,
+            "description": "Gets all items matching the search query by the category field."
+          },
+          {
+            "in": "query",
+            "name": "sex",
+            "schema": {
+              "type": "string",
+              "enum": ["male", "female"]
+            },
+            "required": false,
+            "description": "Gets all items matching the search query by gender."
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to skip before starting to collect the result set"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "default": 6,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of items to return."
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "integer",
+              "enum": [0.5, 1, 2]
+            },
+            "required": false,
+            "description": "Return filtred notices by pet`s age"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "enum": ["desc", "asc"],
+              "default": "desc"
+            },
+            "required": false,
+            "description": "Sort notices cards by date"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/NoticesResponseOwner" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
+        }
+      }
+    },
+    "/notices/add-notice": {
+      "post": {
+        "tags": ["Notices"],
+        "summary": "Adds the notice card",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updating object",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/AddNoticeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#components/schemas/AddNoticeRequest" }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/notices/favorites/addFavorite/{noticeId}": {
+      "patch": {
+        "tags": ["Notices"],
+        "summary": "Adds the notice card to the user's favorites list.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Notice`s id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/NoticesResponseAddFavorite"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request! Missing required name field or wrong field name.",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized.",
+            "content": {}
+          },
+          "404": { "description": "Not found.", "content": {} }
+        }
+      }
+    },
+    "/notices/favorites/delFavorite/{noticeId}": {
+      "patch": {
+        "tags": ["Notices"],
+        "summary": "Removes the notice card from the user's favorites list.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticeId",
+            "required": true,
+            "schema": { "type": "string" },
+            "description": "Notice`s id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "content": {}
+        },
+        "responses": {
+          "200": {
+            "description": "Successfull operations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/NoticesResponseDelFavorite"
+                }
               }
             }
           },
@@ -452,7 +939,7 @@
               },
               "phone": {
                 "type": "string",
-                "description": "User avatar",
+                "description": "User phone",
                 "example": "+380933443494"
               },
               "city": {
@@ -622,7 +1109,7 @@
               },
               "phone": {
                 "type": "string",
-                "description": "User avatar",
+                "description": "User phone",
                 "example": "+380933443494"
               },
               "city": {
@@ -698,7 +1185,7 @@
               },
               "phone": {
                 "type": "string",
-                "description": "User avatar",
+                "description": "User phone",
                 "example": "+380933443494"
               },
               "city": {
@@ -763,13 +1250,13 @@
             "format": "email"
           },
           "birthday": {
-            "type": "date",
+            "type": "string",
             "description": "User birthday date",
-            "example": "2022-12-22T00:00:00.000Z"
+            "example": "12-10-2020"
           },
           "phone": {
             "type": "string",
-            "description": "User avatar",
+            "description": "User phone",
             "example": "+380933443494"
           },
           "city": {
@@ -794,13 +1281,13 @@
             "format": "email"
           },
           "birthday": {
-            "type": "date",
+            "type": "string",
             "description": "User birthday date",
-            "example": "2022-12-22T00:00:00.000Z"
+            "example": "12-10-2020"
           },
           "phone": {
             "type": "string",
-            "description": "User avatar",
+            "description": "User phone",
             "example": "+380933443494"
           },
           "city": {
@@ -873,7 +1360,7 @@
               },
               "phone": {
                 "type": "string",
-                "description": "User avatar",
+                "description": "User phone",
                 "example": "+380933443494"
               },
               "city": {
@@ -913,9 +1400,9 @@
           },
 
           "date": {
-            "type": "date",
+            "type": "string",
             "description": "Pet birthday date",
-            "example": "2022-12-22T00:00:00.000Z"
+            "example": "22-12-2020"
           },
           "type": {
             "type": "string",
@@ -925,7 +1412,7 @@
           "file": {
             "type": "string",
             "format": "binary",
-            "description": "User avatar file"
+            "description": "Pet image file"
           },
           "comments": {
             "type": "string",
@@ -1113,7 +1600,6 @@
                   "description": "Article`s title",
                   "example": "The White House Pushes A.I. Leaders on Risks"
                 },
-
                 "text": {
                   "type": "string",
                   "description": "Article`s text",
@@ -1136,6 +1622,556 @@
             "type": "integer",
             "description": "Return total counts of documents",
             "example": "1121"
+          }
+        }
+      },
+      "NoticesResponse": {
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": ["notices", "total"],
+            "properties": {
+              "notices": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "_id",
+                    "name",
+                    "category",
+                    "date",
+                    "type",
+                    "fileUrl",
+                    "title",
+                    "sex",
+                    "location",
+                    "favorites",
+                    "owner"
+                  ],
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Notice`s id",
+                      "example": "64bd39c0b38fc2fe5b5dfef8"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Pet nickname",
+                      "example": "Rex"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Notice`s category",
+                      "example": "lost-found"
+                    },
+                    "date": {
+                      "type": "string",
+                      "description": "Pet birthday",
+                      "example": "22-09-2009"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Breed of pet",
+                      "example": "greyhound"
+                    },
+                    "fileUrl": {
+                      "type": "string",
+                      "description": "Notice`s image url",
+                      "example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
+                    },
+                    "fileId": {
+                      "type": "string",
+                      "description": "Notice`s image id",
+                      "example": "file/file_Ui9Y3XC5AOwJCyBEqRxOr_drxmxf"
+                    },
+                    "comments": {
+                      "type": "string",
+                      "description": "Notice`s comments",
+                      "example": "Also, four Proud Boys are found guilty of sedition. Here’s the latest at the end of Thursday."
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Notice`s title",
+                      "example": "The White House Pushes A.I. Leaders on Risks"
+                    },
+                    "sex": {
+                      "type": "string",
+                      "description": "Pet gender",
+                      "enum": ["male", "female"],
+                      "example": "male"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Pet's location, city",
+                      "example": "London"
+                    },
+                    "owner": {
+                      "type": "string",
+                      "description": "Owner's id",
+                      "example": "64bd3f149eabb55e4798955b"
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "User`s id",
+                        "example": "64bd39c0b38fc2fe5b5dfef8"
+                      }
+                    }
+                  }
+                }
+              },
+              "total": {
+                "type": "integer",
+                "description": "Return total counts of documents",
+                "example": "1121"
+              }
+            }
+          }
+        }
+      },
+      "NoticesResponseGetById": {
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": [
+              "_id",
+              "name",
+              "category",
+              "date",
+              "type",
+              "fileUrl",
+              "title",
+              "sex",
+              "location",
+              "favorites",
+              "owner"
+            ],
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Notice`s id",
+                "example": "64bd39c0b38fc2fe5b5dfef8"
+              },
+              "name": {
+                "type": "string",
+                "description": "Pet nickname",
+                "example": "Rex"
+              },
+              "category": {
+                "type": "string",
+                "description": "Notice`s category",
+                "example": "lost-found"
+              },
+              "date": {
+                "type": "date",
+                "description": "Pet birthday",
+                "example": "2022-12-22T00:00:00.000Z"
+              },
+              "type": {
+                "type": "string",
+                "description": "Breed of pet",
+                "example": "greyhound"
+              },
+              "fileUrl": {
+                "type": "string",
+                "description": "Notice`s image url",
+                "example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
+              },
+              "fileId": {
+                "type": "string",
+                "description": "Notice`s image id",
+                "example": "file/file_Ui9Y3XC5AOwJCyBEqRxOr_drxmxf"
+              },
+              "comments": {
+                "type": "string",
+                "description": "Notice`s comments",
+                "example": "Also, four Proud Boys are found guilty of sedition. Here’s the latest at the end of Thursday."
+              },
+              "title": {
+                "type": "string",
+                "description": "Notice`s title",
+                "example": "The White House Pushes A.I. Leaders on Risks"
+              },
+              "sex": {
+                "type": "string",
+                "description": "Pet gender",
+                "enum": ["male", "female"],
+                "example": "Male"
+              },
+              "location": {
+                "type": "string",
+                "description": "Pet's location, city",
+                "example": "London"
+              },
+              "owner": {
+                "type": "object",
+                "required": ["_id", "email", "phone"],
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "User id",
+                    "example": "64bd39c0b38fc2fe5b5dfef8"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "User email",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "User phone",
+                    "example": "+380933443494"
+                  }
+                }
+              },
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "User`s id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NoticesResponseOwner": {
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": ["notices", "total"],
+            "properties": {
+              "notices": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "_id",
+                    "name",
+                    "category",
+                    "date",
+                    "type",
+                    "fileUrl",
+                    "title",
+                    "sex",
+                    "location",
+                    "favorites",
+                    "owner"
+                  ],
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Notice`s id",
+                      "example": "64bd39c0b38fc2fe5b5dfef8"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Pet nickname",
+                      "example": "Rex"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Notice`s category",
+                      "example": "lost-found"
+                    },
+                    "date": {
+                      "type": "date",
+                      "description": "Pet birthday",
+                      "example": "2022-12-22T00:00:00.000Z"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Breed of pet",
+                      "example": "greyhound"
+                    },
+                    "fileUrl": {
+                      "type": "string",
+                      "description": "Notice`s image url",
+                      "example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
+                    },
+                    "fileId": {
+                      "type": "string",
+                      "description": "Notice`s image id",
+                      "example": "file/file_Ui9Y3XC5AOwJCyBEqRxOr_drxmxf"
+                    },
+                    "comments": {
+                      "type": "string",
+                      "description": "Notice`s comments",
+                      "example": "Also, four Proud Boys are found guilty of sedition. Here’s the latest at the end of Thursday."
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Notice`s title",
+                      "example": "The White House Pushes A.I. Leaders on Risks"
+                    },
+                    "sex": {
+                      "type": "string",
+                      "description": "Pet gender",
+                      "enum": ["male", "female"],
+                      "example": "male"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Pet's location, city",
+                      "example": "London"
+                    },
+                    "owner": {
+                      "type": "object",
+                      "description": "Owner's id",
+                      "example": "64bd3f149eabb55e4798955b"
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "User`s id",
+                        "example": "64bd39c0b38fc2fe5b5dfef8"
+                      }
+                    }
+                  }
+                }
+              },
+              "total": {
+                "type": "integer",
+                "description": "Return total counts of documents",
+                "example": "1121"
+              }
+            }
+          }
+        }
+      },
+      "NoticesResponseOwnerFavorites": {
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": ["notices", "total"],
+            "properties": {
+              "notices": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "_id",
+                    "name",
+                    "category",
+                    "date",
+                    "type",
+                    "fileUrl",
+                    "title",
+                    "sex",
+                    "location",
+                    "favorites",
+                    "owner"
+                  ],
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Notice`s id",
+                      "example": "64bd39c0b38fc2fe5b5dfef8"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Pet nickname",
+                      "example": "Rex"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Notice`s category",
+                      "example": "lost-found"
+                    },
+                    "date": {
+                      "type": "date",
+                      "description": "Pet birthday",
+                      "example": "2022-12-22T00:00:00.000Z"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Breed of pet",
+                      "example": "greyhound"
+                    },
+                    "fileUrl": {
+                      "type": "string",
+                      "description": "Notice`s image url",
+                      "example": "https://storage.googleapis.com/kidslikev2_bucket/pets-support/images/sponsors/frame_287.png"
+                    },
+                    "fileId": {
+                      "type": "string",
+                      "description": "Notice`s image id",
+                      "example": "file/file_Ui9Y3XC5AOwJCyBEqRxOr_drxmxf"
+                    },
+                    "comments": {
+                      "type": "string",
+                      "description": "Notice`s comments",
+                      "example": "Also, four Proud Boys are found guilty of sedition. Here’s the latest at the end of Thursday."
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Notice`s title",
+                      "example": "The White House Pushes A.I. Leaders on Risks"
+                    },
+                    "sex": {
+                      "type": "string",
+                      "description": "Pet gender",
+                      "enum": ["male", "female"],
+                      "example": "male"
+                    },
+                    "location": {
+                      "type": "string",
+                      "description": "Pet's location, city",
+                      "example": "London"
+                    },
+                    "owner": {
+                      "type": "object",
+                      "description": "Owner's id",
+                      "example": "64bd3f149eabb55e4798955b"
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "User`s id",
+                        "example": "64bd39c0b38fc2fe5b5dfef8"
+                      }
+                    }
+                  }
+                }
+              },
+              "total": {
+                "type": "integer",
+                "description": "Return total counts of documents",
+                "example": "1121"
+              }
+            }
+          }
+        }
+      },
+      "NoticeResponseDelete": {
+        "type": "object",
+        "required": ["_id"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Notice id",
+            "example": "64bd39c0b38fc2fe5b5dfef8"
+          }
+        }
+      },
+      "AddNoticeRequest": {
+        "type": "object",
+        "required": [
+          "category",
+          "name",
+          "date",
+          "type",
+          "file",
+          "sex",
+          "location",
+          "title"
+        ],
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Pet nickname",
+            "format": "text",
+            "enum": ["sell", "lost-found", "for-free"],
+            "example": "sell"
+          },
+          "name": {
+            "type": "string",
+            "description": "Pet name",
+            "format": "text",
+            "example": "Peaches"
+          },
+          "date": {
+            "type": "string",
+            "description": "Pet birthday date",
+            "example": "22-12-2022"
+          },
+          "type": {
+            "type": "string",
+            "description": "Pet`s breed",
+            "example": "Hellhound"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "description": "Pet image file"
+          },
+          "comments": {
+            "type": "string",
+            "description": "Pet`s description",
+            "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+          },
+          "title": {
+            "type": "string",
+            "description": "Notice`s title",
+            "example": "The White House"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Pet gender",
+            "enum": ["male", "female"],
+            "example": "male"
+          },
+          "price": {
+            "type": "integer",
+            "description": "price only for {sell} category",
+            "example": 12
+          },
+          "location": {
+            "type": "string",
+            "description": "Pet's location, city",
+            "example": "London"
+          }
+        }
+      },
+      "NoticesResponseAddFavorite": {
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": ["favorites"],
+            "properties": {
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "User`s id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NoticesResponseDelFavorite": {
+        "type": "object",
+        "required": ["data"],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": ["favorites"],
+            "properties": {
+              "favorites": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "description": "User`s id",
+                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                }
+              }
+            }
           }
         }
       }

@@ -29,14 +29,14 @@ router.delete(
 );
 
 router.patch(
-  "addFavorite/:noticeId",
+  "/addFavorite/:noticeId",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.addFavorite
 );
 
 router.patch(
-  "delFavorite/:noticeId",
+  "/delFavorite/:noticeId",
   authentificate,
   isValidId(400, errorMessage[400]),
   ctrl.deleteFavorite

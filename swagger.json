@@ -628,7 +628,9 @@
 						"description": "Successfull operations",
 						"content": {
 							"application/json": {
-								"schema": { "$ref": "#components/schemas/PetResponse" }
+								"schema": {
+									"$ref": "#components/schemas/NoticesResponseAddFavorite"
+								}
 							}
 						}
 					},
@@ -648,25 +650,27 @@
 			"patch": {
 				"tags": ["Notices"],
 				"summary": "Removes the notice card from the user's favorites list.",
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "noticeId",
+						"required": true,
+						"schema": { "type": "string" },
+						"description": "Notice`s id"
+					}
+				],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {
-					"description": "Updating object",
-					"required": true,
-					"content": {
-						"multipart/form-data": {
-							"schema": {
-								"$ref": "#/components/schemas/AddPetRequest"
-							}
-						}
-					}
+					"content": {}
 				},
 				"responses": {
 					"200": {
 						"description": "Successfull operations",
 						"content": {
 							"application/json": {
-								"schema": { "$ref": "#components/schemas/PetResponse" }
+								"schema": {
+									"$ref": "#components/schemas/NoticesResponseDelFavorite"
+								}
 							}
 						}
 					},
@@ -677,7 +681,8 @@
 					"401": {
 						"description": "Not authorized.",
 						"content": {}
-					}
+					},
+					"404": { "description": "Not found.", "content": {} }
 				}
 			}
 		},
@@ -1935,6 +1940,46 @@
 						"type": "string",
 						"description": "Pet's location, city",
 						"example": "London"
+					}
+				}
+			},
+			"NoticesResponseAddFavorite": {
+				"type": "object",
+				"required": ["data"],
+				"properties": {
+					"data": {
+						"type": "object",
+						"required": ["favorites"],
+						"properties": {
+							"favorites": {
+								"type": "array",
+								"items": {
+									"type": "string",
+									"description": "User`s id",
+									"example": "64bd39c0b38fc2fe5b5dfef8"
+								}
+							}
+						}
+					}
+				}
+			},
+			"NoticesResponseDelFavorite": {
+				"type": "object",
+				"required": ["data"],
+				"properties": {
+					"data": {
+						"type": "object",
+						"required": ["favorites"],
+						"properties": {
+							"favorites": {
+								"type": "array",
+								"items": {
+									"type": "string",
+									"description": "User`s id",
+									"example": "64bd39c0b38fc2fe5b5dfef8"
+								}
+							}
+						}
 					}
 				}
 			}

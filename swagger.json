@@ -12,38 +12,13 @@
     { "url": "https://my-pet-app-8sz1.onrender.com" }
   ],
   "tags": [
-    { "name": "Notices", "description": "Notices list endpoint" },
     { "name": "Users", "description": "User authorisation endpoint" },
+    { "name": "Notices", "description": "Notices list endpoint" },
     { "name": "Pets", "description": "Adding and deleting pets endpoint" },
     { "name": "Sponsors", "description": "Sponsors list endpoint" },
     { "name": "News", "description": "News list endpoint" }
   ],
   "paths": {
-    "/users": {
-      "get": {
-        "tags": ["Users"],
-        "summary": "Return user`s and user`s pets cards",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "content": {}
-        },
-        "responses": {
-          "200": {
-            "description": "Successfull operations",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#components/schemas/UserResponse" }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authorized.",
-            "content": {}
-          }
-        }
-      }
-    },
     "/users/register": {
       "post": {
         "tags": ["Users"],
@@ -152,9 +127,9 @@
       }
     },
     "/users/current": {
-      "post": {
+      "get": {
         "tags": ["Users"],
-        "summary": "User`s authentification",
+        "summary": "Return user`s and user`s pets cards",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -165,7 +140,7 @@
             "description": "Successfull operations.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#components/schemas/CurrentUserResponse" }
+                "schema": { "$ref": "#components/schemas/UserResponse" }
               }
             }
           },
@@ -244,7 +219,7 @@
         }
       }
     },
-    "/pets": {
+    "/pets/add": {
       "post": {
         "tags": ["Pets"],
         "summary": "Add user`s pet card",
@@ -281,7 +256,7 @@
         }
       }
     },
-    "/pets/{petId}": {
+    "/pets/delete/{petId}": {
       "delete": {
         "tags": ["Pets"],
         "summary": "Delete user`s pet card",
@@ -379,7 +354,7 @@
             "in": "query",
             "name": "date",
             "schema": {
-              "type": "integer",
+              "type": "number",
               "enum": [0.5, 1, 2]
             },
             "required": false,
@@ -412,7 +387,7 @@
         }
       }
     },
-    "/notices/{noticeId}": {
+    "/notices/notice/{noticeId}": {
       "get": {
         "tags": ["Notices"],
         "summary": "Returns the card by id",
@@ -446,7 +421,9 @@
           },
           "404": { "description": "Not found.", "content": {} }
         }
-      },
+      }
+    },
+    "/notices/notice/delete/{noticeId}": {
       "delete": {
         "tags": ["Notices"],
         "summary": "Deletes a notice card created by a user.",
@@ -544,7 +521,7 @@
             "in": "query",
             "name": "date",
             "schema": {
-              "type": "integer",
+              "type": "number",
               "enum": [0.5, 1, 2]
             },
             "required": false,
@@ -646,7 +623,7 @@
             "in": "query",
             "name": "date",
             "schema": {
-              "type": "integer",
+              "type": "number",
               "enum": [0.5, 1, 2]
             },
             "required": false,
@@ -689,7 +666,7 @@
         }
       }
     },
-    "/notices/add-notice": {
+    "/notices/notice/add": {
       "post": {
         "tags": ["Notices"],
         "summary": "Adds the notice card",
@@ -726,7 +703,7 @@
         }
       }
     },
-    "/notices/favorites/addFavorite/{noticeId}": {
+    "/notices/favorites/add/{noticeId}": {
       "patch": {
         "tags": ["Notices"],
         "summary": "Adds the notice card to the user's favorites list.",
@@ -766,7 +743,7 @@
         }
       }
     },
-    "/notices/favorites/delFavorite/{noticeId}": {
+    "/notices/favorites/delete/{noticeId}": {
       "patch": {
         "tags": ["Notices"],
         "summary": "Removes the notice card from the user's favorites list.",
@@ -950,9 +927,60 @@
               "pets": {
                 "type": "array",
                 "items": {
-                  "type": "string",
-                  "description": "Pet`s card id",
-                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                  "type": "object",
+                  "required": ["pet"],
+                  "properties": {
+                    "pet": {
+                      "type": "object",
+                      "required": [
+                        "_id",
+                        "category",
+                        "name",
+                        "date",
+                        "type",
+                        "fileUrl"
+                      ],
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Pet id",
+                          "example": "64bd39c0b38fc2fe5b5dfef8"
+                        },
+                        "category": {
+                          "type": "string",
+                          "description": "Pet category",
+                          "example": "my-pet"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Pet name",
+                          "format": "text",
+                          "example": "Peaches"
+                        },
+
+                        "date": {
+                          "type": "date",
+                          "description": "Pet birthday date",
+                          "example": "2022-12-22T00:00:00.000Z"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "Pet`s type",
+                          "example": "cat"
+                        },
+                        "fileUrl": {
+                          "type": "string",
+                          "description": "Pet image url",
+                          "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
+                        },
+                        "comments": {
+                          "type": "string",
+                          "description": "Pet`s description",
+                          "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+                        }
+                      }
+                    }
+                  }
                 }
               },
               "favorites": {
@@ -997,6 +1025,11 @@
             "type": "string",
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "tokenLifeTime": {
+            "type": "date",
+            "description": "Token life time",
+            "example": "2022-12-22T00:00:00.000Z"
           },
           "refreshToken": {
             "type": "string",
@@ -1060,87 +1093,16 @@
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
+          "tokenLifeTime": {
+            "type": "date",
+            "description": "Token life time",
+            "example": "2022-12-22T00:00:00.000Z"
+          },
           "refreshToken": {
             "type": "string",
             "description": "Refresh security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
-          "user": {
-            "type": "object",
-            "required": [
-              "uid",
-              "name",
-              "email",
-              "isNewUser",
-              "avatarUrl",
-              "favorites",
-              "pets"
-            ],
-            "properties": {
-              "uid": {
-                "type": "string",
-                "description": "User id",
-                "example": "64bd39c0b38fc2fe5b5dfef8"
-              },
-              "name": {
-                "type": "string",
-                "description": "User name",
-                "format": "text",
-                "example": "Mango"
-              },
-              "email": {
-                "type": "string",
-                "description": "User email",
-                "format": "email"
-              },
-              "isNewUser": {
-                "type": "boolean",
-                "example": false
-              },
-              "avatarUrl": {
-                "type": "string",
-                "description": "User avatar url",
-                "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
-              },
-              "birthday": {
-                "type": "date",
-                "description": "User birthday date",
-                "example": "2022-12-22T00:00:00.000Z"
-              },
-              "phone": {
-                "type": "string",
-                "description": "User phone",
-                "example": "+380933443494"
-              },
-              "city": {
-                "type": "string",
-                "description": "User location",
-                "example": "London"
-              },
-              "pets": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "description": "Pet`s card id",
-                  "example": "64bd39c0b38fc2fe5b5dfef8"
-                }
-              },
-              "favorites": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "description": "Notice card id",
-                  "example": "64bd39c0b38fc2fe5b5dfef8"
-                }
-              }
-            }
-          }
-        }
-      },
-      "CurrentUserResponse": {
-        "type": "object",
-        "required": ["user"],
-        "properties": {
           "user": {
             "type": "object",
             "required": [
@@ -1226,11 +1188,21 @@
       },
       "RefreshResponse": {
         "type": "object",
-        "required": ["token"],
+        "required": ["token", "tokenLifeTime", "refreshToken"],
         "properties": {
           "token": {
             "type": "string",
             "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "tokenLifeTime": {
+            "type": "date",
+            "description": "Token life time",
+            "example": "2022-12-22T00:00:00.000Z"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           }
         }
@@ -1310,6 +1282,11 @@
             "type": "string",
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "tokenLifeTime": {
+            "type": "date",
+            "description": "Token life time",
+            "example": "2022-12-22T00:00:00.000Z"
           },
           "refreshToken": {
             "type": "string",

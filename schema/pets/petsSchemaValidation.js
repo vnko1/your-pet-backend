@@ -9,6 +9,7 @@ const addPetSchemaValidation = Joi.object({
     .format("DD-MM-YYYY")
     .utc()
     .min("01-01-2000")
+    .max(new Date())
     .required()
     .messages({
       "any.required": `Date is a required field`,

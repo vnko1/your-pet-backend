@@ -67,6 +67,7 @@ const editUserValidation = Joi.object({
     .format("DD-MM-YYYY")
     .utc()
     .min("01-01-1940")
+    .max(new Date())
     .messages({ "date.format": `Date format is DD-MM-YYYY` }),
   avtarUrl: Joi.string(),
   avatarId: Joi.string(),

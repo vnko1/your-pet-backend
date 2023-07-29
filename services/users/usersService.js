@@ -5,11 +5,8 @@ class Users {
     return User.create(newUser);
   }
 
-  static findUserByQuery(data) {
-    const [key] = Object.keys(data);
-    const query = { [key]: data[key] };
-
-    return User.findOne(query);
+  static findUserByQuery(searchParam) {
+    return User.findOne(searchParam);
   }
 
   static updateUser({ id, data, fieldName = null, projection = null }) {

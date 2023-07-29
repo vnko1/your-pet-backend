@@ -37,8 +37,10 @@ const userSchema = new Schema(
     ],
     birthday: {
       type: Date,
+      min: "1940-01-01",
+      max: new Date(),
     },
-    phone: { type: String, match: phoneRegex },
+    phone: { type: String, match: phoneRegex, minlength: 13 },
     city: { type: String, match: cityRegex, minlength: 2, maxlength: 30 },
     avatarUrl: { type: String, default: defaultAvatarUrl },
     avatarId: { type: String, default: "" },
@@ -46,6 +48,7 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    tokenLifeTime: { type: Date },
     refreshToken: { type: String, default: "" },
   },
   { versionKey: false, timestamps: false }

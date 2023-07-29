@@ -22,7 +22,7 @@ const checkUserData = async (req, res, next) => {
   }
 
   if (email) {
-    const user = await Users.findUserByQuery({ email }, { _id: id });
+    const user = await Users.findUserByQuery({ email, $nor: [{ _id: id }] });
 
     if (user) return next(httpError(409, errorMessage[409]));
     req.body.token = createToken(

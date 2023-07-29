@@ -4,7 +4,7 @@ const { tryCatchWrapper } = require("../../utils");
 const addPet = async (req, res) => {
   const { id: owner } = req.user;
   const { body } = req;
-  console.log(req);
+
   const pet = await Pets.add({ ...body, owner });
   await Users.updateUser({
     id: owner,

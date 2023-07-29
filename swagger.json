@@ -1026,6 +1026,11 @@
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           },
+          "tokenLifeTime": {
+            "type": "date",
+            "description": "Token life time",
+            "example": "2022-12-22T00:00:00.000Z"
+          },
           "refreshToken": {
             "type": "string",
             "description": "Refresh security token",
@@ -1087,6 +1092,11 @@
             "type": "string",
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "tokenLifeTime": {
+            "type": "date",
+            "description": "Token life time",
+            "example": "2022-12-22T00:00:00.000Z"
           },
           "refreshToken": {
             "type": "string",
@@ -1178,11 +1188,21 @@
       },
       "RefreshResponse": {
         "type": "object",
-        "required": ["token"],
+        "required": ["token", "tokenLifeTime", "refreshToken"],
         "properties": {
           "token": {
             "type": "string",
             "description": "Security token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "tokenLifeTime": {
+            "type": "date",
+            "description": "Token life time",
+            "example": "2022-12-22T00:00:00.000Z"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
           }
         }
@@ -1262,6 +1282,11 @@
             "type": "string",
             "description": "Security token",
             "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxZDJAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTAxMjI2ODgsImV4cCI6MTY5MDcyNzQ4OH0.SWW540U7mf-Y-GgSQoNLCkFd6HmYpVLTjlzfgjfte8w"
+          },
+          "tokenLifeTime": {
+            "type": "date",
+            "description": "Token life time",
+            "example": "2022-12-22T00:00:00.000Z"
           },
           "refreshToken": {
             "type": "string",

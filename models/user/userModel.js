@@ -48,6 +48,7 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    tokenLifeTime: { type: Date },
     refreshToken: { type: String, default: "" },
   },
   { versionKey: false, timestamps: false }

@@ -25,16 +25,20 @@ const checkUserData = async (req, res, next) => {
     const user = await Users.findUserByQuery({ email, $nor: [{ _id: id }] });
 
     if (user) return next(httpError(409, errorMessage[409]));
-    req.body.token = createToken(
+    const [token, tokenLifeTime] = createToken(
       { email },
       process.env.JWT_KEY,
       process.env.TOKEN_LIFE
     );
-    req.body.refreshToken = createToken(
+    req.body.token = token;
+    req.body.tokenLifeTime = tokenLifeTime;
+
+    const [refreshToken] = createToken(
       { email },
       process.env.REFRESH_JWT_KEY,
       process.env.REFRESH_TOKEN_LIFE
     );
+    req.body.refreshToken = refreshToken;
   }
 
   const keys = Object.keys(req.body);

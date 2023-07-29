@@ -19,10 +19,14 @@ router.get("/owner", authentificate("token"), ctrl.getOwnerNotices);
 
 router.get("/favorites", authentificate("token"), ctrl.getOwnerFavNotices);
 
-router.get("/:noticeId", isValidId(400, errorMessage[400]), ctrl.getById);
+router.get(
+  "/notice/:noticeId",
+  isValidId(400, errorMessage[400]),
+  ctrl.getById
+);
 
 router.delete(
-  "/delete/:noticeId",
+  "/notice/delete/:noticeId",
   authentificate("token"),
   isValidId(400, errorMessage[400]),
   ctrl.delById
@@ -43,7 +47,7 @@ router.patch(
 );
 
 router.post(
-  "/add",
+  "/notice/add",
   authentificate("token"),
   Image.uploadErrorHandler(file.notice.fieldName, file.notice.fileName),
   checkFieldData,

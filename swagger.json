@@ -387,7 +387,7 @@
         }
       }
     },
-    "/notices/{noticeId}": {
+    "/notices/notice/{noticeId}": {
       "get": {
         "tags": ["Notices"],
         "summary": "Returns the card by id",
@@ -423,7 +423,7 @@
         }
       }
     },
-    "/notices/delete/{noticeId}": {
+    "/notices/notice/delete/{noticeId}": {
       "delete": {
         "tags": ["Notices"],
         "summary": "Deletes a notice card created by a user.",
@@ -666,7 +666,7 @@
         }
       }
     },
-    "/notices/add": {
+    "/notices/notice/add": {
       "post": {
         "tags": ["Notices"],
         "summary": "Adds the notice card",

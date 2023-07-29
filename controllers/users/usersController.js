@@ -64,7 +64,7 @@ const login = async (req, res) => {
     process.env.TOKEN_LIFE
   );
   const refreshToken = createToken(
-    { email },
+    { id: user.id },
     process.env.REFRESH_JWT_KEY,
     process.env.REFRESH_TOKEN_LIFE
   );
@@ -99,9 +99,14 @@ const refresh = async (req, res) => {
     process.env.JWT_KEY,
     process.env.TOKEN_LIFE
   );
-  await Users.updateUser({ id: req.user.id, data: { token } });
+  const refreshToken = createToken(
+    { id: req.user.id },
+    process.env.REFRESH_JWT_KEY,
+    process.env.REFRESH_TOKEN_LIFE
+  );
+  await Users.updateUser({ id: req.user.id, data: { token, refreshToken } });
 
-  res.json({ token });
+  res.json({ token, refreshToken });
 };
 
 const logout = async (req, res) => {

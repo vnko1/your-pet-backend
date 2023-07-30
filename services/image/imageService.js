@@ -81,15 +81,12 @@ class Image {
         const image = await Jimp.read(imagePath);
         image.resize(width, height).write(imagePath);
       }
-      const response = await cloudinary.uploader.upload(imagePath, options);
 
-      await fs.unlink(imagePath);
-
-      return response;
+      return await cloudinary.uploader.upload(imagePath, options);
     } catch (error) {
-      await fs.unlink(imagePath);
-
       throw httpError(500, error.message);
+    } finally {
+      await fs.unlink(imagePath);
     }
   }
 

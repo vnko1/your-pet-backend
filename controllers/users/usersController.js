@@ -118,7 +118,10 @@ const refresh = async (req, res) => {
 const logout = async (req, res) => {
   const { id } = req.user;
 
-  await Users.updateUser({ id, data: { token: "", refreshToken: "" } });
+  await Users.updateUser({
+    id,
+    data: { token: "", refreshToken: "", tokenLifeTime: null },
+  });
 
   res.sendStatus(204);
 };

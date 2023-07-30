@@ -18,7 +18,6 @@ const checkUserData = async (req, res, next) => {
     req.body.avatarId = public_id;
 
     if (req.user.avatarId) await Image.deleteImage(req.user.avatarId);
-    await fs.unlink(req.file.path);
   }
 
   if (email) {
@@ -59,8 +58,6 @@ const checkFieldData = async (req, res, next) => {
 
   body.fileUrl = secure_url;
   body.fileId = public_id;
-
-  await fs.unlink(req.file.path);
 
   next();
 };

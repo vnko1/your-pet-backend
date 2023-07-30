@@ -84,9 +84,9 @@ class Image {
 
       return await cloudinary.uploader.upload(imagePath, options);
     } catch (error) {
-      await fs.unlink(imagePath);
-
       throw httpError(500, error.message);
+    } finally {
+      await fs.unlink(imagePath);
     }
   }
 

@@ -14,8 +14,8 @@ const checkUserData = async (req, res, next) => {
       dirName: req.file.fieldname,
     });
 
-    body.avatarUrl = secure_url;
-    body.avatarId = public_id;
+    req.body.avatarUrl = secure_url;
+    req.body.avatarId = public_id;
 
     if (req.user.avatarId) await Image.deleteImage(req.user.avatarId);
     await fs.unlink(req.file.path);

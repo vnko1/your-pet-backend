@@ -9,7 +9,13 @@ class Users {
     return User.findOne(searchParam);
   }
 
-  static updateUser({ id, data, fieldName = null, projection = null }) {
+  static updateUser({
+    id,
+    data,
+    fieldName = null,
+    projection = null,
+    newDoc = true,
+  }) {
     if (fieldName) {
       const key = Object.keys(data);
       return User.findByIdAndUpdate(
@@ -17,11 +23,11 @@ class Users {
         {
           [key]: { [fieldName]: data[key] },
         },
-        { new: true, projection }
+        { new: newDoc, projection }
       );
     }
 
-    return User.findByIdAndUpdate(id, data, { new: true, projection });
+    return User.findByIdAndUpdate(id, data, { new: newDoc, projection });
   }
 
   static findUserById(id, projection = null) {

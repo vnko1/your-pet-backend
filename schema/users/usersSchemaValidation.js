@@ -53,24 +53,32 @@ const editUserValidation = Joi.object({
   }),
   email: Joi.string().pattern(emailRegex).messages({
     "string.pattern.base": `Email is not valid`,
-    "string.empty": `Email cannot be an empty field`,
   }),
-  city: Joi.string().pattern(cityRegex).min(2).max(30).messages({
-    "string.pattern.base": `City is not valid`,
-    "string.empty": `City cannot be an empty field`,
-  }),
-  phone: Joi.string().pattern(phoneRegex).min(13).messages({
-    "string.pattern.base": `Phone is not valid`,
-    "string.empty": `Phone cannot be an empty field`,
-  }),
-  birthday: Joi.date()
-    .format("DD-MM-YYYY")
-    .utc()
-    .min("01-01-1940")
-    .max(new Date())
-    .messages({ "date.format": `Date format is DD-MM-YYYY` }),
+  city: Joi.alternatives().try(
+    Joi.string().trim().valid("").empty("").default(""),
+    Joi.string().pattern(cityRegex).min(2).max(30).messages({
+      "string.pattern.base": `City is not valid`,
+    })
+  ),
+  phone: Joi.alternatives().try(
+    Joi.string().trim().valid("").empty("").default(""),
+    Joi.string().pattern(phoneRegex).min(13).messages({
+      "string.pattern.base": `Phone is not valid`,
+    })
+  ),
+
+  birthday: Joi.alternatives().try(
+    Joi.date().valid("").empty("").default(null),
+    Joi.date()
+      .format("DD-MM-YYYY")
+      .utc()
+      .min("01-01-1940")
+      .max(new Date())
+      .messages({ "date.format": `Date format is DD-MM-YYYY` })
+  ),
   avtarUrl: Joi.string(),
   avatarId: Joi.string(),
+  avatar: Joi.any(),
 });
 //
 module.exports = {

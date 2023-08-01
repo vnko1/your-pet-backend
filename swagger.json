@@ -1152,9 +1152,54 @@
               "pets": {
                 "type": "array",
                 "items": {
-                  "type": "string",
-                  "description": "Pet`s card id",
-                  "example": "64bd39c0b38fc2fe5b5dfef8"
+                  "type": "object",
+                  "required": [
+                    "_id",
+                    "category",
+                    "name",
+                    "date",
+                    "type",
+                    "fileUrl"
+                  ],
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "Pet id",
+                      "example": "64bd39c0b38fc2fe5b5dfef8"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Pet category",
+                      "example": "my-pet"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Pet name",
+                      "format": "text",
+                      "example": "Peaches"
+                    },
+
+                    "date": {
+                      "type": "date",
+                      "description": "Pet birthday date",
+                      "example": "2022-12-22T00:00:00.000Z"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "Pet`s type",
+                      "example": "cat"
+                    },
+                    "fileUrl": {
+                      "type": "string",
+                      "description": "Pet image url",
+                      "example": "https://res.cloudinary.com/de2bdafop/image/upload/v1690014491/default-avatar_zfllbo.png"
+                    },
+                    "comments": {
+                      "type": "string",
+                      "description": "Pet`s description",
+                      "example": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, dolore."
+                    }
+                  }
                 }
               },
               "favorites": {

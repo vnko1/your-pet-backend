@@ -81,7 +81,7 @@ const login = async (req, res) => {
     id: user.id,
     data: { token, tokenLifeTime, refreshToken },
     projection: "-password -avatarId",
-  });
+  }).populate("pets");
 
   res.json({
     token: updatedUser.token,

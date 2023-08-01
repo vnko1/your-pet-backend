@@ -10,9 +10,9 @@ const {
 const { errorMessage } = require("../../constants");
 
 const googleAuth = (req, res) => {
-  const url = `${process.env.FRONTEND_URL}`;
-  console.log(req.user);
-  res.redirect("/users");
+  const url = `${process.env.FRONTEND_URL}?token=${req.user.token}`;
+
+  res.redirect(url);
 };
 
 const register = async (req, res) => {

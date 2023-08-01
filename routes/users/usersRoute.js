@@ -60,8 +60,4 @@ router.get(
   googleAuth
 );
 
-router.get("/", (req, res) => {
-  res.json({ mess: "HELLO" });
-});
-
 module.exports = router;

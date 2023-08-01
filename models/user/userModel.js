@@ -44,6 +44,7 @@ const userSchema = new Schema(
     city: { type: String, match: cityRegex, minlength: 2, maxlength: 30 },
     avatarUrl: { type: String, default: defaultAvatarUrl },
     avatarId: { type: String, default: "" },
+    googleId: { type: String, default: "" },
     token: {
       type: String,
       default: "",

@@ -9,6 +9,12 @@ const {
 } = require("../../utils");
 const { errorMessage } = require("../../constants");
 
+const googleAuth = (req, res) => {
+  const url = `${process.env.FRONTEND_URL}?token=${req.user.token}`;
+
+  res.redirect(url);
+};
+
 const register = async (req, res) => {
   const { email, password, name } = req.body;
 
@@ -184,6 +190,7 @@ const getMe = async (req, res) => {
 };
 
 module.exports = {
+  googleAuth: tryCatchWrapper(googleAuth),
   register: tryCatchWrapper(register),
   login: tryCatchWrapper(login),
   refresh: tryCatchWrapper(refresh),

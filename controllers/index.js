@@ -1,4 +1,5 @@
 const {
+  googleAuth,
   register,
   login,
   refresh,
@@ -25,6 +26,7 @@ const { getSponsors } = require("./sponsors/sponsorsController");
 const { getArticles } = require("./articles/articlesController");
 
 module.exports = {
+  googleAuth,
   register,
   login,
   refresh,

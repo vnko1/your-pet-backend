@@ -1,4 +1,6 @@
 const express = require("express");
+const passport = require("passport");
+require("../../middlewares/passport")(passport);
 
 const {
   authentificate,
@@ -15,6 +17,7 @@ const {
 const { Image } = require("../../services");
 
 const {
+  googleAuth,
   register,
   login,
   logout,
@@ -44,6 +47,17 @@ router.put(
   fieldValidation(editUserValidation),
   checkUserData,
   update
+);
+
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
+  googleAuth
 );
 
 module.exports = router;

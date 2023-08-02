@@ -10,7 +10,7 @@ const {
 const { errorMessage } = require("../../constants");
 
 const googleAuth = (req, res) => {
-  const url = `${process.env.FRONTEND_URL}?token=${req.user.token}`;
+  const url = `${process.env.FRONTEND_URL}?token=${req.user.token}&tokenLifeTime=${req.user.tokenLifeTime}&refreshToken=${req.user.refreshToken}`;
 
   res.redirect(url);
 };

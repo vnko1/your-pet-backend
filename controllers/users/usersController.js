@@ -140,7 +140,7 @@ const update = async (req, res) => {
     id,
     data: body,
     projection: "-password -avatarId",
-  });
+  }).populate("pets");
 
   res.json({
     token: body.token ? body.token : updatedUser.token,

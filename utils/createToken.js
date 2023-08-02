@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const createToken = (payloadData, secretKey, date) => {
+const createToken = (payloadData, secretKey, date = 2) => {
   const key = Object.keys(payloadData);
 
   const expirationValue = Number.parseInt(date);

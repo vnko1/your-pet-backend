@@ -31,6 +31,7 @@ const noticeSchema = new Schema(
     comments: {
       type: String,
       maxlength: 120,
+      default: "",
     },
     title: {
       type: String,

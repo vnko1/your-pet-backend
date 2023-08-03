@@ -21,7 +21,10 @@ const addPetSchemaValidation = Joi.object({
   }),
   fileUrl: Joi.string(),
   fileId: Joi.string(),
-  comments: Joi.string().max(120),
+  comments: Joi.alternatives().try(
+    Joi.string().trim().valid("").empty("").default(""),
+    Joi.string().max(120)
+  ),
 });
 
 module.exports = { addPetSchemaValidation };

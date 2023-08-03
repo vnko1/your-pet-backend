@@ -44,7 +44,10 @@ const addSchema = Joi.object({
     .integer()
     .greater(0)
     .when("category", { is: "sell", then: Joi.required() }),
-  comments: Joi.string().max(120),
+  comments: Joi.alternatives().try(
+    Joi.string().trim().valid("").empty("").default(""),
+    Joi.string().max(120)
+  ),
 });
 
 module.exports = { addSchema };

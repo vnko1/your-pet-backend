@@ -85,7 +85,11 @@ const editUserValidation = Joi.object({
       .utc()
       .min("01-01-1940")
       .max(new Date())
-      .messages({ "date.format": `Date format is DD-MM-YYYY` })
+      .messages({
+        "date.format": `Date format is DD-MM-YYYY`,
+        "date.max": "You cannot be born in the future",
+        "date.min": "Try to choose a later date",
+      })
   ),
   avtarUrl: Joi.string(),
   avatarId: Joi.string(),

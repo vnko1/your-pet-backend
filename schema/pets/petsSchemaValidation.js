@@ -14,6 +14,8 @@ const addPetSchemaValidation = Joi.object({
     .messages({
       "any.required": `Date is a required field`,
       "date.format": `Date format is DD-MM-YYYY`,
+      "date.max": "Your pet cannot be born in the future",
+      "date.min": "Try to choose a later date",
     }),
   type: Joi.string().min(2).max(16).required().messages({
     "string.empty": `Type cannot be an empty field`,

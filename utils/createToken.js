@@ -1,23 +1,17 @@
 const jwt = require("jsonwebtoken");
+const jwt_decode = require("jwt-decode");
 
-const createToken = (payloadData, secretKey, date = 2) => {
+const createToken = (payloadData, secretKey, tokenExpirationValue = "2d") => {
   const key = Object.keys(payloadData);
 
-  const expirationValue = Number.parseInt(date);
-
-  const futureDate = new Date();
-  futureDate.setDate(futureDate.getDate() + expirationValue);
-
-  const tokenLifeTime = (futureDate - new Date()) / 1000;
-
   const token = jwt.sign({ [key]: payloadData[key] }, secretKey, {
-    expiresIn: tokenLifeTime,
+    expiresIn: tokenExpirationValue,
   });
+  const { exp } = jwt_decode(token);
 
-  const convertedTime = new Date();
-  convertedTime.setSeconds(convertedTime.getSeconds() + tokenLifeTime);
+  const tokenLifeTime = new Date(exp * 1000);
 
-  return [token, convertedTime];
+  return [token, tokenLifeTime];
 };
 
 module.exports = { createToken };

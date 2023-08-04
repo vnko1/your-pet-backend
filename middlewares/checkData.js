@@ -42,15 +42,17 @@ const checkUserData = async (req, res, next) => {
 
   const keys = Object.keys(req.body);
 
-  if (keys.includes(file.avatar.fieldName)) {
-    const user = await Users.updateUser({
-      id: req.user.id,
-      data: { avatarId: "", avatarUrl: defaultAvatarUrl },
-      newDoc: false,
-    });
+  keys.forEach(async (item) => {
+    if (item.includes(file.avatar.fieldName) && req.body[item].length === 0) {
+      const user = await Users.updateUser({
+        id: req.user.id,
+        data: { avatarId: "", avatarUrl: defaultAvatarUrl },
+        newDoc: false,
+      });
 
-    if (user.avatarId) await Image.deleteImage(user.avatarId);
-  }
+      if (user.avatarId) await Image.deleteImage(user.avatarId);
+    }
+  });
 
   if (!keys.length && !req.file) next(httpError(400, errorMessage[400]));
 

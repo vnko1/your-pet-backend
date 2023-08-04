@@ -27,7 +27,7 @@ const file = {
 };
 
 const errorMessage = {
-  400: "Bad request! Empty request body, missing field, wrong field name, your file is not valid or wrong id",
+  400: "Bad request! Something wrong with your request body!",
   401: {
     wrongAuth: "Not authorized",
     wrongLogin: "Email or password is wrong",

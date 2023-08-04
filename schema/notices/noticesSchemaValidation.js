@@ -12,7 +12,11 @@ const addSchema = Joi.object({
     .format("DD-MM-YYYY")
     .min("01-01-2000")
     .max(new Date())
-    .messages({ "date.format": `Date format is DD-MM-YYYY` })
+    .messages({
+      "date.format": `Date format is DD-MM-YYYY`,
+      "date.max": "Your pet cannot be born in the future",
+      "date.min": "Try to choose a later date",
+    })
     .required(),
   type: Joi.string()
     .min(2)
